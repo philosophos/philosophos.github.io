@@ -3,6 +3,7 @@ layout: post
 title: esc-seq and tput (2)--cursor
 date: 2017-02-21 03:26:52
 updated: 2017-02-22 22:26:52
+copyright: true
 description: Linux | tput | esc-seq
 categories: Linux
 tags: 
@@ -10,7 +11,7 @@ tags:
 - tput
 - esc-seq
 ---
-===========================================================
+
 **Use Escape Sequence To Move Cursor**
 **Use 'tput' To Move Cursor**
 - Indicated Row, Column
@@ -165,5 +166,3 @@ Other
 `printf "\n"` `printf "\eE"` `tput cud1` <Enter>
 **clear**
 `printf '\ec'` `tput clear` `clear` <C-l>
-
------------------------------------------------------------

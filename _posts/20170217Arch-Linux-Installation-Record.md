@@ -3,6 +3,7 @@ layout: post
 title: Arch Linux Installation Record
 date: 2017-02-17 20:54:43
 updated: 2017-02-18 22:52:23
+copyright: true
 description:  Arch | Linux | Install
 categories: Linux
 tags: 
@@ -11,7 +12,6 @@ tags:
 - Install
 ---
 
-===============================================================================
 - Temporary Configuration 临时设置
 - Net-link & Source Configuration 联网&设置软件源
 - Create Partition 分区
@@ -19,6 +19,7 @@ tags:
 - MOUNT 挂载目标分区
 - BASE Installation 安装基础系统
 - Base Configuration 配置基础系统
+- Boot Configuration 启动引导配置
 - Xorg & GPU Driver
 - Input Method：fcitx/ibus/rime
 - CLI Program
@@ -62,12 +63,14 @@ Net-link & Source Configuration 联网&设置软件源
 `grep -A1 China /etc/pacman.d/mirrorlist`
 
 添加archlinuxcn源
-
-    echo "[archlinuxcn]
+{% codeblock lang:sh Add the following to /etc/pacman.conf %}
+    [archlinuxcn]
     #Server=http://mirrors.xdlinux.info/archlinuxcn/$arch
     Server=https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch
     Server=https://mirrors.ustc.edu.cn/archlinuxcn/$arch
-    ">>/etc/pacman.conf
+{% endcodeblock %}
+
+    pacman -S archlinuxcn-keyring
 
 -------------------------------------------------------------------------------
 Create Partition 分区
@@ -77,8 +80,7 @@ SSD请参考
 [Linux环境SSD（固态硬盘）使用指南](http://www.jinbuguo.com/storage/ssd_usage.html)
 [archlinux wiki:SSD](https://wiki.archlinux.org/index.php/Solid_State_Drive)
 
-lsblk
-分区用软件：
+**分区用软件**
 通用：parted
 MBR:fdisk,cfdisk,sfdisk
 GPT:gdisk,cgdisk,sgdisk
@@ -99,12 +101,9 @@ MKFS 创建文件系统
     mkswap /dev/mapper/arch-5.swap
     swapon /dev/mapper/arch-5.swap
     mkfs.ext4 -c -b 4096 -E lazy_itable_init=0,lazy_journal_init=0 /dev/sda7
-    time mkfs.ext4 -c -b 4096 \
-    -E lazy_itable_init=0,lazy_journal_init=0 /dev/mapper/arch-1.root
-    time mkfs.ext4 -c -b 4096 \
-    -E lazy_itable_init=0,lazy_journal_init=0 /dev/mapper/arch-2.usr
-    time mkfs.ext4 -c -b 4096 \
-    -E lazy_itable_init=0,lazy_journal_init=0 /dev/mapper/arch-3.var
+    time mkfs.ext4 -c -b 4096 -E lazy_itable_init=0,lazy_journal_init=0 /dev/mapper/arch-1.root
+    time mkfs.ext4 -c -b 4096 -E lazy_itable_init=0,lazy_journal_init=0 /dev/mapper/arch-2.usr
+    time mkfs.ext4 -c -b 4096 -E lazy_itable_init=0,lazy_journal_init=0 /dev/mapper/arch-3.var
 
 -------------------------------------------------------------------------------
 MOUNT 挂载目标分区
@@ -121,36 +120,42 @@ MOUNT 挂载目标分区
 -------------------------------------------------------------------------------
 Base Installation 安装基础系统
 -------------------------------------------------------------------------------
-`pacstrap -i /mnt base base-devel`
+
+    pacstrap -i /mnt base base-devel
 
     pacstrap -i /mnt \
-    net-tools rp-pppoe rfkill bluez bluez-utils ifplugd \
-    iw wpa_actiond wpa_supplicant wireless_tools dialog wifi-menu broadcom-wl-dkms \
-    cpupower turbostat usbip pm-utils lm_sensors alsa-utils alsa-plugins \
+    linux-lts linux-lts-headers \
+    linux-zen linux-zen-headers \
+    linux-grsec linux-grsec-headers \
+    net-tools networkmanager rp-pppoe rfkill bluez bluez-utils ifplugd \
+    iw wpa_actiond wpa_supplicant wireless_tools dialog broadcom-wl-dkms \
+    cpupower turbostat usbip lm_sensors alsa-utils alsa-plugins \
     iftop iotop htop atop ntop sysstat dstat vnstat lsof multitail tcpdump \
     dosfstools grub efibootmgr syslinux \
     parted gptfdisk fuse exfat-utils ntfs-3g zip unzip unrar p7zip \
     udisks2 udiskie udevil nfs-utils sshfs curlftpfs cifs-utils zenity \
-    libmtp android-file-transfer ranger vifm \
+    libmtp android-file-transfer archlinuxcn/simple-mtpfs ranger vifm \
     python-chardet libcaca highlight atool poppler transmission-cli mediainfo perl-image-exiftool \
     bash-completion bash-docs bashdb \
-    zsh-completions zsh-doc zshdb zsh-lovers zsh-syntax-highlighting \
-    fbterm fbgrab fbv tmux w3m vim neovim ctags vim-youcompleteme-git \
-    tree pv source-highlight most lesspipe cdu pydf lolcat colordiff prettyping figlet toilet \
+    zsh-completions zsh-doc zshdb zsh-lovers zsh-syntax-highlighting archlinuxcn/oh-my-zsh-git \
+    fbterm fbgrab fbv tmux w3m vim gvim neovim ctags archlinuxcn/vim-youcompleteme-git \
+    tree pv most lesspipe cdu pydf lolcat colordiff prettyping figlet archlinuxcn/toilet \
     minicom picocom tinyserial gpm bc calc dos2unix ack mlocate man-pages-zh_cn \
     dictd sdcv ydcv axel aria2 wget git mercurial subversion \
     firewalld ntp hostapd dhcp bind bind-tools dnsmasq pdnsd dnscrypt-proxy dnssec-tools \
-    openssh pssh sshfs sshguard rsync zsync inotify-tools parallel proxychains shadowsocks goagent \
+    openssh sshfs sshguard rsync zsync inotify-tools parallel proxychains shadowsocks \
     cmake ccache distcc colorgcc $(pacman -Ssq noto-fonts) \
-    emacs-nox pandoc pandoc-citeproc texlive-core texlive-lang texlive-most \
-    python2 python python2-pip python-pip lua luarocks \
+    emacs-nox emacs pandoc pandoc-citeproc texlive-core texlive-lang texlive-most \
+    python2 python python2-pip python-pip lua luarocks nodejs npm ruby \
     jre8-openjdk jre8-openjdk-headless jdk8-openjdk openjdk8-doc jdk \
     mariadb perl-dbd-mysql mytop innotop phpmyadmin \
     postgresql postgresql-docs phppgadmin python2-mysql2pgsql \
     mongodb mongodb-tools redis \
-    i3 awesome vicious xorg-server-xephyr xorg-xev xcompmgr transset-df conky \
-    xsel xclip xscreensaver-arch-logo xterm rxvt-unicode urxvt-perls \
-    x11vnc tigervnc jfbview apvlv feh scrot vlc wps-office netease-cloud-music \
+    i3 awesome vicious xorg-server-xephyr xorg-xev xorg-xprop xcompmgr transset-df conky \
+    xsel xclip archlinuxcn/xscreensaver-arch-logo xterm rxvt-unicode urxvt-perls \
+    x11vnc tigervnc jfbview apvlv feh scrot vlc  firefox archlinuxcn/google-chrome \
+    wps-office netease-cloud-music \
+    archlinuxcn/anything-sync-daemon archlinuxcn/profile-sync-daemon 
 
 **生成配置fstab**
 `genfstab -p /mnt > /mnt/etc/fstab && vi /mnt/etc/fstab`
@@ -167,66 +172,32 @@ Base Configuration 配置基础系统
     hwclock --systohc --utc
     echo mobius-8 > /etc/hostname
 
-**Base Network Configuration 基础网络配置**
+**Base Network Configuration 基础服务网络配置**
 
-    systemctl start dhcpcd
+    systemctl enable lvm2-lvmetad
+    systemctl start firewalld 
+    systemctl enable firewalld 
     systemctl enable dhcpcd
-    pacman -S --needed iw wpa_supplicant dialog wifi-menu
+    systemctl enable NetworkManager
+    pacman -S --needed iw wpa_supplicant dialog
     pacman -S --needed rp-pppoe
     pppoe-setup
-    systemctl start adsl
     systemctl enable adsl
 
 
 **archlinuxcn & yaourt 添加源**
-
-    echo "[archlinuxcn]
-    Server=http://mirrors.xdlinux.info/archlinuxcn/$arch
+{% codeblock lang:sh Add the following to /etc/pacman.conf %}
+    [archlinuxcn]
+    #Server=http://mirrors.xdlinux.info/archlinuxcn/$arch
     Server=https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/$arch
     Server=https://mirrors.ustc.edu.cn/archlinuxcn/$arch
-    ">>/etc/pacman.conf
-    pacman -S --needed archlinuxcn-keyring
-    pacman -S --needed yaourt
-    vim /etc/yaourtrc
-    AURURL="https://aur.tuna.tsinghua.edu.cn"
-
-    cd /tmp
-    git clone https://aur.archlinux.org/package-query.git
-    git clone https://aur.archlinux.org/yaourt.git
-    cd package-query
-    makepkg -si
-    cd ../yaourt
-    makepkg -si
-    cd ~
-
-**Boot Configuration 启动引导配置**
-
-`vim /etc/mkinitcpio.conf`
-`HOOKS="base udev autodetect modconf block lvm2 resume filesystems keyboard shutdown usr fsck"`
-`lvm2` for LVM
-`resume` for Hibernate
-`usr` for `/usr` mount independently
-
-`mkinitcpio -p linux`
-
-    vim /etc/default/grub
-    GRUB_CMDLINE_LINUX_DEFAULT="quiet"
-    GRUB_CMDLINE_LINUX="resume=/dev/mapper/arch-5.swap net.ifnames=0 biosdevname=0"
-`resume=/dev/mapper/arch-5.swap` specifies swap partition for hibernation
-`net.ifnames=0 biosdevname=0` retain tradtional NIC names like 'eth0' instead of 'enp0s3'
-
-BIOS：
-
-    pacman -S --needed grub os-prober
-    grub-install --recheck /dev/<目标磁盘>
-    grub-mkconfig -o /boot/grub/grub.cfg
-
-UEFI：
-
-    pacman -S --needed dosfstools grub efibootmgr
-    grub-install --target=x86_64-efi --efi-directory=/boot/EFI \
-    --bootloader-id=archlinux --recheck
-    grub-mkconfig -o /boot/grub/grub.cfg
+{% endcodeblock %}
+{% codeblock lang:sh %}
+    pacman -S archlinuxcn-keyring yaourt
+{% endcodeblock %}
+{% codeblock lang:sh Edit /etc/yaourtrc %}
+AURURL="https://aur.tuna.tsinghua.edu.cn"
+{% endcodeblock %}
 
 **Base Sec Configuration 基础安全配置**
 
@@ -238,11 +209,11 @@ UEFI：
     
 **Mouse Configuration 鼠标配置**
 
-    echo \
+{% codeblock lang:sh Add /etc/conf.d/gpm %}
     #GPM_ARGS="-m /dev/psaux" -t ps2	#PS/2 mouse
      GPM_ARGS="-m /dev/input/mice" -t imps2	#USB mouse
     #GPM_ARGS="-m /dev/input/mice" -t ps2	#IBM Trackpoints
-    >> /etc/conf.d/gpm
+{% endcodeblock %}
 
 **tmux-mem-cpu-load (for tmux)**
 
@@ -252,12 +223,11 @@ UEFI：
     make
     su -c 'make install'
 
-
 **Other Configuration**
 
-    mkdir -p /media/jeau-0/{usual,bak,iso-{0..2}}
-    cp -rf /media/jeau-0/usual/bak/conf.unix/skel/ /etc/
-    useradd -u 1536 -m -o -s /bin/bash jeau-0
+    mkdir -p /media/{usual,ISO,mtp}
+    cp -rf /media/usual/bak/conf.unix/skel/ /etc/
+    useradd -u 1536 -m -o -s /bin/zsh jeau-0
     passwd jeau-0
     passwd
     chown -R jeau-0:jeau-0 /media/jeau-0/
@@ -266,6 +236,63 @@ UEFI：
     setcap 'cap_sys_tty_config+ep' /usr/bin/fbterm
     mkdir /usr/share/stardict/dic/
     ls stardict-* |xargs -i tar xjvf {} -C /usr/share/stardict/dic/
+
+-------------------------------------------------------------------------------
+Boot Configuration 启动引导配置
+-------------------------------------------------------------------------------
+**mkinitcpio**
+{% codeblock lang:sh Edit /etc/mkinitcpio.conf %}
+HOOKS="base udev autodetect modconf block lvm2 resume filesystems keyboard shutdown usr fsck"
+{% endcodeblock %}
+`lvm2` for LVM
+`resume` for Hibernate
+`usr` for `/usr` mount independently
+
+    mkinitcpio -p linux
+
+**grub installation**
+BIOS：
+
+    pacman -S --needed grub os-prober
+    grub-install --recheck /dev/<目标磁盘>
+
+UEFI：
+
+    pacman -S --needed dosfstools grub efibootmgr  os-prober
+    grub-install --target=x86_64-efi --efi-directory=/boot/EFI \
+    --bootloader-id=archlinux --recheck
+
+**grub config**
+
+{% codeblock lang:sh Edit /etc/default/grub %}
+# GRUB can remember the last entry you booted from and use this as the default entry to boot from next time.
+# This is useful if you have multiple kernels or operating systems
+GRUB_DEFAULT=saved
+GRUB_SAVEDEFAULT="true"
+# If you have multiple kernels installed,by default grub-mkconfig groups them in a submenu.
+GRUB_DISABLE_SUBMENU=y
+
+GRUB_CMDLINE_LINUX_DEFAULT="resume=/dev/mapper/arch-5.swap quiet"
+GRUB_CMDLINE_LINUX="net.ifnames=0 biosdevname=0"
+
+# Uncomment to enable Hidden Menu, and optionally hide the timeout count
+GRUB_TIMEOUT=0
+GRUB_HIDDEN_TIMEOUT=3
+GRUB_HIDDEN_TIMEOUT_QUIET=true
+
+# Uncomment and set to the desired menu colors.  Used by normal and wallpaper
+# modes only.  Entries specified as foreground/background.
+GRUB_COLOR_NORMAL="light-blue/black"
+GRUB_COLOR_HIGHLIGHT="light-cyan/blue"
+
+# Uncomment to allow the kernel use the same resolution used by grub
+GRUB_GFXPAYLOAD_LINUX=keep
+{% endcodeblock %}
+
+`resume=/dev/mapper/arch-5.swap` specifies swap partition for hibernation
+`net.ifnames=0 biosdevname=0` retain tradtional NIC names like 'eth0' instead of 'enp0s3'
+
+    grub-mkconfig -o /boot/grub/grub.cfg
 
 **exit**
 
@@ -302,8 +329,7 @@ Xorg & GPU Driver
     xf86-input-evdev \
     xf86-video-intel \
     nvidia opencl-nvidia \
-    bumblebee primus bbswitch \
-    mesa-libgl \
+    bbswitch \
     nvidia-libgl \
 
 `pacman -S --needed cuda `
@@ -323,101 +349,115 @@ Input Method：fcitx/ibus/rime
     fcitx-ui-light \
     fcitx-cloudpinyin \
     fcitx-sunpinyin \
-    fcitx-m17n
+    fcitx-m17n \
+    archlinuxcn/fcitx-sogoupinyin
 
+-------------------------------------------------------------------------------
+kernel
+-------------------------------------------------------------------------------
+
+    linux-lts linux-lts-headers \
+    linux-zen linux-zen-headers \
+    linux-grsec linux-grsec-headers \
+    archlinuxcn/linux-pf archlinuxcn/linux-pf-headers \
 -------------------------------------------------------------------------------
 CLI Program
 -------------------------------------------------------------------------------
-**Network**
-*net-config* : net-tools rfkill ifplugd
-*PPPOE*      : rp-pppoe
-*Bluetooth*  : bluez bluez-utils
-*wireless*   : iw wpa_actiond wpa_supplicant wireless_tools dialog wifi-menu
-*AP*         : hostapd
-*NTP*        : ntp
-*DHCP*       : dhcp
-*DNS-Server* : bind bind-tools
-*DNS-Cache*  : dnsmasq pdnsd
-*DNS-Sec*    : dnscrypt-proxy dnssec-tools
-*SSH*        : openssh pssh sshfs sshguard
-*Sync*       : rsync zsync inotify-tools
-*Proxy*      : proxychains shadowsocks goagent
-*Firewall*   : iptables firewalld
-*Download*   : axel aria2 wget
+#### Network
+**net-config** : iproute2-doc net-tools rfkill ifplugd networkmanager
+**PPPOE**      : rp-pppoe
+**Bluetooth**  : bluez bluez-utils
+**wireless**   : iw wpa_actiond wpa_supplicant wireless_tools dialog
+**AP**         : hostapd
+**NTP**        : ntp
+**DHCP**       : dhcp
+**DNS-Server** : bind bind-tools
+**DNS-Cache**  : dnsmasq pdnsd
+**DNS-Sec**    : dnscrypt-proxy dnssec-tools
+**SSH**        : openssh sshfs sshguard aur/pssh
+**Proxy**      : proxychains shadowsocks goagent
+**Firewall**   : iptables firewalld
+**Download**   : axel aria2 wget
 
-**System Tools**
-*hardware control*  : cpupower turbostat usbip
-*Sleep&Hibernate*   : pm-utils
-*Sensors*           : lm_sensors
-*Volume*            : alsa-utils alsa-plugins
-*System Monitoring* : iftop iotop htop atop ntop sysstat dstat vnstat lsof multitail tcpdump
-*BOOT*              : dosfstools grub efibootmgr syslinux
-*fonts*             : $(pacman -Ssq noto-fonts)
+#### System Tools
+**hardware control**  : cpupower turbostat usbip
+**Sleep&Hibernate**   : aur/pm-utils
+**Sensors**           : lm_sensors
+**Volume**            : alsa-utils alsa-plugins
+**System Monitoring** : iftop iotop htop atop ntop sysstat dstat vnstat lsof multitail tcpdump time
+**BOOT**              : dosfstools grub efibootmgr syslinux
+**fonts**             : $(pacman -Ssq noto-fonts)
 
-**File&Storage&Disk**
-*PART*                   : parted gptfdisk
-*FS*                     : fuse exfat-utils ntfs-3g
-*Udisk*                  : udisks2 udiskie udevil
-*NFS*                    : nfs-utils
-*SSHFS*                  : sshfs
-*FTP*                    : curlftpfs
-*Samba*                  : cifs-utils
-*MTP*                    : libmtp android-file-transfer
-*File Manager*           : ranger vifm
-*achiving & compression* : zip unzip unrar p7zip
+#### File&Storage&Disk
+**PART**                           : parted gptfdisk
+**FS**                             : fuse exfat-utils ntfs-3g
+**Udisk**                          : udisks2 udiskie udevil
+**NFS**                            : nfs-utils
+**Samba**                          : cifs-utils
+**SSHFS**                          : sshfs
+**FTP**                            : curlftpfs
+**Sync**                           : rsync zsync inotify-tools archlinuxcn/anything-sync-daemon archlinuxcn/profile-sync-daemon
+**MTP**                            : libmtp android-file-transfer archlinuxcn/simple-mtpfs
+**File Manager**                   : ranger vifm
+**achiving & compression**         : zip unzip unrar p7zip
 
-**Shell&Terminal**
-*Bash*                 : bash-completion bash-docs bashdb
-*Zsh*                  : zsh-completions zsh-doc zshdb zsh-lovers zsh-syntax-highlighting
-*Regex*                : ack sed gawk
-*File Finder*          : mlocate
-*Fbterm*               : fbterm fbgrab fbv
-*Terminal*             : tmux parallel
-*Serial Communication* : minicom picocom tinyserial
-*VIM*                  : vim neovim ctags vim-youcompleteme-git
-*EMACS*                : emacs-nox pandoc pandoc-citeproc
-*view/color*           : tree pv most lesspipe cdu pydf lolcat colordiff prettyping
-*code highlighter*     : source-highlight highlight
-*Dict*                 : dictd sdcv ydcv
-*Calc*                 : bc calc
-*TTY REC*              : ttyrec termrec ippt tpp
-*WordArt*              : figlet toilet
-*other tools*          : gpm dos2unix  man-pages-zh_cn
+#### Shell&Terminal
+**Bash**                 : bash-completion bash-docs bashdb
+**Zsh**                  : zsh-completions zsh-doc zshdb zsh-lovers zsh-syntax-highlighting
+**Regex**                : ack sed gawk
+**File Finder**          : mlocate
+**Fbterm**               : fbterm fbgrab fbv
+**Terminal**             : tmux parallel
+**Serial Communication** : minicom picocom tinyserial
+**VIM**                  : vim gvim neovim ctags vim-youcompleteme-git
+**EMACS**                : emacs-nox emacs pandoc pandoc-citeproc
+**view/color**           : tree pv most lesspipe cdu pydf lolcat colordiff prettyping
+**code highlighter**     : highlight
+**Dict**                 : dictd sdcv ydcv
+**Calc**                 : bc calc
+**TTY REC**              : aur/ttyrec aur/termrec aur/ippt aur/tpp
+**WordArt**              : figlet toilet
+**other tools**          : gpm dos2unix man-pages-zh_cn
 
-**Code&Language&Package**
-*compile*     : clang cmake ccache distcc colorgcc
-*code-manage* : git mercurial subversion
-*texlive*     : texlive-core texlive-lang texlive-most
-*python2*     : python2 python2-pip
-*python3*     : python python-pip
-*nodejs*      : nodejs npm | cnpm hexo-cli
-*ruby*        : ruby ruby-jekyll
-*lua*         : lua luarocks
-*JDK*         : jre8-openjdk jre8-openjdk-headless jdk8-openjdk openjdk8-doc jdk aur/jdk-docs
+#### Code&Language&Package
+**compile**     : clang cmake ccache distcc colorgcc
+**code-manage** : git mercurial subversion
+**texlive**     : texlive-core texlive-lang texlive-most
+**python2**     : python2 python2-pip
+**python3**     : python python-pip
+**nodejs**      : nodejs npm | cnpm hexo-cli
+**ruby**        : ruby ruby-jekyll
+**lua**         : lua luarocks
+**JDK**         : jre8-openjdk jre8-openjdk-headless jdk8-openjdk openjdk8-doc jdk aur/jdk-docs
 
-**DB**
-*mysql/mariadb* : mariadb perl-dbd-mysql mytop innotop phpmyadmin aur/mycli aur/mtop
-*postgresql*    : postgresql postgresql-docs phppgadmin python2-mysql2pgsql
-*mongodb*       : mongodb mongodb-tools
-*redis*         : redis
+#### Virtual
+**docker**             : docker docker-compose docker-machine
+**virt-manage**        : libvirt virt-install
+**net-manage**         : bridge-utils openvswitch vlan quagga
+**qemu**               : qemu \
+qemu-arch-extra \
+qemu-block-gluster \
+qemu-block-iscsi \
+qemu-block-rbd \
 
 -------------------------------------------------------------------------------
 GUI Program
 -------------------------------------------------------------------------------
-*Window Manager* : i3 awesome vicious xorg-server-xephyr xorg-xev
-*Transparency*   : xcompmgr transset-df
-*Monitor*        : conky
-*clipboard*      : xsel xclip
-*screensaver*    : xscreensaver-arch-logo
-*terminal*       : xterm rxvt-unicode urxvt-perls
-*Browser*        : firefox archlinuxcn/google-chrome
-*VNC*            : x11vnc tigervnc
-*PDF*            : jfbview apvlv
-*PHOTO*          : feh
-*Screenshot*     : scrot
-*VIDEO*          : vlc
-*OFFICE*         : wps-office
-*MUSIC*          : netease-cloud-music
+**Window Manager** : i3 awesome vicious
+**X Tools**        : xorg-server-xephyr xorg-xev xorg-xprop
+**Transparency**   : xcompmgr transset-df
+**Monitor**        : conky
+**clipboard**      : xsel xclip
+**screensaver**    : archlinuxcn/xscreensaver-arch-logo
+**terminal**       : xterm rxvt-unicode urxvt-perls
+**Browser**        : firefox archlinuxcn/google-chrome
+**VNC**            : x11vnc tigervnc
+**PDF**            : jfbview apvlv
+**PHOTO**          : feh
+**Screenshot**     : scrot
+**VIDEO**          : vlc
+**OFFICE**         : archlinuxcn/wps-office
+**MUSIC**          : archlinuxcn/netease-cloud-music
 
 -------------------------------------------------------------------------------
 More Configuration

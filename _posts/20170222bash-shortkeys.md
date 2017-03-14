@@ -3,6 +3,7 @@ layout: post
 title: bash shortkeys
 date: 2017-02-22 00:03:32
 updated: 2017-02-22 13:03:32
+copyright: true
 description: Linux | Bash | Shortkeys
 categories:
 - Linux
@@ -12,8 +13,6 @@ tags:
 - Bash
 - shortkeys
 ---
-
-===========================================================
 
 set emacs-mode : `set -o emacs`(default)
 set vi-mode    : `set -o vi`

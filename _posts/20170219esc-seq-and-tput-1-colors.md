@@ -3,6 +3,7 @@ layout: post
 title: esc-seq and tput (1)--colors
 date: 2017-02-19 20:52:35
 updated: 2017-02-21
+copyright: true
 description: Linux | tput | esc-seq
 categories: Linux
 tags:
@@ -10,7 +11,7 @@ tags:
 - tput
 - esc-seq
 ---
-===============================================================================
+
 **Use Escape Sequence To Set Colors**
     Nowadays terminal like XTerm & URxvt support 256color. But only the first 16 can be specified using resources currently or other configuration file, the rest can only be shown via command sequences ("escape codes").  
     The ECMA-48 SGR sequence ( ESC \[ parameters m ) can set foreground & background colors.  

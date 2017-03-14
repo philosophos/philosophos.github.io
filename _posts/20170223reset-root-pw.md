@@ -3,6 +3,7 @@ layout: post
 title: reset root pw
 date: 2017-02-23 00:10:30
 updated:
+copyright: true
 description: Linux | root | password
 categories: Linux
 tags:
@@ -10,8 +11,6 @@ tags:
 - root
 - password
 ---
-
-===========================================================
 
 **rpm-based Distros**(RedHat,CentOS,Fedora)
 **deb-baesd Distros**(Debian,Ubuntu,Mint)
