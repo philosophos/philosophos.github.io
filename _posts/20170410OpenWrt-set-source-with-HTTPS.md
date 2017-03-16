@@ -1,16 +1,17 @@
 ---
 layout: post
-title: OpenWrt -- Change Source with HTTPS
+title: OpenWrt -- set source with HTTPS
 copyright: true
 date: 2017-03-13 22:21:47
 updated:
-description: Change OpenWrt Source with HTTPS
+description: set OpenWrt Source to HTTPS
 Categories:
 - Linux
 - OpenWrt
 tags:
 - Linux
 - OpenWrt
+- Router
 - source
 - HTTPS
 ---
@@ -18,9 +19,9 @@ tags:
 `vim scp://root@OpenWrt:2222//etc/opkg/distfeeds.conf`
 `opkg update` Failed.
 Maybe the wget in BusyBox doesn't support https.
-Change source with HTTP, update,
-Install `wget` & `ca-certificates`,
-Change source with HTTPS, update.
+- set source with HTTP, update,
+- Install `wget` & `ca-certificates`,
+- set source with HTTPS, update.
 <!-- more -->
 
 -----------------------------------------------------------
@@ -131,6 +132,10 @@ src/gz chaos_calmer_management https://mirrors.tuna.tsinghua.edu.cn/openwrt/chao
 Maybe the wget in BusyBox doesn't support https.
 Change source with HTTP, update, install `wget` & `ca-certificates`, then change source with HTTPS, update .
 
+-----------------------------------------------------------
+set source with HTTP, update
+-----------------------------------------------------------
+
     root@OpenWrt:~# sed -i 's/https/http/' /etc/opkg/distfeeds.conf
 
     root@OpenWrt:~# opkg update
@@ -159,6 +164,10 @@ Change source with HTTP, update, install `wget` & `ca-certificates`, then change
     Downloading http://mirrors.tuna.tsinghua.edu.cn/openwrt/chaos_calmer/15.05.1/mvebu/generic/packages/management/Packages.sig.
     Signature check passed.
 
+-----------------------------------------------------------
+Install `wget` & `ca-certificates`
+-----------------------------------------------------------
+
     root@OpenWrt:~# opkg install wget ca-certificates
     Installing wget (1.17.1-1) to root...
     Downloading http://mirrors.tuna.tsinghua.edu.cn/openwrt/chaos_calmer/15.05.1/mvebu/generic/packages/packages/wget_1.17.1-1_mvebu.ipk.
@@ -181,6 +190,10 @@ Change source with HTTP, update, install `wget` & `ca-certificates`, then change
     Configuring librt.
     Configuring wget.
     Configuring ca-certificates.
+
+-----------------------------------------------------------
+set source with HTTPS, update
+-----------------------------------------------------------
 
     root@OpenWrt:~# sed -i 's/http/https/' /etc/opkg/distfeeds.conf
 

@@ -163,7 +163,7 @@ Base Installation 安装基础系统
 -------------------------------------------------------------------------------
 Base Configuration 配置基础系统
 -------------------------------------------------------------------------------
-**Language&Date&Hostname 语言&时间&主机名**
+### Language&Date&Hostname 语言&时间&主机名
 
     arch-chroot /mnt /bin/bash
     sed -i '/de_\|el_\|en_\|es_\|fr_\|ja_\|ko_\|pt_\|ru_\|zh_/s/^#//'  /etc/locale.gen
@@ -172,7 +172,7 @@ Base Configuration 配置基础系统
     hwclock --systohc --utc
     echo mobius-8 > /etc/hostname
 
-**Base Network Configuration 基础服务网络配置**
+### Base Network Configuration 基础服务网络配置
 
     systemctl enable lvm2-lvmetad
     systemctl start firewalld 
@@ -185,7 +185,7 @@ Base Configuration 配置基础系统
     systemctl enable adsl
 
 
-**archlinuxcn & yaourt 添加源**
+### archlinuxcn & yaourt 添加源
 {% codeblock lang:sh Add the following to /etc/pacman.conf %}
     [archlinuxcn]
     #Server=http://mirrors.xdlinux.info/archlinuxcn/$arch
@@ -199,7 +199,7 @@ Base Configuration 配置基础系统
 AURURL="https://aur.tuna.tsinghua.edu.cn"
 {% endcodeblock %}
 
-**Base Sec Configuration 基础安全配置**
+### Base Sec Configuration 基础安全配置
 
     sed -i '/^tty/s/^/#/'/etc/securetty
     sed -i '/PermitRootLogin/s/prohibit-password/no#prohibit-password/' /etc/ssh/sshd_config
@@ -207,7 +207,7 @@ AURURL="https://aur.tuna.tsinghua.edu.cn"
     sed -i '/^#PermitRootLogin/s/#//' /etc/ssh/sshd_config
     sed -i '/Port/s/22/2222/' /etc/ssh/sshd_config
     
-**Mouse Configuration 鼠标配置**
+### Mouse Configuration 鼠标配置
 
 {% codeblock lang:sh Add /etc/conf.d/gpm %}
     #GPM_ARGS="-m /dev/psaux" -t ps2	#PS/2 mouse
@@ -215,7 +215,7 @@ AURURL="https://aur.tuna.tsinghua.edu.cn"
     #GPM_ARGS="-m /dev/input/mice" -t ps2	#IBM Trackpoints
 {% endcodeblock %}
 
-**tmux-mem-cpu-load (for tmux)**
+### tmux-mem-cpu-load (for tmux)
 
     git clone https://github.com/thewtex/tmux-mem-cpu-load.git /tmp
     cd /tmp/tmux-mem-cpu-load
@@ -223,7 +223,7 @@ AURURL="https://aur.tuna.tsinghua.edu.cn"
     make
     su -c 'make install'
 
-**Other Configuration**
+### Other Configuration
 
     mkdir -p /media/{usual,ISO,mtp}
     cp -rf /media/usual/bak/conf.unix/skel/ /etc/
@@ -240,7 +240,7 @@ AURURL="https://aur.tuna.tsinghua.edu.cn"
 -------------------------------------------------------------------------------
 Boot Configuration 启动引导配置
 -------------------------------------------------------------------------------
-**mkinitcpio**
+### mkinitcpio
 {% codeblock lang:sh Edit /etc/mkinitcpio.conf %}
 HOOKS="base udev autodetect modconf block lvm2 resume filesystems keyboard shutdown usr fsck"
 {% endcodeblock %}
@@ -250,7 +250,7 @@ HOOKS="base udev autodetect modconf block lvm2 resume filesystems keyboard shutd
 
     mkinitcpio -p linux
 
-**grub installation**
+### grub installation
 BIOS：
 
     pacman -S --needed grub os-prober
@@ -262,7 +262,7 @@ UEFI：
     grub-install --target=x86_64-efi --efi-directory=/boot/EFI \
     --bootloader-id=archlinux --recheck
 
-**grub config**
+### grub config
 
 {% codeblock lang:sh Edit /etc/default/grub %}
 # GRUB can remember the last entry you booted from and use this as the default entry to boot from next time.
@@ -328,11 +328,16 @@ Xorg & GPU Driver
     xf86-input-synaptics \
     xf86-input-evdev \
     xf86-video-intel \
-    nvidia opencl-nvidia \
-    bbswitch \
-    nvidia-libgl \
 
-`pacman -S --needed cuda `
+    pacman -S --needed \
+    nvidia-dkms \
+    bbswitch primus bumblebee \
+
+    pacman -S --needed \
+    nvidia-settings nvidia-utils nvdock \
+
+
+`pacman -S --needed cuda opencl-nvidia `
 
 -------------------------------------------------------------------------------
 Input Method：fcitx/ibus/rime
@@ -356,14 +361,15 @@ Input Method：fcitx/ibus/rime
 kernel
 -------------------------------------------------------------------------------
 
+    linuxdoc-tools linux-manpages kexec-tools \
     linux-lts linux-lts-headers \
     linux-zen linux-zen-headers \
     linux-grsec linux-grsec-headers \
-    archlinuxcn/linux-pf archlinuxcn/linux-pf-headers \
+
 -------------------------------------------------------------------------------
 CLI Program
 -------------------------------------------------------------------------------
-#### Network
+### Network
 **net-config** : iproute2-doc net-tools rfkill ifplugd networkmanager
 **PPPOE**      : rp-pppoe
 **Bluetooth**  : bluez bluez-utils
@@ -379,7 +385,7 @@ CLI Program
 **Firewall**   : iptables firewalld
 **Download**   : axel aria2 wget
 
-#### System Tools
+### System Tools
 **hardware control**  : cpupower turbostat usbip
 **Sleep&Hibernate**   : aur/pm-utils
 **Sensors**           : lm_sensors
@@ -388,7 +394,7 @@ CLI Program
 **BOOT**              : dosfstools grub efibootmgr syslinux
 **fonts**             : $(pacman -Ssq noto-fonts)
 
-#### File&Storage&Disk
+### File&Storage&Disk
 **PART**                           : parted gptfdisk
 **FS**                             : fuse exfat-utils ntfs-3g
 **Udisk**                          : udisks2 udiskie udevil
@@ -397,11 +403,12 @@ CLI Program
 **SSHFS**                          : sshfs
 **FTP**                            : curlftpfs
 **Sync**                           : rsync zsync inotify-tools archlinuxcn/anything-sync-daemon archlinuxcn/profile-sync-daemon
-**MTP**                            : libmtp android-file-transfer archlinuxcn/simple-mtpfs
-**File Manager**                   : ranger vifm
+**MTP**                            : libmtp archlinuxcn/simple-mtpfs
+**File Manager**                   : ranger
+**PDF**                            : ghostscript archlinuxcn/pdftk-bin
 **achiving & compression**         : zip unzip unrar p7zip
 
-#### Shell&Terminal
+### Shell&Terminal
 **Bash**                 : bash-completion bash-docs bashdb
 **Zsh**                  : zsh-completions zsh-doc zshdb zsh-lovers zsh-syntax-highlighting
 **Regex**                : ack sed gawk
@@ -419,18 +426,18 @@ CLI Program
 **WordArt**              : figlet toilet
 **other tools**          : gpm dos2unix man-pages-zh_cn
 
-#### Code&Language&Package
-**compile**     : clang cmake ccache distcc colorgcc
-**code-manage** : git mercurial subversion
-**texlive**     : texlive-core texlive-lang texlive-most
-**python2**     : python2 python2-pip
-**python3**     : python python-pip
-**nodejs**      : nodejs npm | cnpm hexo-cli
-**ruby**        : ruby ruby-jekyll
-**lua**         : lua luarocks
-**JDK**         : jre8-openjdk jre8-openjdk-headless jdk8-openjdk openjdk8-doc jdk aur/jdk-docs
+### Code&Language&Package
+**compile** : clang cmake ccache distcc colorgcc
+**VCS**     : git hub tig mercurial subversion
+**texlive** : texlive-core texlive-lang texlive-most
+**python2** : python2 python2-pip
+**python3** : python python-pip
+**nodejs**  : nodejs npm | cnpm hexo-cli
+**ruby**    : ruby ruby-jekyll
+**lua**     : lua luarocks
+**JDK**     : jre8-openjdk jre8-openjdk-headless jdk8-openjdk openjdk8-doc jdk aur/jdk-docs
 
-#### Virtual
+### Virtual
 **docker**             : docker docker-compose docker-machine
 **virt-manage**        : libvirt virt-install
 **net-manage**         : bridge-utils openvswitch vlan quagga
@@ -443,27 +450,33 @@ qemu-block-rbd \
 -------------------------------------------------------------------------------
 GUI Program
 -------------------------------------------------------------------------------
+**Display manager**: sddm
 **Window Manager** : i3 awesome vicious
 **X Tools**        : xorg-server-xephyr xorg-xev xorg-xprop
 **Transparency**   : xcompmgr transset-df
+**Backlight**      : xorg-xbacklight archlinuxcn/light
 **Monitor**        : conky
 **clipboard**      : xsel xclip
 **screensaver**    : archlinuxcn/xscreensaver-arch-logo
 **terminal**       : xterm rxvt-unicode urxvt-perls
 **Browser**        : firefox archlinuxcn/google-chrome
 **VNC**            : x11vnc tigervnc
-**PDF**            : jfbview apvlv
-**PHOTO**          : feh
+**PDF**            : zathura zathura-cb zathura-djvu zathura-pdf-mupdf zathura-ps archlinuxcn/masterpdfeditor
+**PHOTO**          : feh sxiv geeqie shotwell
+**Raster Graphics Editors**: imagemagick imagemagick-doc gimp gimp-help-en gimp-help-zh_cn archlinuxcn/gimp-plugin-resynthesizer-git
+**Vector Graphics Editors**: graphviz dot2tex xdot umbrello umlet plantuml dia sk1 inkscape python2-scour uniconvertor
 **Screenshot**     : scrot
 **VIDEO**          : vlc
 **OFFICE**         : archlinuxcn/wps-office
 **MUSIC**          : archlinuxcn/netease-cloud-music
+**Note**           : aur/[turtl](https://turtl.it) aur/[simplenote-electron-bin](https://github.com/Automattic/simplenote-electron) aur/[laverna](https://laverna.cc/)
 
 -------------------------------------------------------------------------------
 More Configuration
 -------------------------------------------------------------------------------
 [VIM](https://github.com/philosophos/easy-vimrc)         -- the God of Text Editor,For Human
 [TMUX](https://github.com/philosophos/tmux.conf)         -- Terminal Multiplexer,For Efficiency
+[ZSH](https://github.com/philosophos/power-zshrc)        -- The last shell you’ll ever need
 [URxvt&XTerm](https://github.com/philosophos/Xresources) -- Classic Terminal,Lesser Dependencies
 [Awesome](https://github.com/philosophos/awesome-WM-rc)  -- Tilling Window Manager,Highly Configuration
 [Conky](https://github.com/philosophos/conky.conf)       -- Lightweight System Monitor for X，Highly Configuration

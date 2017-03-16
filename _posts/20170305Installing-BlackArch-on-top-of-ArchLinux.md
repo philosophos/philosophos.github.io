@@ -14,6 +14,7 @@ tags:
 
 - Add [blackarch] Repositories To /etc/pacman.conf
 - Install & Setup BlackArch Linux Keyring
+- Install & Setup ruby-bundler
 - Install Tools From The Blackarch Repository
 - Configure Menus
     - automatic generate WM menu from xdg files
@@ -23,7 +24,7 @@ tags:
 <!-- more -->
 
 -------------------------------------------------------------------------------
-Add [blackarch] Repositories To /etc/pacman.conf
+ Add [blackarch] Repositories To /etc/pacman.conf
 -------------------------------------------------------------------------------
 {% codeblock lang:sh Add the following to /etc/pacman.conf %}
     [blackarch]
@@ -34,7 +35,7 @@ Add [blackarch] Repositories To /etc/pacman.conf
 **NOTE**: These mirrors are for Chinese user,other countris' users see [Official BlackArch Linux Mirror Sites](https://www.blackarch.org/downloads.html#mirror-list)
 
 -------------------------------------------------------------------------------
-Install & Setup BlackArch Linux Keyring
+ Install & Setup BlackArch Linux Keyring
 -------------------------------------------------------------------------------
 {% codeblock lang:sh %}
 curl -O https://blackarch.org/strap.sh
@@ -43,7 +44,20 @@ bash strap.sh     # Run strap.sh as root
 {% endcodeblock %}
 
 -------------------------------------------------------------------------------
-Install Tools From The Blackarch Repository
+ Install & Setup ruby-bundler (Optional)
+-------------------------------------------------------------------------------
+{% codeblock lang:sh %}
+sudo pacman -S ruby-bundler
+su -c "bundle config 'mirror.https://rubygems.org' 'https://gems.ruby-china.org'"
+{% endcodeblock %}
+**ruby gem mirrors for Chinese users:**
+https://gems.ruby-china.org
+http://ruby.taobao.com
+http://mirrors.aliyun.com/rubygems/
+http://mirrors.tuna.tsinghua.edu.cn/rubygems/
+
+-------------------------------------------------------------------------------
+ Install Tools From The Blackarch Repository
 -------------------------------------------------------------------------------
 {% codeblock lang:sh %}
 # To list all of the available tools, run
@@ -63,7 +77,7 @@ Most package in the blackarch repository is also in blackarch group and blackarc
 
 {% codeblock lang:sh %}
 #!/bin/bash
-    tool_grp=$(sed 's/ /\n/g' <(pacman -Sg|grep blackarch-) |awk '!a[$0]++')
+    tool_grp=$(pacman -Sg|grep blackarch-)
     echo '--------------------------------------------------------------------------------'
     echo -e "packages not in either blackarch group or blackarch-<category> group,\n\
     won't be installed by \e[1mpacman -S blackarch-<category>\e[0m or \e[1mpacman -S blackarch\e[0m"
@@ -118,11 +132,11 @@ It will output like following:
 Install the package you need.
 
 -------------------------------------------------------------------------------
-Configure Menus
---------------------------------------------------------------------------------
+ Configure Menus
+-------------------------------------------------------------------------------
 You may have customized WM or DE, only need a menu for BlackArch rather than installing package `blackarch-config-*`
 
-**automatic generate WM menu from xdg files**
+### automatic generate WM menu from xdg files
 
     pacman -S archlinux-xdg-menu blackarch-menus
 
@@ -131,7 +145,7 @@ You may have customized WM or DE, only need a menu for BlackArch rather than ins
 And it compatible with Gnome, KDE, Xfce and Enlightenment.
 For more info about xdg_menu usage & examples, see [ArchWiki](https://wiki.archlinux.org/index.php/Xdg_menu)
 
-**For awesome 4**
+### For awesome 4
 If you use awesome 4, the xdg_menu does not create the correct lua code.But as a workaround you can do as following:
 
 {% codeblock lang:sh %}
@@ -161,7 +175,7 @@ Then edit you rc.lua as shown below:
 {% endcodeblock %}
 
 -------------------------------------------------------------------------------
-Build The Blackarch Packages From Source
+ Build The Blackarch Packages From Source
 -------------------------------------------------------------------------------
 As part of an alternative method of installation, you can build the blackarch packages from source. You can find the PKGBUILDs on github. To build the entire repo, you can use the blackman tool.
 

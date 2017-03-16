@@ -11,6 +11,7 @@ categories:
 tags:
 - Linux
 - OpenWrt
+- Router
 - SSH
 - Signature Authentication
 - port
@@ -106,7 +107,7 @@ Set Password At First Login
 -----------------------------------------------------------
 SSH Signature Authentication
 -----------------------------------------------------------
-#### Authentication Key Generation
+### Authentication Key Generation
 
     $ ssh-keygen -C 'root@WRT' -f ~/.ssh/wrt_rsa
     Generating public/private rsa key pair.
@@ -129,7 +130,7 @@ SSH Signature Authentication
     | .=+=o*+.        |
     +----[SHA256]-----+
 
-#### Copy Public Key To The OpenWrt System
+### Copy Public Key To The OpenWrt System
 
 {% codeblock lang:sh %}
 $ cat ~/.ssh/wrt_rsa.pub | ssh root@192.168.1.1 'cat >> /etc/dropbear/authorized_keys; chmod 0600 /etc/dropbear/authorized_keys'
@@ -141,7 +142,7 @@ Now `ssh -i ~/.ssh/wrt_rsa root@192.168.1.1` can ssh to the OpenWrt system.
 -----------------------------------------------------------
 Disable PasswordAuth, Change Default Port
 -----------------------------------------------------------
-#### Use uci command
+### Use uci command
 
     root@OpenWrt:~# uci show dropbear
     dropbear.@dropbear[0]=dropbear
@@ -159,7 +160,7 @@ Disable PasswordAuth, Change Default Port
     dropbear.@dropbear[0].RootPasswordAuth='off'
     root@OpenWrt:~# /etc/init.d/dropbear reload
 
-#### Edit /etc/config/dropbear Directly
+### Edit /etc/config/dropbear Directly
 
     root@OpenWrt:~# cat /etc/config/dropbear
     config dropbear

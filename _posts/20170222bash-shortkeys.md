@@ -7,9 +7,11 @@ copyright: true
 description: Linux | Bash | Shortkeys
 categories:
 - Linux
+- Shell
 - Bash
 tags:
 - Linux
+- Shell
 - Bash
 - shortkeys
 ---
