@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Enjoy CS&amp;IT, Enjoy Life</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="BASH(1)                     General Commands Manual                    BASH(1)    Readline Command NamesThe  following  is  a list of the names of the commands and the default key sequences to which t">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Enjoy CS&amp;IT, Enjoy Life">
+<meta property="og:url" content="http://philosophos.localhost/man/man-en.bash.shortkeys.html">
+<meta property="og:site_name" content="Enjoy CS&amp;IT, Enjoy Life">
+<meta property="og:description" content="BASH(1)                     General Commands Manual                    BASH(1)    Readline Command NamesThe  following  is  a list of the names of the commands and the default key sequences to which t">
+<meta property="og:updated_time" content="2017-09-18T20:31:04.773Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Enjoy CS&amp;IT, Enjoy Life">
+<meta name="twitter:description" content="BASH(1)                     General Commands Manual                    BASH(1)    Readline Command NamesThe  following  is  a list of the names of the commands and the default key sequences to which t">
+  
+    <link rel="alternate" href="/atom.xml" title="Enjoy CS&amp;IT, Enjoy Life" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Enjoy CS&amp;IT, Enjoy Life</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/links">Links</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://philosophos.localhost"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="page-" class="article article-type-page" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/man/man-en.bash.shortkeys.html" class="article-date">
+  <time datetime="2017-09-18T20:31:04.773Z" itemprop="datePublished">2017-09-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>BASH(1)                     General Commands Manual                    BASH(1)</p>
+<h1 id="Readline-Command-Names"><a href="#Readline-Command-Names" class="headerlink" title="   Readline Command Names"></a>   Readline Command Names</h1><pre><code>The  following  is  a list of the names of the commands and the default
+key sequences to which they are bound.  Command names without an accom‐
+panying key sequence are unbound by default.  In the following descrip‐
+tions, point refers to the current cursor position, and mark refers  to
+a  cursor position saved by the set-mark command.  The text between the
+point and mark is referred to as the region.
+</code></pre><h2 id="Commands-for-Moving"><a href="#Commands-for-Moving" class="headerlink" title="   Commands for Moving"></a>   Commands for Moving</h2><pre><code>beginning-of-line (C-a)
+       Move to the start of the current line.
+end-of-line (C-e)
+       Move to the end of the line.
+forward-char (C-f)
+       Move forward a character.
+backward-char (C-b)
+       Move back a character.
+forward-word (M-f)
+       Move forward to the end of the next word.  Words are composed of
+       alphanumeric characters (letters and digits).
+backward-word (M-b)
+       Move  back  to the start of the current or previous word.  Words
+       are composed of alphanumeric characters (letters and digits).
+shell-forward-word
+       Move forward to the end of the next word.  Words  are  delimited
+       by non-quoted shell metacharacters.
+shell-backward-word
+       Move  back  to the start of the current or previous word.  Words
+       are delimited by non-quoted shell metacharacters.
+clear-screen (C-l)
+       Clear the screen leaving the current line  at  the  top  of  the
+       screen.   With  an  argument,  refresh  the current line without
+       clearing the screen.
+redraw-current-line
+       Refresh the current line.
+</code></pre><h2 id="Commands-for-Manipulating-the-History"><a href="#Commands-for-Manipulating-the-History" class="headerlink" title="   Commands for Manipulating the History"></a>   Commands for Manipulating the History</h2><pre><code>accept-line (Newline, Return)
+       Accept the line regardless of where the cursor is.  If this line
+       is  non-empty, add it to the history list according to the state
+       of the HISTCONTROL variable.  If the line is a modified  history
+       line, then restore the history line to its original state.
+previous-history (C-p)
+       Fetch the previous command from the history list, moving back in
+       the list.
+next-history (C-n)
+       Fetch the next command from the history list, moving forward  in
+       the list.
+beginning-of-history (M-&lt;)
+       Move to the first line in the history.
+end-of-history (M-&gt;)
+       Move  to  the end of the input history, i.e., the line currently
+       being entered.
+reverse-search-history (C-r)
+       Search backward starting at the current  line  and  moving  `up&apos;
+       through  the  history  as  necessary.   This  is  an incremental
+       search.
+forward-search-history (C-s)
+       Search forward starting at the current line  and  moving  `down&apos;
+       through  the  history  as  necessary.   This  is  an incremental
+       search.
+non-incremental-reverse-search-history (M-p)
+       Search backward through the history starting at the current line
+       using  a  non-incremental  search  for  a string supplied by the
+       user.
+non-incremental-forward-search-history (M-n)
+       Search forward  through  the  history  using  a  non-incremental
+       search for a string supplied by the user.
+history-search-forward
+       Search  forward through the history for the string of characters
+       between the start of the current line and the point.  This is  a
+       non-incremental search.
+history-search-backward
+       Search backward through the history for the string of characters
+       between the start of the current line and the point.  This is  a
+       non-incremental search.
+yank-nth-arg (M-C-y)
+       Insert  the  first argument to the previous command (usually the
+       second word on the previous line) at point.  With an argument n,
+       insert  the nth word from the previous command (the words in the
+       previous command  begin  with  word  0).   A  negative  argument
+       inserts the nth word from the end of the previous command.  Once
+       the argument n is computed, the argument is extracted as if  the
+       &quot;!n&quot; history expansion had been specified.
+yank-last-arg (M-., M-_)
+       Insert  the last argument to the previous command (the last word
+       of the previous history entry).  With a numeric argument, behave
+       exactly  like  yank-nth-arg.   Successive calls to yank-last-arg
+       move back through the history list, inserting the last word  (or
+       the  word  specified  by the argument to the first call) of each
+       line in turn.  Any numeric argument supplied to these successive
+       calls  determines  the direction to move through the history.  A
+       negative argument switches the  direction  through  the  history
+       (back or forward).  The history expansion facilities are used to
+       extract the last word, as if the &quot;!$&quot; history expansion had been
+       specified.
+shell-expand-line (M-C-e)
+       Expand the line as the shell does.  This performs alias and his‐
+       tory expansion as well as all of the shell word expansions.  See
+       HISTORY EXPANSION below for a description of history expansion.
+history-expand-line (M-^)
+       Perform  history  expansion  on  the  current line.  See HISTORY
+       EXPANSION below for a description of history expansion.
+magic-space
+       Perform history expansion on  the  current  line  and  insert  a
+       space.  See HISTORY EXPANSION below for a description of history
+       expansion.
+alias-expand-line
+       Perform alias expansion on the current line.  See ALIASES  above
+       for a description of alias expansion.
+history-and-alias-expand-line
+       Perform history and alias expansion on the current line.
+insert-last-argument (M-., M-_)
+       A synonym for yank-last-arg.
+operate-and-get-next (C-o)
+       Accept  the  current  line for execution and fetch the next line
+       relative to the current line from the history for editing.   Any
+       argument is ignored.
+edit-and-execute-command (C-xC-e)
+       Invoke  an  editor  on the current command line, and execute the
+       result as shell commands.   Bash  attempts  to  invoke  $VISUAL,
+       $EDITOR, and emacs as the editor, in that order.
+</code></pre><h2 id="Commands-for-Changing-Text"><a href="#Commands-for-Changing-Text" class="headerlink" title="   Commands for Changing Text"></a>   Commands for Changing Text</h2><pre><code>end-of-file (usually C-d)
+       The  character  indicating  end-of-file  as set, for example, by
+       &quot;stty&quot;.  If this character is read when there are  no  charac‐
+       ters  on  the  line,  and point is at the beginning of the line,
+       Readline interprets it as the end of input and returns EOF.
+delete-char (C-d)
+       Delete the character at point.  If this function is bound to the
+       same character as the tty EOF character, as C-d commonly is, see
+       above for the effects.
+backward-delete-char (Rubout)
+       Delete the character behind the cursor.  When  given  a  numeric
+       argument, save the deleted text on the kill ring.
+forward-backward-delete-char
+       Delete  the  character under the cursor, unless the cursor is at
+       the end of the line, in which case the character behind the cur‐
+       sor is deleted.
+quoted-insert (C-q, C-v)
+       Add  the next character typed to the line verbatim.  This is how
+       to insert characters like C-q, for example.
+tab-insert (C-v TAB)
+       Insert a tab character.
+self-insert (a, b, A, 1, !, ...)
+       Insert the character typed.
+transpose-chars (C-t)
+       Drag the character before point forward over  the  character  at
+       point,  moving point forward as well.  If point is at the end of
+       the line, then this transposes the two characters before  point.
+       Negative arguments have no effect.
+transpose-words (M-t)
+       Drag  the  word  before  point past the word after point, moving
+       point over that word as well.  If point is at  the  end  of  the
+       line, this transposes the last two words on the line.
+upcase-word (M-u)
+       Uppercase  the  current  (or  following)  word.  With a negative
+       argument, uppercase the previous word, but do not move point.
+downcase-word (M-l)
+       Lowercase the current (or  following)  word.   With  a  negative
+       argument, lowercase the previous word, but do not move point.
+capitalize-word (M-c)
+       Capitalize  the  current  (or  following) word.  With a negative
+       argument, capitalize the previous word, but do not move point.
+overwrite-mode
+       Toggle overwrite mode.  With an explicit positive numeric  argu‐
+       ment, switches to overwrite mode.  With an explicit non-positive
+       numeric argument, switches to insert mode.  This command affects
+       only  emacs mode; vi mode does overwrite differently.  Each call
+       to readline() starts in insert mode.  In overwrite mode, charac‐
+       ters  bound to self-insert replace the text at point rather than
+       pushing the text  to  the  right.   Characters  bound  to  back‐
+       ward-delete-char  replace  the  character  before  point  with a
+       space.  By default, this command is unbound.
+</code></pre><h2 id="Killing-and-Yanking"><a href="#Killing-and-Yanking" class="headerlink" title="   Killing and Yanking"></a>   Killing and Yanking</h2><pre><code>kill-line (C-k)
+       Kill the text from point to the end of the line.
+backward-kill-line (C-x Rubout)
+       Kill backward to the beginning of the line.
+unix-line-discard (C-u)
+       Kill backward from point to the  beginning  of  the  line.   The
+       killed text is saved on the kill-ring.
+kill-whole-line
+       Kill  all  characters on the current line, no matter where point
+       is.
+kill-word (M-d)
+       Kill from point to the end of the current word,  or  if  between
+       words,  to  the  end  of the next word.  Word boundaries are the
+       same as those used by forward-word.
+backward-kill-word (M-Rubout)
+       Kill the word behind point.  Word boundaries  are  the  same  as
+       those used by backward-word.
+shell-kill-word
+       Kill  from  point  to the end of the current word, or if between
+       words, to the end of the next word.   Word  boundaries  are  the
+       same as those used by shell-forward-word.
+shell-backward-kill-word
+       Kill  the  word  behind  point.  Word boundaries are the same as
+       those used by shell-backward-word.
+unix-word-rubout (C-w)
+       Kill the word behind point, using white space as a  word  bound‐
+       ary.  The killed text is saved on the kill-ring.
+unix-filename-rubout
+       Kill  the  word  behind  point,  using white space and the slash
+       character as the word boundaries.  The killed text is  saved  on
+       the kill-ring.
+delete-horizontal-space (M-\)
+       Delete all spaces and tabs around point.
+kill-region
+       Kill the text in the current region.
+copy-region-as-kill
+       Copy the text in the region to the kill buffer.
+copy-backward-word
+       Copy  the word before point to the kill buffer.  The word bound‐
+       aries are the same as backward-word.
+copy-forward-word
+       Copy the word following point to  the  kill  buffer.   The  word
+       boundaries are the same as forward-word.
+yank (C-y)
+       Yank the top of the kill ring into the buffer at point.
+yank-pop (M-y)
+       Rotate  the kill ring, and yank the new top.  Only works follow‐
+       ing yank or yank-pop.
+</code></pre><h2 id="Numeric-Arguments"><a href="#Numeric-Arguments" class="headerlink" title="   Numeric Arguments"></a>   Numeric Arguments</h2><pre><code>digit-argument (M-0, M-1, ..., M--)
+       Add this digit to the argument already accumulating, or start  a
+       new argument.  M-- starts a negative argument.
+universal-argument
+       This  is another way to specify an argument.  If this command is
+       followed by one or more digits, optionally with a leading  minus
+       sign,  those digits define the argument.  If the command is fol‐
+       lowed by digits, executing  universal-argument  again  ends  the
+       numeric  argument, but is otherwise ignored.  As a special case,
+       if this command is immediately followed by a character  that  is
+       neither  a digit nor minus sign, the argument count for the next
+       command is multiplied by four.  The argument count is  initially
+       one,  so  executing this function the first time makes the argu‐
+       ment count four, a second time makes the argument count sixteen,
+       and so on.
+</code></pre><h2 id="Completing"><a href="#Completing" class="headerlink" title="   Completing"></a>   Completing</h2><pre><code>complete (TAB)
+       Attempt  to  perform  completion on the text before point.  Bash
+       attempts completion treating the text as a variable (if the text
+       begins  with  $), username (if the text begins with ~), hostname
+       (if the text begins with @), or command (including  aliases  and
+       functions) in turn.  If none of these produces a match, filename
+       completion is attempted.
+possible-completions (M-?)
+       List the possible completions of the text before point.
+insert-completions (M-*)
+       Insert all completions of the text before point that would  have
+       been generated by possible-completions.
+menu-complete
+       Similar  to complete, but replaces the word to be completed with
+       a single match from the list of possible completions.   Repeated
+       execution  of  menu-complete  steps through the list of possible
+       completions, inserting each match in turn.  At the  end  of  the
+       list of completions, the bell is rung (subject to the setting of
+       bell-style) and the original text is restored.  An argument of n
+       moves  n  positions  forward  in the list of matches; a negative
+       argument may be used to move backward through  the  list.   This
+       command  is  intended  to  be  bound  to  TAB, but is unbound by
+       default.
+menu-complete-backward
+       Identical to menu-complete, but moves backward through the  list
+       of  possible  completions,  as if menu-complete had been given a
+       negative argument.  This command is unbound by default.
+delete-char-or-list
+       Deletes the character under the cursor if not at  the  beginning
+       or  end  of  the  line (like delete-char).  If at the end of the
+       line, behaves identically to possible-completions.  This command
+       is unbound by default.
+complete-filename (M-/)
+       Attempt filename completion on the text before point.
+possible-filename-completions (C-x /)
+       List the possible completions of the text before point, treating
+       it as a filename.
+complete-username (M-~)
+       Attempt completion on the text before point, treating  it  as  a
+       username.
+possible-username-completions (C-x ~)
+       List the possible completions of the text before point, treating
+       it as a username.
+complete-variable (M-$)
+       Attempt completion on the text before point, treating  it  as  a
+       shell variable.
+possible-variable-completions (C-x $)
+       List the possible completions of the text before point, treating
+       it as a shell variable.
+complete-hostname (M-@)
+       Attempt completion on the text before point, treating  it  as  a
+       hostname.
+possible-hostname-completions (C-x @)
+       List the possible completions of the text before point, treating
+       it as a hostname.
+complete-command (M-!)
+       Attempt completion on the text before point, treating  it  as  a
+       command  name.   Command  completion  attempts to match the text
+       against  aliases,  reserved  words,   shell   functions,   shell
+       builtins, and finally executable filenames, in that order.
+possible-command-completions (C-x !)
+       List the possible completions of the text before point, treating
+       it as a command name.
+dynamic-complete-history (M-TAB)
+       Attempt completion on the text before point, comparing the  text
+       against  lines  from  the  history  list for possible completion
+       matches.
+dabbrev-expand
+       Attempt menu completion on the text before point, comparing  the
+       text against lines from the history list for possible completion
+       matches.
+complete-into-braces (M-{)
+       Perform filename completion and insert the list of possible com‐
+       pletions  enclosed within braces so the list is available to the
+       shell (see Brace Expansion above).
+</code></pre><h2 id="Keyboard-Macros"><a href="#Keyboard-Macros" class="headerlink" title="   Keyboard Macros"></a>   Keyboard Macros</h2><pre><code>start-kbd-macro (C-x ()
+       Begin saving the characters  typed  into  the  current  keyboard
+       macro.
+end-kbd-macro (C-x ))
+       Stop saving the characters typed into the current keyboard macro
+       and store the definition.
+call-last-kbd-macro (C-x e)
+       Re-execute the last keyboard macro defined, by making the  char‐
+       acters in the macro appear as if typed at the keyboard.
+print-last-kbd-macro ()
+       Print  the  last keyboard macro defined in a format suitable for
+       the inputrc file.
+</code></pre><h2 id="Miscellaneous"><a href="#Miscellaneous" class="headerlink" title="   Miscellaneous"></a>   Miscellaneous</h2><pre><code>re-read-init-file (C-x C-r)
+       Read in the contents of the inputrc file,  and  incorporate  any
+       bindings or variable assignments found there.
+abort (C-g)
+       Abort  the  current editing command and ring the terminal&apos;s bell
+       (subject to the setting of bell-style).
+do-uppercase-version (M-a, M-b, M-x, ...)
+       If the metafied character x is lowercase, run the  command  that
+       is bound to the corresponding uppercase character.
+prefix-meta (ESC)
+       Metafy the next character typed.  ESC f is equivalent to Meta-f.
+undo (C-_, C-x C-u)
+       Incremental undo, separately remembered for each line.
+revert-line (M-r)
+       Undo  all changes made to this line.  This is like executing the
+       undo command enough times to return  the  line  to  its  initial
+       state.
+tilde-expand (M-&amp;)
+       Perform tilde expansion on the current word.
+set-mark (C-@, M-&lt;space&gt;)
+       Set  the  mark to the point.  If a numeric argument is supplied,
+       the mark is set to that position.
+exchange-point-and-mark (C-x C-x)
+       Swap the point with the mark.  The current  cursor  position  is
+       set  to the saved position, and the old cursor position is saved
+       as the mark.
+character-search (C-])
+       A character is read and point is moved to the next occurrence of
+       that  character.   A negative count searches for previous occur‐
+       rences.
+character-search-backward (M-C-])
+       A character is read and point is moved to  the  previous  occur‐
+       rence  of  that character.  A negative count searches for subse‐
+       quent occurrences.
+skip-csi-sequence
+       Read enough characters to consume a multi-key sequence  such  as
+       those  defined for keys like Home and End.  Such sequences begin
+       with a Control Sequence Indicator (CSI), usually ESC-[.  If this
+       sequence  is  bound  to &quot;\[&quot;, keys producing such sequences will
+       have no effect unless explicitly bound to  a  readline  command,
+       instead  of  inserting stray characters into the editing buffer.
+       This is unbound by default, but usually bound to ESC-[.
+insert-comment (M-#)
+       Without a numeric argument,  the  value  of  the  readline  com‐
+       ment-begin  variable is inserted at the beginning of the current
+       line.  If a numeric argument is supplied, this command acts as a
+       toggle:  if  the  characters at the beginning of the line do not
+       match the value of comment-begin, the value is inserted,  other‐
+       wise the characters in comment-begin are deleted from the begin‐
+       ning of the line.  In either case, the line is accepted as if  a
+       newline  had  been  typed.   The  default value of comment-begin
+       causes this command to make the current line  a  shell  comment.
+       If  a  numeric  argument  causes  the  comment  character  to be
+       removed, the line will be executed by the shell.
+glob-complete-word (M-g)
+       The word before point is  treated  as  a  pattern  for  pathname
+       expansion,  with  an asterisk implicitly appended.  This pattern
+       is used to generate a list of matching  filenames  for  possible
+       completions.
+glob-expand-word (C-x *)
+       The  word  before  point  is  treated  as a pattern for pathname
+       expansion, and the  list  of  matching  filenames  is  inserted,
+       replacing  the  word.   If  a  numeric  argument is supplied, an
+       asterisk is appended before pathname expansion.
+glob-list-expansions (C-x g)
+       The list  of  expansions  that  would  have  been  generated  by
+       glob-expand-word  is  displayed,  and the line is redrawn.  If a
+       numeric argument is supplied, an  asterisk  is  appended  before
+       pathname expansion.
+dump-functions
+       Print  all  of the functions and their key bindings to the read‐
+       line output stream.  If a numeric argument is supplied, the out‐
+       put  is  formatted  in such a way that it can be made part of an
+       inputrc file.
+dump-variables
+       Print all of the settable readline variables and their values to
+       the  readline output stream.  If a numeric argument is supplied,
+       the output is formatted in such a way that it can be  made  part
+       of an inputrc file.
+dump-macros
+       Print  all of the readline key sequences bound to macros and the
+       strings they output.  If a numeric  argument  is  supplied,  the
+       output is formatted in such a way that it can be made part of an
+       inputrc file.
+display-shell-version (C-x C-v)
+       Display version information about the current instance of bash.
+</code></pre><p>GNU Bash 4.4                    2016 August 26                         BASH(1)</p>
+
+      
+    </div>
+    <footer class="article-footer">
+    
+      <a data-url="http://philosophos.localhost/man/man-en.bash.shortkeys.html" data-id="cj7qs79nt0009hzm86395ggil" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Network/">Network</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/OpenWrt/">OpenWrt</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/Bash/">Bash</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/Zsh/">Zsh</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Network/">Network</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ARP/">ARP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Arch/">Arch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BGP/">BGP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bash/">Bash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BlackArch/">BlackArch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EIGRP/">EIGRP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fn/">Fn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Frame/">Frame</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GRUB/">GRUB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTPS/">HTTPS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ICMP/">ICMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IP/">IP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Install/">Install</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Manually/">Manually</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Network/">Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OSPF/">OSPF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenWrt/">OpenWrt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PDU/">PDU</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PPPOE/">PPPOE</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Port/">Port</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RIP/">RIP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Router/">Router</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Routing/">Routing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Service/">Service</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Signature-Authentication/">Signature Authentication</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TCP/">TCP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UDP/">UDP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Wireless/">Wireless</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zsh/">Zsh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/esc-seq/">esc-seq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ifconfig/">ifconfig</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iproute2/">iproute2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/keycode/">keycode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/net-tools/">net-tools</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/password/">password</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/port/">port</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/root/">root</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shortkeys/">shortkeys</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/source/">source</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sysrq/">sysrq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tput/">tput</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wifi/">wifi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xev/">xev</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+    <script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+    <div class="widget-wrap">
+        <h3 class="widget-title">Tag Cloud</h3>
+        <div id="myCanvasContainer" class="widget tagcloud">
+            <canvas width="250" height="250" id="resCanvas" style="width=100%">
+                <a href="/tags/ARP/" style="font-size: 10px;">ARP</a> <a href="/tags/Arch/" style="font-size: 10px;">Arch</a> <a href="/tags/BGP/" style="font-size: 10px;">BGP</a> <a href="/tags/Bash/" style="font-size: 10px;">Bash</a> <a href="/tags/BlackArch/" style="font-size: 10px;">BlackArch</a> <a href="/tags/EIGRP/" style="font-size: 10px;">EIGRP</a> <a href="/tags/Fn/" style="font-size: 10px;">Fn</a> <a href="/tags/Frame/" style="font-size: 10px;">Frame</a> <a href="/tags/GRUB/" style="font-size: 10px;">GRUB</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/ICMP/" style="font-size: 10px;">ICMP</a> <a href="/tags/IP/" style="font-size: 10px;">IP</a> <a href="/tags/Install/" style="font-size: 12.5px;">Install</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Manually/" style="font-size: 10px;">Manually</a> <a href="/tags/Network/" style="font-size: 17.5px;">Network</a> <a href="/tags/OSPF/" style="font-size: 10px;">OSPF</a> <a href="/tags/OpenWrt/" style="font-size: 15px;">OpenWrt</a> <a href="/tags/PDU/" style="font-size: 12.5px;">PDU</a> <a href="/tags/PPPOE/" style="font-size: 12.5px;">PPPOE</a> <a href="/tags/Port/" style="font-size: 10px;">Port</a> <a href="/tags/RIP/" style="font-size: 10px;">RIP</a> <a href="/tags/Router/" style="font-size: 15px;">Router</a> <a href="/tags/Routing/" style="font-size: 10px;">Routing</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/Service/" style="font-size: 10px;">Service</a> <a href="/tags/Shell/" style="font-size: 12.5px;">Shell</a> <a href="/tags/Signature-Authentication/" style="font-size: 10px;">Signature Authentication</a> <a href="/tags/TCP/" style="font-size: 10px;">TCP</a> <a href="/tags/UDP/" style="font-size: 10px;">UDP</a> <a href="/tags/Wireless/" style="font-size: 10px;">Wireless</a> <a href="/tags/Zsh/" style="font-size: 10px;">Zsh</a> <a href="/tags/esc-seq/" style="font-size: 12.5px;">esc-seq</a> <a href="/tags/ifconfig/" style="font-size: 10px;">ifconfig</a> <a href="/tags/iproute2/" style="font-size: 10px;">iproute2</a> <a href="/tags/keycode/" style="font-size: 10px;">keycode</a> <a href="/tags/net-tools/" style="font-size: 10px;">net-tools</a> <a href="/tags/password/" style="font-size: 12.5px;">password</a> <a href="/tags/port/" style="font-size: 10px;">port</a> <a href="/tags/root/" style="font-size: 10px;">root</a> <a href="/tags/shortkeys/" style="font-size: 15px;">shortkeys</a> <a href="/tags/source/" style="font-size: 10px;">source</a> <a href="/tags/sysrq/" style="font-size: 10px;">sysrq</a> <a href="/tags/tput/" style="font-size: 12.5px;">tput</a> <a href="/tags/wifi/" style="font-size: 10px;">wifi</a> <a href="/tags/xev/" style="font-size: 10px;">xev</a>
+            </canvas>
+      <a href="/tags/ARP/" style="font-size: 10px;">ARP</a> <a href="/tags/Arch/" style="font-size: 10px;">Arch</a> <a href="/tags/BGP/" style="font-size: 10px;">BGP</a> <a href="/tags/Bash/" style="font-size: 10px;">Bash</a> <a href="/tags/BlackArch/" style="font-size: 10px;">BlackArch</a> <a href="/tags/EIGRP/" style="font-size: 10px;">EIGRP</a> <a href="/tags/Fn/" style="font-size: 10px;">Fn</a> <a href="/tags/Frame/" style="font-size: 10px;">Frame</a> <a href="/tags/GRUB/" style="font-size: 10px;">GRUB</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/ICMP/" style="font-size: 10px;">ICMP</a> <a href="/tags/IP/" style="font-size: 10px;">IP</a> <a href="/tags/Install/" style="font-size: 12.5px;">Install</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Manually/" style="font-size: 10px;">Manually</a> <a href="/tags/Network/" style="font-size: 17.5px;">Network</a> <a href="/tags/OSPF/" style="font-size: 10px;">OSPF</a> <a href="/tags/OpenWrt/" style="font-size: 15px;">OpenWrt</a> <a href="/tags/PDU/" style="font-size: 12.5px;">PDU</a> <a href="/tags/PPPOE/" style="font-size: 12.5px;">PPPOE</a> <a href="/tags/Port/" style="font-size: 10px;">Port</a> <a href="/tags/RIP/" style="font-size: 10px;">RIP</a> <a href="/tags/Router/" style="font-size: 15px;">Router</a> <a href="/tags/Routing/" style="font-size: 10px;">Routing</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/Service/" style="font-size: 10px;">Service</a> <a href="/tags/Shell/" style="font-size: 12.5px;">Shell</a> <a href="/tags/Signature-Authentication/" style="font-size: 10px;">Signature Authentication</a> <a href="/tags/TCP/" style="font-size: 10px;">TCP</a> <a href="/tags/UDP/" style="font-size: 10px;">UDP</a> <a href="/tags/Wireless/" style="font-size: 10px;">Wireless</a> <a href="/tags/Zsh/" style="font-size: 10px;">Zsh</a> <a href="/tags/esc-seq/" style="font-size: 12.5px;">esc-seq</a> <a href="/tags/ifconfig/" style="font-size: 10px;">ifconfig</a> <a href="/tags/iproute2/" style="font-size: 10px;">iproute2</a> <a href="/tags/keycode/" style="font-size: 10px;">keycode</a> <a href="/tags/net-tools/" style="font-size: 10px;">net-tools</a> <a href="/tags/password/" style="font-size: 12.5px;">password</a> <a href="/tags/port/" style="font-size: 10px;">port</a> <a href="/tags/root/" style="font-size: 10px;">root</a> <a href="/tags/shortkeys/" style="font-size: 15px;">shortkeys</a> <a href="/tags/source/" style="font-size: 10px;">source</a> <a href="/tags/sysrq/" style="font-size: 10px;">sysrq</a> <a href="/tags/tput/" style="font-size: 12.5px;">tput</a> <a href="/tags/wifi/" style="font-size: 10px;">wifi</a> <a href="/tags/xev/" style="font-size: 10px;">xev</a>
+        </div>
+    </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/articles/Routing-PDU/">Routing PDU</a>
+          </li>
+        
+          <li>
+            <a href="/articles/ICMP-PDU/">ICMP PDU</a>
+          </li>
+        
+          <li>
+            <a href="/articles/Get-the-keycode-of-Fn-F1-F12-with-xev/">Get the keycode of Fn+F1~F12 with xev</a>
+          </li>
+        
+          <li>
+            <a href="/articles/net-tools-VS-iproute2/">net-tools VS iproute2</a>
+          </li>
+        
+          <li>
+            <a href="/articles/Manage-Wireless-Network-Manually/">Manage Wireless Network Manually</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+
+</aside>
+
+        
+      </div>
+      <footer id="footer">
+    
+    <div class="outer">
+        <div id="footer-left">
+            &copy; 2017 philosophos &lt;&gt;
+            <br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+            <br>
+            <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+            </script>
+            <span id="busuanzi_container_site_pv" style='display:none'>
+                Total Visits:&nbsp;
+                <span id="busuanzi_value_site_pv"></span>
+            </span>
+            <br>
+            <span id="busuanzi_container_site_uv" style='display:none'>
+                You are Visiter No.
+                <span id="busuanzi_value_site_uv"></span>
+            </span>
+        </div>
+            <!--
+            <span id="busuanzi_container_page_pv" style='display:none'>
+                Total Visits:&nbsp;
+                <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            -->
+    </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/links" class="mobile-nav-link">Links</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
