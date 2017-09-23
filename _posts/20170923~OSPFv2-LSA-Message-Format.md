@@ -17,11 +17,11 @@ tags:
 ---
 
 OSPFv2 Protocol LSA Header
-- OSPF Router LSA
-- OSPF Network LSA
-- OSPF Network/ASBR Summary LSA
-- OSPF Autonomous System External LSA
-- OSPF Not-So-Stubby Area External LSA
+- OSPFv2 Router LSA
+- OSPFv2 Network LSA
+- OSPFv2 Network/ASBR Summary LSA
+- OSPFv2 Autonomous System External LSA
+- OSPFv2 Not-So-Stubby Area External LSA
 
 <!-- more -->
 
@@ -42,21 +42,21 @@ OSPFv2 Protocol LSA Header
     ┃ Checksum | Length        ┃
     ┗----------+---------------┛
 
-| number | type                           | Command                             |
-|--------|--------------------------------|-------------------------------------|
-|      1 | Router LSA                     | show ip ospf database router        |
-|      2 | Network LSA                    | show ip ospf database network       |
-|      3 | Network Summary LSA            | show ip ospf database summary       |
-|      4 | ASBR Summary LSA               | show ip ospf database asbr-summary  |
-|      5 | AS External LSA                | show ip ospf database external      |
-|      6 | Group Membership LSA           |                                     |
-|      7 | NSSA External LSA              | show ip ospf database nssa-external |
-|      8 | External Attributes LSA        | show ip ospf database               |
-|      9 | Opaque LSA (link链路本地范围 ) |                                     |
-|     10 | Opaque LSA (area本地区域范围)  |                                     |
-|     11 | Opaque LSA (AS范围)            |                                     |
+| Type | LSA Type                       | Command                             |
+|------|--------------------------------|-------------------------------------|
+|    1 | Router LSA                     | show ip ospf database router        |
+|    2 | Network LSA                    | show ip ospf database network       |
+|    3 | Network Summary LSA            | show ip ospf database summary       |
+|    4 | ASBR Summary LSA               | show ip ospf database asbr-summary  |
+|    5 | AS External LSA                | show ip ospf database external      |
+|    6 | Group Membership LSA           |                                     |
+|    7 | NSSA External LSA              | show ip ospf database nssa-external |
+|    8 | External Attributes LSA        | show ip ospf database               |
+|    9 | Opaque LSA (link链路本地范围 ) |                                     |
+|   10 | Opaque LSA (area本地区域范围)  |                                     |
+|   11 | Opaque LSA (AS范围)            |                                     |
 
-#### OSPF Router LSA
+#### OSPFv2 Router LSA
 
     ┃ 8bit      | 8bit          | 8bit   | 8bit   ┃
     ┏---------------------------+--------+--------┓
@@ -94,127 +94,125 @@ OSPFv2 Protocol LSA Header
 |         3 | a Stub Network                  | IP网络/子网地址                         | 网络ip addr / subnet mask          |
 |         4 | virtual link                    | neighboring router's ID                 | 始发路由器接口的mib-ii ifindex值   |
 
-#### OSPF Network LSA
+#### OSPFv2 Network LSA
 
     ┃ 16bit    |  8bit  | 8bit ┃
     ┏----------+--------+------┓
-    ┃ age      | option |type=2┃
+    ┃ Age      | Option |Type=2┃
     ┠----------+--------+------┨
-    ┃ link state id            ┃
+    ┃ Link State ID            ┃
     ┠--------------------------┨
-    ┃ advertising router       ┃
+    ┃ Advertising Router       ┃
     ┠--------------------------┨
-    ┃ sequence                 ┃
+    ┃ Sequence                 ┃
     ┠----------+---------------┨
-    ┃ checksum | length        ┃
+    ┃ Checksum | Length        ┃
     ┠----------+---------------┨
-    ┃ network mask             ┃
+    ┃ Network Mask             ┃
     ┠--------------------------┨
-    ┃ attached router          ┃
-    ┠--------------------------┨
-    ┃ attached router          ┃
+    ┃ Attached Router          ┃
     ┠--------------------------┨
     ┃           ...            ┃
     ┠--------------------------┨
-    ┃ attached router          ┃
+    ┃ Attached Router          ┃
     ┗--------------------------┛
 
-#### OSPF Network/ASBR Summary LSA
+#### OSPFv2 Network/ASBR Summary LSA
 
     ┃ 8bit | 8bit | 8bit   | 8bit     ┃
     ┏-------------+--------+----------┓
-    ┃ age         | option | type=3/4 ┃
+    ┃ Age         | Option | Type=3/4 ┃
     ┠-------------+--------+----------┨
-    ┃ link state id                   ┃
+    ┃ Link State ID                   ┃
     ┠---------------------------------┨
-    ┃ advertising router              ┃
+    ┃ Advertising Router              ┃
     ┠---------------------------------┨
-    ┃ sequence                        ┃
+    ┃ Sequence                        ┃
     ┠-------------+-------------------┨
-    ┃ checksum    | length            ┃
+    ┃ Checksum    | Length            ┃
     ┠-------------+-------------------┨
-    ┃ network mask                    ┃
+    ┃ Network Mask                    ┃
     ┠------+--------------------------┨
-    ┃ 0x00 | metric                   ┃
+    ┃ 0x00 | Metric                   ┃
     ┠------+--------------------------┨
-    ┃ tos  | tos metric               ┃
+    ┃ Tos  | Tos Metric               ┃
     ┠------+--------------------------┨
     ┃               ...               ┃
     ┠------+--------------------------┨
-    ┃ 0x00 | metric                   ┃
+    ┃ 0x00 | Metric                   ┃
     ┗---------------------------------┛
 
-#### OSPF Autonomous System External LSA
+#### OSPFv2 Autonomous System External LSA
 
     ┃ 8bit    | 8bit | 8bit   | 8bit   ┃
     ┏----------------+--------+--------┓
-    ┃ age            | option | type=5 ┃
+    ┃ Age            | Option | Type=5 ┃
     ┠----------------+--------+--------┨
-    ┃ link state id                    ┃
+    ┃ Link State ID                    ┃
     ┠----------------------------------┨
-    ┃ advertising router               ┃
+    ┃ Advertising Router               ┃
     ┠----------------------------------┨
-    ┃ sequence                         ┃
+    ┃ Sequence                         ┃
     ┠----------------+-----------------┨
-    ┃ checksum       | length          ┃
+    ┃ Checksum       | Length          ┃
     ┠----------------+-----------------┨
-    ┃ network mask                     ┃
+    ┃ Network Mask                     ┃
     ┠-+-------+------------------------┨
-    ┃e|0000000| metric                 ┃
+    ┃E|0000000| Metric                 ┃
     ┠-+-------+------------------------┨
-    ┃ forwarding address               ┃
+    ┃ Forwarding Address               ┃
     ┠----------------------------------┨
-    ┃ external route tag               ┃
+    ┃ External Route Tag               ┃
     ┠-+-------+------------------------┨
-    ┃e|  tos  | tos metric             ┃
+    ┃E|  Tos  | Metric                 ┃
     ┠-+-------+------------------------┨
-    ┃ forwarding address               ┃
+    ┃ Forwarding Address               ┃
     ┠----------------------------------┨
-    ┃ external route tag               ┃
+    ┃ External Route Tag               ┃
     ┠----------------------------------┨
     ┃                ...               ┃
-    ┠----------------+-----------------┨
-    ┃ network mask                     ┃
-    ┠-+-------+------------------------┨
-    ┃e|0000000| metric                 ┃
-    ┠-+-------+------------------------┨
-    ┃ forwarding address               ┃
     ┠----------------------------------┨
-    ┃ external route tag               ┃
+    ┃ Network Mask                     ┃
+    ┠-+-------+------------------------┨
+    ┃E|0000000| Metric                 ┃
+    ┠-+-------+------------------------┨
+    ┃ Forwarding Address               ┃
+    ┠----------------------------------┨
+    ┃ External Route Tag               ┃
     ┗----------------------------------┛
-	e:external metric bit:0(e1)/1(e2)
+	E:External Metric bit:0(E1)/1(E2)
 
-#### OSPF Not-So-Stubby Area External LSA
+#### OSPFv2 Not-So-Stubby Area External LSA
 
     ┃ 8bit    | 8bit | 8bit   | 8bit   ┃
     ┏----------------+--------+--------┓
-    ┃ age            | option | type=5 ┃
+    ┃ Age            | Option | Type=5 ┃
     ┠----------------+--------+--------┨
-    ┃ link state id                    ┃
+    ┃ Link State ID                    ┃
     ┠----------------------------------┨
-    ┃ advertising router               ┃
+    ┃ Advertising Router               ┃
     ┠----------------------------------┨
-    ┃ sequence                         ┃
+    ┃ Sequence                         ┃
     ┠----------------+-----------------┨
-    ┃ checksum       | length          ┃
+    ┃ Checksum       | Length          ┃
     ┠----------------+-----------------┨
-    ┃ network mask                     ┃
+    ┃ Network Mask                     ┃
     ┠-+-------+------------------------┨
-    ┃e|  tos  | tos metric             ┃
+    ┃E|  Tos  | Metric                 ┃
     ┠-+-------+------------------------┨
-    ┃ forwarding address               ┃
+    ┃ Forwarding Address               ┃
     ┠----------------------------------┨
-    ┃ external route tag               ┃
+    ┃ External Route Tag               ┃
     ┠----------------------------------┨
     ┃                ...               ┃
-    ┠----------------+-----------------┨
-    ┃ network mask                     ┃
-    ┠-+-------+------------------------┨
-    ┃e|0000000| metric                 ┃
-    ┠-+-------+------------------------┨
-    ┃ forwarding address               ┃
     ┠----------------------------------┨
-    ┃ external route tag               ┃
+    ┃ Network Mask                     ┃
+    ┠-+-------+------------------------┨
+    ┃E|  Tos  | Metric                 ┃
+    ┠-+-------+------------------------┨
+    ┃ Forwarding Address               ┃
+    ┠----------------------------------┨
+    ┃ External Route Tag               ┃
     ┗----------------------------------┛
-	e:external metric bit:0(e1)/1(e2)
+	E:External Metric bit:0(E1)/1(E2)
 

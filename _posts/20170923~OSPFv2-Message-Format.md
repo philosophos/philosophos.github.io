@@ -30,22 +30,22 @@ OSPF Authentication Type
 OSPFv2 Message Format
 -----------------------------------------------------------
 
-    ┃ 8bit  | 8bit |    16bit    ┃
-    ┏-------+------+-------------┓
-	┃Version| Type |Packet Length┃
-    ┠-------+------+-------------┨
-    ┃ Router ID                  ┃
-    ┠----------------------------┨
-    ┃ Area ID                    ┃
-    ┠--------------+-------------┨
-    ┃ Checksum     | AuType      ┃
-    ┠--------------+-------------┨
-    ┃ Authentication             ┃
-    ┠----------------------------┨
-    ┃ Authentication             ┃
-    ┠----------------------------┨
-    ┃ Data                       ┃
-    ┗----------------------------┛
+    ┃ 8bit    | 8bit |    16bit    ┃
+    ┏---------+------+-------------┓
+	┃Version=2| Type |Packet Length┃
+    ┠---------+------+-------------┨
+    ┃ Router ID                    ┃
+    ┠------------------------------┨
+    ┃ Area ID                      ┃
+    ┠----------------+-------------┨
+    ┃ Checksum       | AuType      ┃
+    ┠----------------+-------------┨
+    ┃ Authentication               ┃
+    ┠------------------------------┨
+    ┃ Authentication               ┃
+    ┠------------------------------┨
+    ┃ Data                         ┃
+    ┗------------------------------┛
 
 if AuType=2
 
@@ -77,7 +77,7 @@ OSPF Authentication Type
 
     ┃ 8bit    | 8bit |  8bit  | 8bit           ┃
     ┏---------+------+-------------------------┓
-	┃ Version |Type=1| Packet Length           ┃
+	┃Version=2|Type=1| Packet Length           ┃
     ┠---------+------+-------------------------┨
     ┃ Router ID                                ┃
     ┠------------------------------------------┨
@@ -110,7 +110,7 @@ OSPF Authentication Type
 
     ┃ 8bit    | 8bit |  8bit  | 8bit       ┃
     ┏---------+------+---------------------┓
-	┃ Version |Type=2| Packet Length       ┃
+	┃Version=2|Type=2| Packet Length       ┃
     ┠---------+------+---------------------┨
     ┃ Router ID                            ┃
     ┠--------------------------------------┨
@@ -136,7 +136,7 @@ OSPF Authentication Type
 
     ┃ 8bit    | 8bit |     16bit     ┃
     ┏---------+------+---------------┓
-	┃ Version |Type=3| Packet Length ┃
+	┃Version=2|Type=3| Packet Length ┃
     ┠---------+------+---------------┨
     ┃ Router ID                      ┃
     ┠--------------------------------┨
@@ -167,7 +167,7 @@ OSPF Authentication Type
 
     ┃ 8bit    | 8bit |     16bit     ┃
     ┏---------+------+---------------┓
-	┃ Version |Type=4| Packet Length ┃
+	┃Version=2|Type=4| Packet Length ┃
     ┠---------+------+---------------┨
     ┃ Router ID                      ┃
     ┠--------------------------------┨
@@ -188,7 +188,7 @@ OSPF Authentication Type
 
     ┃ 8bit    | 8bit |     16bit     ┃
     ┏---------+------+---------------┓
-	┃ Version |Type=4| Packet Length ┃
+	┃Version=2|Type=4| Packet Length ┃
     ┠---------+------+---------------┨
     ┃ Router ID                      ┃
     ┠--------------------------------┨
