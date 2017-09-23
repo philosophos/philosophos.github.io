@@ -5,17 +5,17 @@
   
   <title>OSPFv3 LSA Message Format | Enjoy CS&amp;IT, Enjoy Life</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="OSPFv3 Protocol LSA Header">
-<meta name="keywords" content="Network,PDU,Routing,OSPF,OSPFv3,LSA">
+  <meta name="description" content="OSPFv3 Protocol LSA Header  OSPFv3 Router LSA OSPFv3 Network LSA OSPFv3 Inter-Area Prefix LSA OSPFv3 Inter-Area Router LSA OSPFv3 AS External LSA OSPFv3 Link LSA OSPFv3 Intra-Area Prefix LSAPrefix Opt">
+<meta name="keywords" content="Network,PDU,Routing,OSPF,LSA,OSPFv3">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OSPFv3 LSA Message Format">
 <meta property="og:url" content="http://philosophos.localhost/articles/OSPFv3-LSA-Message-Format/index.html">
 <meta property="og:site_name" content="Enjoy CS&amp;IT, Enjoy Life">
-<meta property="og:description" content="OSPFv3 Protocol LSA Header">
-<meta property="og:updated_time" content="2017-09-23T12:59:43.458Z">
+<meta property="og:description" content="OSPFv3 Protocol LSA Header  OSPFv3 Router LSA OSPFv3 Network LSA OSPFv3 Inter-Area Prefix LSA OSPFv3 Inter-Area Router LSA OSPFv3 AS External LSA OSPFv3 Link LSA OSPFv3 Intra-Area Prefix LSAPrefix Opt">
+<meta property="og:updated_time" content="2017-09-23T17:36:07.803Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OSPFv3 LSA Message Format">
-<meta name="twitter:description" content="OSPFv3 Protocol LSA Header">
+<meta name="twitter:description" content="OSPFv3 Protocol LSA Header  OSPFv3 Router LSA OSPFv3 Network LSA OSPFv3 Inter-Area Prefix LSA OSPFv3 Inter-Area Router LSA OSPFv3 AS External LSA OSPFv3 Link LSA OSPFv3 Intra-Area Prefix LSAPrefix Opt">
   
     <link rel="alternate" href="/atom.xml" title="Enjoy CS&amp;IT, Enjoy Life" type="application/atom+xml">
   
@@ -54,9 +54,9 @@
       <nav id="sub-nav">
         
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Buscar"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://philosophos.localhost"></form>
@@ -93,9 +93,348 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>OSPFv3 Protocol LSA Header</p>
+<ul>
+<li>OSPFv3 Router LSA</li>
+<li>OSPFv3 Network LSA</li>
+<li>OSPFv3 Inter-Area Prefix LSA</li>
+<li>OSPFv3 Inter-Area Router LSA</li>
+<li>OSPFv3 AS External LSA</li>
+<li>OSPFv3 Link LSA</li>
+<li>OSPFv3 Intra-Area Prefix LSA<br>Prefix Option</li>
+</ul>
 <a id="more"></a>
 <hr>
-<h2 id="OSPFv3-Protocol-LSA-Header"><a href="#OSPFv3-Protocol-LSA-Header" class="headerlink" title="OSPFv3 Protocol LSA Header"></a>OSPFv3 Protocol LSA Header</h2>
+<h2 id="OSPFv3-Protocol-LSA-Header"><a href="#OSPFv3-Protocol-LSA-Header" class="headerlink" title="OSPFv3 Protocol LSA Header"></a>OSPFv3 Protocol LSA Header</h2><pre><code>┃ 16bit    | 16bit   ┃
+┏----------+---------┓
+┃ Age      | Type    ┃
+┠----------+---------┨
+┃ Link State ID      ┃
+┠--------------------┨
+┃ Advertising Router ┃
+┠--------------------┨
+┃ Sequence           ┃
+┠----------+---------┨
+┃ Checksum | Length  ┃
+┗----------+---------┛
+</code></pre><p>Link State Type</p>
+<pre><code>┏---+----+----+-------------------┓
+┃ U | S2 | S1 | LSA Function Code ┃
+┗---+----+----+-------------------┛
+</code></pre><table>
+<thead>
+<tr>
+<th>S2</th>
+<th>S1</th>
+<th>Flooding Diffusion Ranger</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>链路本地</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>区域</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>AS</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>Reserved</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>OSPFv3 Type Name</th>
+<th>Type</th>
+<th>OSPFv2 Type Name</th>
+<th>Command</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0x2001</td>
+<td>Router LSA</td>
+<td>1</td>
+<td>Router LSA</td>
+<td>show ip ospf database router</td>
+</tr>
+<tr>
+<td>0x2002</td>
+<td>Network LSA</td>
+<td>2</td>
+<td>Network LSA</td>
+<td>show ip ospf database network</td>
+</tr>
+<tr>
+<td>0x2003</td>
+<td>Inter-Area Prefix LSA</td>
+<td>3</td>
+<td>Network Summary LSA</td>
+<td>show ip ospf database summary</td>
+</tr>
+<tr>
+<td>0x2004</td>
+<td>Inter-Area Router LSA</td>
+<td>4</td>
+<td>ASBR Summary LSA</td>
+<td>show ip ospf database asbr-summary</td>
+</tr>
+<tr>
+<td>0x4005</td>
+<td>AS External LSA</td>
+<td>5</td>
+<td>AS External LSA</td>
+<td>show ip ospf database external</td>
+</tr>
+<tr>
+<td>0x2006</td>
+<td>Group Membership</td>
+<td>6</td>
+<td>Group Membership LSA</td>
+<td></td>
+</tr>
+<tr>
+<td>0x2007</td>
+<td>Type7 LSA</td>
+<td>7</td>
+<td>NSSA External LSA</td>
+<td>show ip ospf database nssa-external</td>
+</tr>
+<tr>
+<td>0x0008</td>
+<td>Link LSA</td>
+<td></td>
+<td>no corresponding LSA</td>
+<td></td>
+</tr>
+<tr>
+<td>0x2009</td>
+<td>Intra-Area Prefix LSA</td>
+<td></td>
+<td>no corresponding LSA</td>
+</tr>
+</tbody>
+</table>
+<h4 id="OSPFv3-Router-LSA"><a href="#OSPFv3-Router-LSA" class="headerlink" title="OSPFv3 Router LSA"></a>OSPFv3 Router LSA</h4><pre><code>┃ 8bit           | 8bit |    16bit    ┃
+┏-----------------------+-------------┓
+┃ Age                   | Type=0x2001 ┃
+┠-----------------------+-------------┨
+┃ Link State ID                       ┃
+┠-------------------------------------┨
+┃ Advertising Router                  ┃
+┠-------------------------------------┨
+┃ Link State Sequence                 ┃
+┠-----------------------+-------------┨
+┃ Link State Checksum   | Length      ┃
+┠------+---------+------+-------------┨
+┃ 0000 | W|V|E|B | Option             ┃ 
+┠------+---------+------+-------------┨
+┃ Interface Type | 0x00 | Metric      ┃
+┠----------------+------+-------------┨
+┃ 实例 ID                             ┃
+┠-------------------------------------┨
+┃ Neighbor Interface ID               ┃
+┠-------------------------------------┨
+┃ Neighbor Router ID                  ┃
+┠-------------------------------------┨
+┃                 ...                 ┃
+┠----------------+------+-------------┨
+┃ Interface Type | 0x00 | Metric      ┃
+┠----------------+------+-------------┨
+┃ 实例 ID                             ┃
+┠-------------------------------------┨
+┃ Neighbor Interface ID               ┃
+┠-------------------------------------┨
+┃ Neighbor Router ID                  ┃
+┗-------------------------------------┛
+</code></pre><table>
+<thead>
+<tr>
+<th>Interface Type</th>
+<th>Link connected to:</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>another Router (point-to-point)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>a Transit Network</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Reserved</td>
+</tr>
+<tr>
+<td>4</td>
+<td>virtual link</td>
+</tr>
+</tbody>
+</table>
+<h4 id="OSPFv3-Network-LSA"><a href="#OSPFv3-Network-LSA" class="headerlink" title="OSPFv3 Network LSA"></a>OSPFv3 Network LSA</h4><pre><code>┃ 8bit | 8bit |    16bit    ┃
+┏-------------+-------------┓
+┃ Age         | Type=0x2002 ┃
+┠-------------+-------------┨
+┃ Link State ID             ┃
+┠---------------------------┨
+┃ Advertising Router        ┃
+┠---------------------------┨
+┃ Link State Sequence       ┃
+┠-------------+-------------┨
+┃ Checksum    | Length      ┃
+┠------+------+-------------┨
+┃ 0x00 | Option             ┃ 
+┠------+--------------------┨
+┃ Attached Router           ┃
+┠---------------------------┨
+┃           ...             ┃
+┠---------------------------┨
+┃ Attached Router           ┃
+┗---------------------------┛
+</code></pre><h4 id="OSPFv3-Inter-Area-Prefix-LSA"><a href="#OSPFv3-Inter-Area-Prefix-LSA" class="headerlink" title="OSPFv3 Inter-Area Prefix LSA"></a>OSPFv3 Inter-Area Prefix LSA</h4><pre><code>┃ 8bit          | 8bit          |    16bit    ┃
+┏-------------------------------+-------------┓
+┃ Age                           | Type=0x2003 ┃
+┠-------------------------------+-------------┨
+┃ Link State ID                               ┃
+┠---------------------------------------------┨
+┃ Advertising Router                          ┃
+┠---------------------------------------------┨
+┃ Link State Sequence                         ┃
+┠-------------------------------+-------------┨
+┃ Checksum                      | Length      ┃
+┠---------------+---------------+-------------┨
+┃ 0x00          | Metric                      ┃
+┠---------------+---------------+-------------┨
+┃ Prefix Length | Prefix Option | 0x0000      ┃
+┠---------------+---------------+-------------┨
+┃ IPaddr Prefix                               ┃
+┃ ...                                         ┃
+┗---------------------------------------------┛
+</code></pre><h4 id="OSPFv3-Inter-Area-Router-LSA"><a href="#OSPFv3-Inter-Area-Router-LSA" class="headerlink" title="OSPFv3 Inter-Area Router LSA"></a>OSPFv3 Inter-Area Router LSA</h4><pre><code>┃ 8bit | 8bit |    16bit    ┃
+┏-------------+-------------┓
+┃ Age         | Type=0x2004 ┃
+┠-------------+-------------┨
+┃ Link State ID             ┃
+┠---------------------------┨
+┃ Advertising Router        ┃
+┠---------------------------┨
+┃ Link State Sequence       ┃
+┠-------------+-------------┨
+┃ Checksum    | Length      ┃
+┠------+------+-------------┨
+┃ 0x00 | Option             ┃
+┠------+--------------------┨
+┃ 0x00 | Metric             ┃
+┠------+--------------------┨
+┃ Destination Router ID     ┃
+┗---------------------------┛
+Destination Router ID:ASBR&apos;s RID
+</code></pre><h4 id="OSPFv3-AS-External-LSA"><a href="#OSPFv3-AS-External-LSA" class="headerlink" title="OSPFv3 AS External LSA"></a>OSPFv3 AS External LSA</h4><pre><code>┃ 8bit          | 8bit          |    16bit       ┃
+┏-------------------------------+----------------┓
+┃ Age                           | Type=0x4005    ┃
+┠-------------------------------+----------------┨
+┃ Link State ID                                  ┃
+┠------------------------------------------------┨
+┃ Advertising Router                             ┃
+┠------------------------------------------------┨
+┃ Link State Sequence                            ┃
+┠-------------------------------+----------------┨
+┃ Checksum                      | Length         ┃
+┠---------------+---------------+----------------┨
+┃ 00000 | E|F|T | Metric                         ┃
+┠---------------+---------------+----------------┨
+┃ Prefix Length | Prefix Option | Interface Type ┃
+┠---------------+---------------+----------------┨
+┃ IPaddr Prefix                                  ┃
+┃ ...                                            ┃
+┠------------------------------------------------┨
+┃ Transit IPaddr (if F=1)                        ┃
+┠------------------------------------------------┨
+┃ External Route Tag (if T=1)                    ┃
+┠------------------------------------------------┨
+┃ Reference Link State ID (option)               ┃
+┗------------------------------------------------┛
+E:External Metric bit:0(E1)/1(E2)
+</code></pre><h4 id="OSPFv3-Link-LSA"><a href="#OSPFv3-Link-LSA" class="headerlink" title="OSPFv3 Link LSA"></a>OSPFv3 Link LSA</h4><pre><code>┃ 8bit          | 8bit            |    16bit    ┃
+┏---------------------------------+-------------┓
+┃ Age                             | Type=0x0008 ┃
+┠---------------------------------+-------------┨
+┃ Link State ID                                 ┃
+┠-----------------------------------------------┨
+┃ Advertising Router                            ┃
+┠-----------------------------------------------┨
+┃ Link State Sequence                           ┃
+┠---------------------------------+-------------┨
+┃ Checksum                        | Length      ┃
+┠-----------------+---------------+-------------┨
+┃ Router Priority | Option                      ┃
+┠-----------------+-----------------------------┨
+┃ 链路本地 Prefix地址                          ┃
+┃ ...                                           ┃
+┠-----------------------------------------------┨
+┃ Number of Prefix                              ┃
+┠-----------------+---------------+-------------┨
+┃ Prefix Length   | Prefix Option | 0x0000      ┃
+┠-----------------+---------------+-------------┨
+┃ IPaddr Prefix                                 ┃
+┃ ...                                           ┃
+┠-----------------------------------------------┨
+┃ ...                                           ┃
+┠-----------------------------------------------┨
+┃ Number of Prefix                              ┃
+┠-----------------+---------------+-------------┨
+┃ Prefix Length   | Prefix Option | 0x0000      ┃
+┠-----------------+---------------+-------------┨
+┃ IPaddr Prefix                                 ┃
+┃ ...                                           ┃
+┗-----------------------------------------------┛
+</code></pre><h4 id="OSPFv3-Intra-Area-Prefix-LSA"><a href="#OSPFv3-Intra-Area-Prefix-LSA" class="headerlink" title="OSPFv3 Intra-Area Prefix LSA"></a>OSPFv3 Intra-Area Prefix LSA</h4><pre><code>┃ 8bit          | 8bit          | 16bit                     ┃
+┏-------------------------------+---------------------------┓
+┃ Age                           | Type=0x2009               ┃
+┠-------------------------------+---------------------------┨
+┃ Link State ID                                             ┃
+┠-----------------------------------------------------------┨
+┃ Advertising Router                                        ┃
+┠-----------------------------------------------------------┨
+┃ Link State Sequence                                       ┃
+┠-------------------------------+---------------------------┨
+┃ Checksum                      | Reference Link State Type ┃
+┠-------------------------------+---------------------------┨
+┃ Reference Link State ID                                   ┃
+┠-----------------------------------------------------------┨
+┃ Reference Advertising Router                              ┃
+┠---------------+---------------+---------------------------┨
+┃ Prefix Length | Prefix Option | Metric                    ┃
+┠---------------+---------------+---------------------------┨
+┃ IPaddr Prefix                                             ┃
+┃ ...                                                       ┃
+┠-----------------------------------------------------------┨
+┃ ...                                                       ┃
+┠---------------+---------------+---------------------------┨
+┃ Prefix Length | Prefix Option | Metric                    ┃
+┠---------------+---------------+---------------------------┨
+┃ IPaddr Prefix                                             ┃
+┃ ...                                                       ┃
+┗-----------------------------------------------------------┛
+</code></pre><p>Prefix Option</p>
+<pre><code>┏-+-+-+-+---+----+----+----┓
+┃ | | | | P | MC | LA | NU ┃
+┗-+-+-+-+---+----+----+----┛
+</code></pre><p>P :Propagate,传播位<br>MC:MultiCast,多播位<br>LA:Local Address,本地地址位<br>NU:No Unicast,无单播位</p>
+
       
     </div>
     <footer class="article-footer">
@@ -116,7 +455,7 @@
 </div>
 
     
-      <a data-url="http://philosophos.localhost/articles/OSPFv3-LSA-Message-Format/" data-id="cj7xcnozx0023s8m8muxngjwn" class="article-share-link">Compartir</a>
+      <a data-url="http://philosophos.localhost/articles/OSPFv3-LSA-Message-Format/" data-id="cj7xlnzm1002cewm84tonxboh" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LSA/">LSA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Network/">Network</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OSPF/">OSPF</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OSPFv3/">OSPFv3</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PDU/">PDU</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Routing/">Routing</a></li></ul>
@@ -128,7 +467,7 @@
 <nav id="article-nav">
   
     <a href="/articles/BGP-Message-Format/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Nuevo</strong>
+      <strong class="article-nav-caption">Neuer</strong>
       <div class="article-nav-title">
         
           BGP Message Format
@@ -138,7 +477,7 @@
   
   
     <a href="/articles/OSPFv2-LSA-Message-Format/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Viejo</strong>
+      <strong class="article-nav-caption">Älter</strong>
       <div class="article-nav-title">OSPFv2 LSA Message Format</div>
     </a>
   
@@ -156,7 +495,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Categorías</h3>
+    <h3 class="widget-title">Kategorien</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Network/">Network</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/OpenWrt/">OpenWrt</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/Bash/">Bash</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/Zsh/">Zsh</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Network/">Network</a></li></ul>
     </div>
@@ -191,7 +530,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archivos</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
     </div>
@@ -201,7 +540,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Posts recientes</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
         
@@ -241,7 +580,7 @@
         <div id="footer-left">
             &copy; 2017 philosophos &lt;&gt;
             <br>
-            Construido por <a href="http://hexo.io/" target="_blank">Hexo</a>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
             <br>
             <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
             </script>
