@@ -2,7 +2,7 @@
 layout: post
 title: OSPFv2 Message Format
 copyright: true
-date: 2017-09-23 20:24:21
+date: 2017-09-22 20:24:21
 updated:
 description:
 categories:

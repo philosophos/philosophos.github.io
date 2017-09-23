@@ -2,7 +2,7 @@
 layout: post
 title: RIP Message Format
 copyright: true
-date: 2017-09-23 20:23:28
+date: 2017-09-20 20:23:28
 updated:
 description:
 categories:

@@ -2,7 +2,7 @@
 layout: post
 title: EIGRP Message Format
 copyright: true
-date: 2017-09-23 20:23:39
+date: 2017-09-21 20:23:39
 updated:
 description:
 categories:
