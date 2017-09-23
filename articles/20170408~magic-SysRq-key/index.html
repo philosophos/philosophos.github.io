@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>magic SysRq key | Enjoy CS&amp;IT, Enjoy Life</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="It is a ‘magical’ key combo you can hit which the kernel will respond to regardless of whatever else it is doing, unless it is completely locked up.  enable the magic SysRq key use the magic SysRq key">
+<meta name="keywords" content="Linux,shortkeys,sysrq">
+<meta property="og:type" content="article">
+<meta property="og:title" content="magic SysRq key">
+<meta property="og:url" content="http://philosophos.localhost/articles/20170408~magic-SysRq-key/index.html">
+<meta property="og:site_name" content="Enjoy CS&amp;IT, Enjoy Life">
+<meta property="og:description" content="It is a ‘magical’ key combo you can hit which the kernel will respond to regardless of whatever else it is doing, unless it is completely locked up.  enable the magic SysRq key use the magic SysRq key">
+<meta property="og:updated_time" content="2017-09-18T20:31:04.773Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="magic SysRq key">
+<meta name="twitter:description" content="It is a ‘magical’ key combo you can hit which the kernel will respond to regardless of whatever else it is doing, unless it is completely locked up.  enable the magic SysRq key use the magic SysRq key">
+  
+    <link rel="alternate" href="/atom.xml" title="Enjoy CS&amp;IT, Enjoy Life" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Enjoy CS&amp;IT, Enjoy Life</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/links">Links</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://philosophos.localhost"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-magic-SysRq-key" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/articles/20170408~magic-SysRq-key/" class="article-date">
+  <time datetime="2017-04-08T12:32:52.000Z" itemprop="datePublished">2017-04-08</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      magic SysRq key
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>It is a ‘magical’ key combo you can hit which the kernel will respond to regardless of whatever else it is doing, unless it is completely locked up.</p>
+<ul>
+<li>enable the magic SysRq key</li>
+<li>use the magic SysRq key</li>
+<li>the ‘command’ keys</li>
+<li>Uses</li>
+</ul>
+<p>For more info, see <a href="https://www.kernel.org/doc/Documentation/admin-guide/sysrq.rst" target="_blank" rel="external">sysrq</a><br><a id="more"></a></p>
+<hr>
+<h2 id="enable-the-magic-SysRq-key"><a href="#enable-the-magic-SysRq-key" class="headerlink" title="enable the magic SysRq key"></a>enable the magic SysRq key</h2><p>You need to say “yes” to ‘Magic SysRq key (CONFIG_MAGIC_SYSRQ)’ when configuring the kernel.<br>When running a kernel with SysRq compiled in, <code>/proc/sys/kernel/sysrq</code> controls the functions allowed to be invoked via the SysRq key. The default value in this file is set by the <code>CONFIG_MAGIC_SYSRQ_DEFAULT_ENABLE</code> config symbol, which itself defaults to 1. Here is the list of possible values in <code>/proc/sys/kernel/sysrq</code>:</p>
+<ul>
+<li><code>0</code> - disable sysrq completely</li>
+<li><code>1</code> - enable all functions of sysrq</li>
+<li><p><code>&gt;1</code> - bitmask of allowed sysrq functions (see below for detailed function description)::</p>
+<pre><code>  2 = 0x2   - enable control of console logging level
+  4 = 0x4   - enable control of keyboard (SAK, unraw)
+  8 = 0x8   - enable debugging dumps of processes etc.
+ 16 = 0x10  - enable sync command
+ 32 = 0x20  - enable remount read-only
+ 64 = 0x40  - enable signalling of processes (term, kill, oom-kill)
+128 = 0x80  - allow reboot/poweroff
+256 = 0x100 - allow nicing of all RT tasks
+</code></pre></li>
+</ul>
+<p>The number may be written here either as decimal or as hexadecimal with the 0x prefix. <code>CONFIG_MAGIC_SYSRQ_DEFAULT_ENABLE</code> must always be written in hexadecimal.</p>
+<p>Note that the value of <code>/proc/sys/kernel/sysrq</code> influences only the invocation via a keyboard. Invocation of any operation via <code>/proc/sysrq-trigger</code> is always allowed (by a user with admin privileges).</p>
+<p>You can set the value in the file by the following command::</p>
+<pre><code>echo 1 &gt;/proc/sys/kernel/sysrq
+</code></pre><p>or</p>
+<pre><code>sysctl -w kernel.sysrq=1
+</code></pre><p>If you wish to have it enabled during boot, edit /etc/sysctl.d/99-sysctl.conf and insert the text <code>kernel.sysrq = 1</code>.<br>If you want to make sure it will be enabled even before the partitions are mounted and in the initrd, then add <code>sysrq_always_enabled=1</code> to your kernel parameters. </p>
+<hr>
+<h2 id="use-the-magic-SysRq-key"><a href="#use-the-magic-SysRq-key" class="headerlink" title="use the magic SysRq key"></a>use the magic SysRq key</h2><p><strong>On x86</strong><br>Press the key combo <code>&lt;Alt&gt;&lt;SysRq&gt;&lt;command key&gt;</code>.</p>
+<p><strong>On PowerPC</strong><br>Press <code>&lt;Alt&gt;&lt;Print Screen&gt;(or &lt;F13&gt;)&lt;command key&gt;</code>, <code>&lt;Print Screen&gt;(or &lt;F13&gt;)&lt;command key&gt;</code> may suffice.</p>
+<p><strong>On SPARC</strong><br>Press <code>&lt;Alt&gt;&lt;Stop&gt;&lt;command key&gt;</code></p>
+<p><strong>On the serial console</strong> (PC style standard serial ports only)<br>Send a <code>BREAK</code>, then within 5 seconds a command key.<br>Sending <code>BREAK</code> twice is interpreted as a normal BREAK.</p>
+<p><strong>On all</strong><br>write a character to /proc/sysrq-trigger.  e.g.::</p>
+<pre><code>echo t &gt; /proc/sysrq-trigger
+</code></pre><p><strong>NOTE</strong><br>On some devices, notably laptops, the Fn key may need to be pressed to use the magic SysRq key.<br>Some keyboards may not provide a separate SysRq key. In this case, a separate PrtScr key should be present.<br>Some keyboards can’t handle so many keys being pressed at the same time, so you might have better luck with press <code>Alt</code>, press <code>SysRq</code>, release <code>SysRq</code>, press <code>&lt;command key&gt;</code>, release everything.</p>
+<hr>
+<h2 id="the-‘command’-keys"><a href="#the-‘command’-keys" class="headerlink" title="the ‘command’ keys"></a>the ‘command’ keys</h2><p>The combinations always assume the QWERTY keyboard layout; for example, on a Dvorak Simplified Keyboard, the combination to shut the system down uses the R key instead of O.</p>
+<pre><code>======= ===================================================================
+Command        Function
+======= ===================================================================
+0-9     Sets the console log level, controlling which kernel messages
+        will be printed to your console. (``0``, for example would make
+        it so that only emergency messages like PANICs or OOPSes would
+        make it to your console.)
+b   Will immediately reboot the system without syncing or unmounting
+        your disks.
+c   Will perform a system crash by a NULL pointer dereference.
+        A crashdump will be taken if configured.
+d   Shows all locks that are held.
+e   Send a SIGTERM to all processes, except for init.
+f   Will call the oom killer to kill a memory hog process, but do not
+        panic if nothing can be killed.
+g   Used by kgdb (kernel debugger)
+h   Will display help (actually any other key than those listed
+        here will display help. but ``h`` is easy to remember :-)
+i   Send a SIGKILL to all processes, except for init.
+j   Forcibly &quot;Just thaw it&quot; - filesystems frozen by the FIFREEZE ioctl.
+k   Secure Access Key (SAK) Kills all programs on the current virtual
+        console. NOTE: See important comments below in SAK section.
+l   Shows a stack backtrace for all active CPUs.
+m   Will dump current memory info to your console.
+n   Used to make RT tasks nice-able
+o   Will shut your system off (if configured and supported).
+p   Will dump the current registers and flags to your console.
+q   Will dump per CPU lists of all armed hrtimers (but NOT regular
+        timer_list timers) and detailed information about all
+        clockevent devices.
+r   Turns off keyboard raw mode and sets it to XLATE.
+s   Will attempt to sync all mounted filesystems.
+t   Will dump a list of current tasks and their information to your
+        console.
+u   Will attempt to remount all mounted filesystems read-only.
+v   Forcefully restores framebuffer console
+v   Causes ETM buffer dump [ARM-specific]
+w   Dumps tasks that are in uninterruptable (blocked) state.
+x   Used by xmon interface on ppc/powerpc platforms.
+        Show global PMU Registers on sparc64.
+        Dump all TLB entries on MIPS.
+y   Show global CPU Registers [SPARC-64 specific]
+z   Dump the ftrace buffer
+</code></pre><hr>
+<h2 id="Uses"><a href="#Uses" class="headerlink" title="Uses"></a>Uses</h2><p>There are several low level shortcuts that are implemented in the kernel which can be used for debugging and recovering from an unresponsive system. Whenever possible, it is recommended that you use these shortcuts instead of doing a hard shutdown (holding down the power button to completely power off the system).<br>A common use of the magic SysRq key is to perform a safe reboot of a Linux computer which has otherwise locked up (abbr. REISUB). This can prevent a fsck being required on reboot and gives some programs a chance to save emergency backups of unsaved work. The QWERTY (or AZERTY) mnemonics: “Raising Elephants Is So Utterly Boring”, “Reboot Even If System Utterly Broken” or simply the word “BUSIER” read backwards, are often used to remember the following SysRq-keys sequence:</p>
+<pre><code>unRaw      (take control of keyboard back from X),
+ tErminate (send SIGTERM to all processes, allowing them to terminate gracefully),
+ kIll      (send SIGKILL to all processes, forcing them to terminate immediately),
+  Sync     (flush data to disk),
+  Unmount  (remount all filesystems read-only),
+reBoot.
+</code></pre><p>When magic SysRq keys are used to kill a frozen graphical program, the program has no chance to restore text mode. This can make everything unreadable. The commands textmode (part of SVGAlib) and the reset command can restore text mode and make the console readable again.</p>
+<p>On distributions that do not include a textmode executable, the key command Ctrl+Alt+F1 may sometimes be able to force a return to a text console. (Use F1, F2, F3,…, F(n), where n is the highest number of text consoles set up by the distribution. Ctrl+Alt+F(n+1) would normally be used to reenter GUI mode on a system on which the X server has not crashed.)</p>
+
+      
+    </div>
+    <footer class="article-footer">
+    
+        <div class="article-footer-copyright">
+    <div style="text-align:center">
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">
+        <img alt="Creative Commons License" style="border-width:0"
+        src="/image/copyright.png" />
+        </a>
+    </div>
+    This work is licensed under a 
+    <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">
+    Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License
+    </a>.
+    NonCommercial reprint please indicate the auther and source,
+    Commercial reprint please contact the auther.
+</div>
+
+    
+      <a data-url="http://philosophos.localhost/articles/20170408~magic-SysRq-key/" data-id="cj7xnecw0000rvmm8zzdj7nll" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/shortkeys/">shortkeys</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sysrq/">sysrq</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/articles/20170409~Services-Ports/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          Services &amp; Ports
+        
+      </div>
+    </a>
+  
+  
+    <a href="/articles/20170408~zsh-shortkeys/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">zsh shortkeys</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Network/">Network</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/OpenWrt/">OpenWrt</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/Bash/">Bash</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/Zsh/">Zsh</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Network/">Network</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ARP/">ARP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Arch/">Arch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bash/">Bash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BlackArch/">BlackArch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EIGRP/">EIGRP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fn/">Fn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Frame/">Frame</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GRUB/">GRUB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTPS/">HTTPS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ICMP/">ICMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IP/">IP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Install/">Install</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LSA/">LSA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Manually/">Manually</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Network/">Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OSPF/">OSPF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OSPFv2/">OSPFv2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OSPFv3/">OSPFv3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenWrt/">OpenWrt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PDU/">PDU</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PPPOE/">PPPOE</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Port/">Port</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RIP/">RIP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Router/">Router</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Routing/">Routing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Service/">Service</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Signature-Authentication/">Signature Authentication</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TCP/">TCP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UDP/">UDP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Wireless/">Wireless</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zsh/">Zsh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/esc-seq/">esc-seq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ifconfig/">ifconfig</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iproute2/">iproute2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/keycode/">keycode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/net-tools/">net-tools</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/password/">password</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/port/">port</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/root/">root</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shortkeys/">shortkeys</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/source/">source</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sysrq/">sysrq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tput/">tput</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wifi/">wifi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xev/">xev</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+    <script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+    <div class="widget-wrap">
+        <h3 class="widget-title">Tag Cloud</h3>
+        <div id="myCanvasContainer" class="widget tagcloud">
+            <canvas width="250" height="250" id="resCanvas" style="width=100%">
+                <a href="/tags/ARP/" style="font-size: 10px;">ARP</a> <a href="/tags/Arch/" style="font-size: 10px;">Arch</a> <a href="/tags/Bash/" style="font-size: 10px;">Bash</a> <a href="/tags/BlackArch/" style="font-size: 10px;">BlackArch</a> <a href="/tags/EIGRP/" style="font-size: 10px;">EIGRP</a> <a href="/tags/Fn/" style="font-size: 10px;">Fn</a> <a href="/tags/Frame/" style="font-size: 10px;">Frame</a> <a href="/tags/GRUB/" style="font-size: 10px;">GRUB</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/ICMP/" style="font-size: 10px;">ICMP</a> <a href="/tags/IP/" style="font-size: 10px;">IP</a> <a href="/tags/Install/" style="font-size: 11.43px;">Install</a> <a href="/tags/LSA/" style="font-size: 11.43px;">LSA</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Manually/" style="font-size: 10px;">Manually</a> <a href="/tags/Network/" style="font-size: 18.57px;">Network</a> <a href="/tags/OSPF/" style="font-size: 14.29px;">OSPF</a> <a href="/tags/OSPFv2/" style="font-size: 11.43px;">OSPFv2</a> <a href="/tags/OSPFv3/" style="font-size: 11.43px;">OSPFv3</a> <a href="/tags/OpenWrt/" style="font-size: 12.86px;">OpenWrt</a> <a href="/tags/PDU/" style="font-size: 17.14px;">PDU</a> <a href="/tags/PPPOE/" style="font-size: 11.43px;">PPPOE</a> <a href="/tags/Port/" style="font-size: 10px;">Port</a> <a href="/tags/RIP/" style="font-size: 10px;">RIP</a> <a href="/tags/Router/" style="font-size: 12.86px;">Router</a> <a href="/tags/Routing/" style="font-size: 15.71px;">Routing</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/Service/" style="font-size: 10px;">Service</a> <a href="/tags/Shell/" style="font-size: 11.43px;">Shell</a> <a href="/tags/Signature-Authentication/" style="font-size: 10px;">Signature Authentication</a> <a href="/tags/TCP/" style="font-size: 10px;">TCP</a> <a href="/tags/UDP/" style="font-size: 10px;">UDP</a> <a href="/tags/Wireless/" style="font-size: 10px;">Wireless</a> <a href="/tags/Zsh/" style="font-size: 10px;">Zsh</a> <a href="/tags/esc-seq/" style="font-size: 11.43px;">esc-seq</a> <a href="/tags/ifconfig/" style="font-size: 10px;">ifconfig</a> <a href="/tags/iproute2/" style="font-size: 10px;">iproute2</a> <a href="/tags/keycode/" style="font-size: 10px;">keycode</a> <a href="/tags/net-tools/" style="font-size: 10px;">net-tools</a> <a href="/tags/password/" style="font-size: 11.43px;">password</a> <a href="/tags/port/" style="font-size: 10px;">port</a> <a href="/tags/root/" style="font-size: 10px;">root</a> <a href="/tags/shortkeys/" style="font-size: 12.86px;">shortkeys</a> <a href="/tags/source/" style="font-size: 10px;">source</a> <a href="/tags/sysrq/" style="font-size: 10px;">sysrq</a> <a href="/tags/tput/" style="font-size: 11.43px;">tput</a> <a href="/tags/wifi/" style="font-size: 10px;">wifi</a> <a href="/tags/xev/" style="font-size: 10px;">xev</a>
+            </canvas>
+      <a href="/tags/ARP/" style="font-size: 10px;">ARP</a> <a href="/tags/Arch/" style="font-size: 10px;">Arch</a> <a href="/tags/Bash/" style="font-size: 10px;">Bash</a> <a href="/tags/BlackArch/" style="font-size: 10px;">BlackArch</a> <a href="/tags/EIGRP/" style="font-size: 10px;">EIGRP</a> <a href="/tags/Fn/" style="font-size: 10px;">Fn</a> <a href="/tags/Frame/" style="font-size: 10px;">Frame</a> <a href="/tags/GRUB/" style="font-size: 10px;">GRUB</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/ICMP/" style="font-size: 10px;">ICMP</a> <a href="/tags/IP/" style="font-size: 10px;">IP</a> <a href="/tags/Install/" style="font-size: 11.43px;">Install</a> <a href="/tags/LSA/" style="font-size: 11.43px;">LSA</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Manually/" style="font-size: 10px;">Manually</a> <a href="/tags/Network/" style="font-size: 18.57px;">Network</a> <a href="/tags/OSPF/" style="font-size: 14.29px;">OSPF</a> <a href="/tags/OSPFv2/" style="font-size: 11.43px;">OSPFv2</a> <a href="/tags/OSPFv3/" style="font-size: 11.43px;">OSPFv3</a> <a href="/tags/OpenWrt/" style="font-size: 12.86px;">OpenWrt</a> <a href="/tags/PDU/" style="font-size: 17.14px;">PDU</a> <a href="/tags/PPPOE/" style="font-size: 11.43px;">PPPOE</a> <a href="/tags/Port/" style="font-size: 10px;">Port</a> <a href="/tags/RIP/" style="font-size: 10px;">RIP</a> <a href="/tags/Router/" style="font-size: 12.86px;">Router</a> <a href="/tags/Routing/" style="font-size: 15.71px;">Routing</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/Service/" style="font-size: 10px;">Service</a> <a href="/tags/Shell/" style="font-size: 11.43px;">Shell</a> <a href="/tags/Signature-Authentication/" style="font-size: 10px;">Signature Authentication</a> <a href="/tags/TCP/" style="font-size: 10px;">TCP</a> <a href="/tags/UDP/" style="font-size: 10px;">UDP</a> <a href="/tags/Wireless/" style="font-size: 10px;">Wireless</a> <a href="/tags/Zsh/" style="font-size: 10px;">Zsh</a> <a href="/tags/esc-seq/" style="font-size: 11.43px;">esc-seq</a> <a href="/tags/ifconfig/" style="font-size: 10px;">ifconfig</a> <a href="/tags/iproute2/" style="font-size: 10px;">iproute2</a> <a href="/tags/keycode/" style="font-size: 10px;">keycode</a> <a href="/tags/net-tools/" style="font-size: 10px;">net-tools</a> <a href="/tags/password/" style="font-size: 11.43px;">password</a> <a href="/tags/port/" style="font-size: 10px;">port</a> <a href="/tags/root/" style="font-size: 10px;">root</a> <a href="/tags/shortkeys/" style="font-size: 12.86px;">shortkeys</a> <a href="/tags/source/" style="font-size: 10px;">source</a> <a href="/tags/sysrq/" style="font-size: 10px;">sysrq</a> <a href="/tags/tput/" style="font-size: 11.43px;">tput</a> <a href="/tags/wifi/" style="font-size: 10px;">wifi</a> <a href="/tags/xev/" style="font-size: 10px;">xev</a>
+        </div>
+    </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/articles/20170924~BGP-Message-Format/">BGP Message Format</a>
+          </li>
+        
+          <li>
+            <a href="/articles/20170923~OSPFv3-LSA-Message-Format/">OSPFv3 LSA Message Format</a>
+          </li>
+        
+          <li>
+            <a href="/articles/20170923~OSPFv2-LSA-Message-Format/">OSPFv2 LSA Message Format</a>
+          </li>
+        
+          <li>
+            <a href="/articles/20170922~OSPFv3-Message-Format/">OSPFv3 Message Format</a>
+          </li>
+        
+          <li>
+            <a href="/articles/20170922~OSPFv2-Message-Format/">OSPFv2 Message Format</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+
+</aside>
+
+        
+      </div>
+      <footer id="footer">
+    
+    <div class="outer">
+        <div id="footer-left">
+            &copy; 2017 philosophos &lt;&gt;
+            <br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+            <br>
+            <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+            </script>
+            <span id="busuanzi_container_site_pv" style='display:none'>
+                Total Visits:&nbsp;
+                <span id="busuanzi_value_site_pv"></span>
+            </span>
+            <br>
+            <span id="busuanzi_container_site_uv" style='display:none'>
+                You are Visiter No.
+                <span id="busuanzi_value_site_uv"></span>
+            </span>
+        </div>
+            <!--
+            <span id="busuanzi_container_page_pv" style='display:none'>
+                Total Visits:&nbsp;
+                <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            -->
+    </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/links" class="mobile-nav-link">Links</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

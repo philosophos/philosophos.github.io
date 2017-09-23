@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Installing BlackArch on top of Arch Linux | Enjoy CS&amp;IT, Enjoy Life</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Install | BlackArch">
+<meta name="keywords" content="Linux,BlackArch,Install">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Installing BlackArch on top of Arch Linux">
+<meta property="og:url" content="http://philosophos.localhost/articles/20170305~Installing-BlackArch-on-top-of-ArchLinux/index.html">
+<meta property="og:site_name" content="Enjoy CS&amp;IT, Enjoy Life">
+<meta property="og:description" content="Install | BlackArch">
+<meta property="og:updated_time" content="2017-09-18T20:31:04.773Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Installing BlackArch on top of Arch Linux">
+<meta name="twitter:description" content="Install | BlackArch">
+  
+    <link rel="alternate" href="/atom.xml" title="Enjoy CS&amp;IT, Enjoy Life" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Enjoy CS&amp;IT, Enjoy Life</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/links">Links</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://philosophos.localhost"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Installing-BlackArch-on-top-of-ArchLinux" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/articles/20170305~Installing-BlackArch-on-top-of-ArchLinux/" class="article-date">
+  <time datetime="2017-03-05T05:25:58.000Z" itemprop="datePublished">2017-03-05</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Installing BlackArch on top of Arch Linux
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>Add [blackarch] Repositories To /etc/pacman.conf</li>
+<li>Install &amp; Setup BlackArch Linux Keyring</li>
+<li>Install &amp; Setup ruby-bundler</li>
+<li>Install Tools From The Blackarch Repository</li>
+<li>Configure Menus<ul>
+<li>automatic generate WM menu from xdg files</li>
+<li>For awesome 4</li>
+</ul>
+</li>
+<li>Build The Blackarch Packages From Source</li>
+</ul>
+<a id="more"></a>
+<hr>
+<h2 id="Add-blackarch-Repositories-To-etc-pacman-conf"><a href="#Add-blackarch-Repositories-To-etc-pacman-conf" class="headerlink" title=" Add [blackarch] Repositories To /etc/pacman.conf"></a> Add [blackarch] Repositories To /etc/pacman.conf</h2><figure class="highlight sh"><figcaption><span>Add the following to /etc/pacman.conf</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[blackarch]</div><div class="line"><span class="comment">#SigLevel = Optional TrustAll</span></div><div class="line">Server=https://mirrors.tuna.tsinghua.edu.cn/blackarch/blackarch/os/<span class="variable">$arch</span></div><div class="line">Server=https://mirrors.ustc.edu.cn/blackarch/blackarch/os/<span class="variable">$arch</span></div></pre></td></tr></table></figure>
+<p><strong>NOTE</strong>: These mirrors are for Chinese user,other countris’ users see <a href="https://www.blackarch.org/downloads.html#mirror-list" target="_blank" rel="external">Official BlackArch Linux Mirror Sites</a></p>
+<hr>
+<h2 id="Install-amp-Setup-BlackArch-Linux-Keyring"><a href="#Install-amp-Setup-BlackArch-Linux-Keyring" class="headerlink" title=" Install &amp; Setup BlackArch Linux Keyring"></a> Install &amp; Setup BlackArch Linux Keyring</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">curl -O https://blackarch.org/strap.sh</div><div class="line">sha1sum strap.sh  <span class="comment"># The SHA1 sum should match: 34b1a3698a4c971807fb1fe41463b9d25e1a4a09</span></div><div class="line">bash strap.sh     <span class="comment"># Run strap.sh as root</span></div></pre></td></tr></table></figure>
+<hr>
+<h2 id="Install-amp-Setup-ruby-bundler-Optional"><a href="#Install-amp-Setup-ruby-bundler-Optional" class="headerlink" title=" Install &amp; Setup ruby-bundler (Optional)"></a> Install &amp; Setup ruby-bundler (Optional)</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo pacman -S ruby-bundler</div><div class="line">su -c <span class="string">"bundle config 'mirror.https://rubygems.org' 'https://gems.ruby-china.org'"</span></div></pre></td></tr></table></figure>
+<p><strong>ruby gem mirrors for Chinese users:</strong><br><a href="https://gems.ruby-china.org" target="_blank" rel="external">https://gems.ruby-china.org</a><br><a href="http://ruby.taobao.com" target="_blank" rel="external">http://ruby.taobao.com</a><br><a href="http://mirrors.aliyun.com/rubygems/" target="_blank" rel="external">http://mirrors.aliyun.com/rubygems/</a><br><a href="http://mirrors.tuna.tsinghua.edu.cn/rubygems/" target="_blank" rel="external">http://mirrors.tuna.tsinghua.edu.cn/rubygems/</a></p>
+<hr>
+<h2 id="Install-Tools-From-The-Blackarch-Repository"><a href="#Install-Tools-From-The-Blackarch-Repository" class="headerlink" title=" Install Tools From The Blackarch Repository"></a> Install Tools From The Blackarch Repository</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># To list all of the available tools, run</span></div><div class="line">$ sudo pacman -Sgg | grep blackarch | cut -d<span class="string">' '</span> -f2 | sort -u</div><div class="line"></div><div class="line"><span class="comment"># To install all of the tools, run</span></div><div class="line">$ sudo pacman -S blackarch</div><div class="line"></div><div class="line"><span class="comment"># To install a category of tools, run</span></div><div class="line">$ sudo pacman -S blackarch-&lt;category&gt;</div><div class="line"></div><div class="line"><span class="comment"># To see the blackarch categories, run</span></div><div class="line">$ sudo pacman -Sg | grep blackarch </div></pre></td></tr></table></figure>
+<p>Most package in the blackarch repository is also in blackarch group and blackarch-<category> group,but there are still some package not.  Run this script for more info.</category></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line">    tool_grp=$(pacman -Sg|grep blackarch-)</div><div class="line">    <span class="built_in">echo</span> <span class="string">'--------------------------------------------------------------------------------'</span></div><div class="line">    <span class="built_in">echo</span> -e <span class="string">"packages not in either blackarch group or blackarch-&lt;category&gt; group,\n\</span></div><div class="line"><span class="string">    won't be installed by \e[1mpacman -S blackarch-&lt;category&gt;\e[0m or \e[1mpacman -S blackarch\e[0m"</span></div><div class="line">    comm -23 &lt;(comm -3 &lt;(pacman -Ssq ^blackarch|sort) &lt;(pacman -Sgq blackarch|sort)) \</div><div class="line">    &lt;(pacman -Sgq <span class="variable">$tool_grp</span>|sort -u)</div><div class="line">    <span class="built_in">echo</span> <span class="string">'--------------------------------------------------------------------------------'</span></div><div class="line">    <span class="built_in">echo</span> -e <span class="string">"packages in blackarch group but not in blackarch-&lt;category&gt; group,\n\</span></div><div class="line"><span class="string">    won't be installed by \e[1mpacman -S blackarch-&lt;category&gt;\e[0m"</span></div><div class="line">    comm -23 &lt;(pacman -Sgq blackarch|sort) &lt;(pacman -Sgq <span class="variable">$tool_grp</span>|sort -u)</div><div class="line">    <span class="built_in">echo</span> <span class="string">'--------------------------------------------------------------------------------'</span></div><div class="line">    <span class="built_in">echo</span> -e <span class="string">"packages not in blackarch group but in blackarch-&lt;category&gt; group,\n\</span></div><div class="line"><span class="string">    won't be installed by \e[1mpacman -S blackarch\e[0m"</span></div><div class="line">    comm -13 &lt;(pacman -Sgq blackarch|sort) &lt;(pacman -Sgq <span class="variable">$tool_grp</span>|sort -u)</div><div class="line">    <span class="built_in">echo</span> <span class="string">'--------------------------------------------------------------------------------'</span></div></pre></td></tr></table></figure>
+<p>It will output like following:</p>
+<pre><code>--------------------------------------------------------------------------------
+packages not in either blackarch group or blackarch-&lt;category&gt; group,
+    won&apos;t be installed by pacman -S blackarch-&lt;category&gt; or pacman -S blackarch
+blackarch-config-awesome
+blackarch-config-bash
+blackarch-config-fluxbox
+blackarch-config-gtk
+blackarch-config-lxdm
+blackarch-config-openbox
+blackarch-config-spectrwm
+blackarch-config-vim
+blackarch-config-wmii
+blackarch-config-x11
+blackarch-devtools
+blackarch-dwm
+blackarch-installer
+blackarch-keyring
+blackarch-wallpaper
+blackmate
+--------------------------------------------------------------------------------
+packages in blackarch group but not in blackarch-&lt;category&gt; group,
+    won&apos;t be installed by pacman -S blackarch-&lt;category&gt;
+blackarch-menus
+blackarch-mirrorlist
+ruby-msgpack
+--------------------------------------------------------------------------------
+packages not in blackarch group but in blackarch-&lt;category&gt; group,
+    won&apos;t be installed by pacman -S blackarch
+cryptohazemultiforcer
+cudahashcat
+malboxes
+truecrack
+vmcloak
+--------------------------------------------------------------------------------
+</code></pre><p>Install the package you need.</p>
+<hr>
+<h2 id="Configure-Menus"><a href="#Configure-Menus" class="headerlink" title=" Configure Menus"></a> Configure Menus</h2><p>You may have customized WM or DE, only need a menu for BlackArch rather than installing package <code>blackarch-config-*</code></p>
+<h3 id="automatic-generate-WM-menu-from-xdg-files"><a href="#automatic-generate-WM-menu-from-xdg-files" class="headerlink" title="automatic generate WM menu from xdg files"></a>automatic generate WM menu from xdg files</h3><pre><code>pacman -S archlinux-xdg-menu blackarch-menus
+</code></pre><p><code>xdg_menu</code> output format can be:<br> twm, WindowMaker, fvwm2, icewm, ion3, blackbox, fluxbox, openbox, xfce4, openbox3, openbox3-pipe, awesome jwm<br>And it compatible with Gnome, KDE, Xfce and Enlightenment.<br>For more info about xdg_menu usage &amp; examples, see <a href="https://wiki.archlinux.org/index.php/Xdg_menu" target="_blank" rel="external">ArchWiki</a></p>
+<h3 id="For-awesome-4"><a href="#For-awesome-4" class="headerlink" title="For awesome 4"></a>For awesome 4</h3><p>If you use awesome 4, the xdg_menu does not create the correct lua code.But as a workaround you can do as following:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">pacman -Sw blackarch-config-awesome</div><div class="line">tar xJf /var/cache/pacman/pkg/blackarch-config-awesome-*.pkg.tar.xz -C /tmp etc/xdg/awesome/rc.lua.blackarch</div><div class="line">sed -n <span class="string">'/antiforensicmenu/,/mymainmenu/p'</span> /tmp/etc/xdg/awesome/rc.lua.blackarch \</div><div class="line">|sed -n <span class="string">'$d;w ~/.config/awesome/blackarchmenu.lua'</span></div><div class="line">rm -r /tmp/etc</div></pre></td></tr></table></figure>
+<p>Then edit you rc.lua as shown below:<br>    Add a require statment for your new menu.lua file<br>    Add an entry to your awful.menu object for your new menu which calls xdgmenu</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">...</div><div class="line">xdg_menu = <span class="built_in">require</span>(<span class="string">"blackarchmenu"</span>)</div><div class="line">...</div><div class="line"></div><div class="line">...</div><div class="line">mymainmenu = awful.menu(&#123; items = &#123; &#123; <span class="string">"awesome"</span>, myawesomemenu, beautiful.awesome_icon &#125;,</div><div class="line">                                    &#123; <span class="string">"BlackArch"</span>, blackarchmenu &#125;,</div><div class="line">                                    &#123; <span class="string">"open terminal"</span>, terminal &#125;</div><div class="line">                                    ...</div><div class="line">                                  &#125;</div><div class="line">                        &#125;)</div><div class="line">...</div></pre></td></tr></table></figure>
+<hr>
+<h2 id="Build-The-Blackarch-Packages-From-Source"><a href="#Build-The-Blackarch-Packages-From-Source" class="headerlink" title=" Build The Blackarch Packages From Source"></a> Build The Blackarch Packages From Source</h2><p>As part of an alternative method of installation, you can build the blackarch packages from source. You can find the PKGBUILDs on github. To build the entire repo, you can use the blackman tool.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># First, you must install blackman. If the BlackArch package repository is setup on your machine,</span></div><div class="line"><span class="comment"># you can install blackman like:</span></div><div class="line">$ sudo pacman -S blackman</div><div class="line"></div><div class="line"><span class="comment"># Download, compile and install package:</span></div><div class="line">$ sudo blackman -i &lt;package&gt;</div><div class="line"></div><div class="line"><span class="comment"># Download, compile and install whole category</span></div><div class="line">$ sudo blackman -g &lt;group&gt;</div><div class="line"></div><div class="line"><span class="comment"># Download, compile and install all BlackArch tools</span></div><div class="line">$ sudo blackman -a</div><div class="line"></div><div class="line"><span class="comment"># To list blackarch categories</span></div><div class="line">$ blackman -l</div><div class="line"></div><div class="line"><span class="comment"># To list category tools</span></div><div class="line">$ blackman -p &lt;category&gt;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+    
+        <div class="article-footer-copyright">
+    <div style="text-align:center">
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">
+        <img alt="Creative Commons License" style="border-width:0"
+        src="/image/copyright.png" />
+        </a>
+    </div>
+    This work is licensed under a 
+    <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">
+    Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License
+    </a>.
+    NonCommercial reprint please indicate the auther and source,
+    Commercial reprint please contact the auther.
+</div>
+
+    
+      <a data-url="http://philosophos.localhost/articles/20170305~Installing-BlackArch-on-top-of-ArchLinux/" data-id="cj7xnecvr000dvmm86ok9n0as" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BlackArch/">BlackArch</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Install/">Install</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/articles/20170313~OpenWrt-set-ssh/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          OpenWrt -- Set SSH
+        
+      </div>
+    </a>
+  
+  
+    <a href="/articles/20170304~Password-Protection-of-GRUB-Menu/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">Password Protection of GRUB Menu</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Network/">Network</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/OpenWrt/">OpenWrt</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/Bash/">Bash</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/Zsh/">Zsh</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Network/">Network</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ARP/">ARP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Arch/">Arch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bash/">Bash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BlackArch/">BlackArch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EIGRP/">EIGRP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fn/">Fn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Frame/">Frame</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GRUB/">GRUB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTPS/">HTTPS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ICMP/">ICMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IP/">IP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Install/">Install</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LSA/">LSA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Manually/">Manually</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Network/">Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OSPF/">OSPF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OSPFv2/">OSPFv2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OSPFv3/">OSPFv3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenWrt/">OpenWrt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PDU/">PDU</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PPPOE/">PPPOE</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Port/">Port</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RIP/">RIP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Router/">Router</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Routing/">Routing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Service/">Service</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Signature-Authentication/">Signature Authentication</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TCP/">TCP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UDP/">UDP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Wireless/">Wireless</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zsh/">Zsh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/esc-seq/">esc-seq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ifconfig/">ifconfig</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iproute2/">iproute2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/keycode/">keycode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/net-tools/">net-tools</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/password/">password</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/port/">port</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/root/">root</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shortkeys/">shortkeys</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/source/">source</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sysrq/">sysrq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tput/">tput</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wifi/">wifi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xev/">xev</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+    <script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+    <div class="widget-wrap">
+        <h3 class="widget-title">Tag Cloud</h3>
+        <div id="myCanvasContainer" class="widget tagcloud">
+            <canvas width="250" height="250" id="resCanvas" style="width=100%">
+                <a href="/tags/ARP/" style="font-size: 10px;">ARP</a> <a href="/tags/Arch/" style="font-size: 10px;">Arch</a> <a href="/tags/Bash/" style="font-size: 10px;">Bash</a> <a href="/tags/BlackArch/" style="font-size: 10px;">BlackArch</a> <a href="/tags/EIGRP/" style="font-size: 10px;">EIGRP</a> <a href="/tags/Fn/" style="font-size: 10px;">Fn</a> <a href="/tags/Frame/" style="font-size: 10px;">Frame</a> <a href="/tags/GRUB/" style="font-size: 10px;">GRUB</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/ICMP/" style="font-size: 10px;">ICMP</a> <a href="/tags/IP/" style="font-size: 10px;">IP</a> <a href="/tags/Install/" style="font-size: 11.43px;">Install</a> <a href="/tags/LSA/" style="font-size: 11.43px;">LSA</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Manually/" style="font-size: 10px;">Manually</a> <a href="/tags/Network/" style="font-size: 18.57px;">Network</a> <a href="/tags/OSPF/" style="font-size: 14.29px;">OSPF</a> <a href="/tags/OSPFv2/" style="font-size: 11.43px;">OSPFv2</a> <a href="/tags/OSPFv3/" style="font-size: 11.43px;">OSPFv3</a> <a href="/tags/OpenWrt/" style="font-size: 12.86px;">OpenWrt</a> <a href="/tags/PDU/" style="font-size: 17.14px;">PDU</a> <a href="/tags/PPPOE/" style="font-size: 11.43px;">PPPOE</a> <a href="/tags/Port/" style="font-size: 10px;">Port</a> <a href="/tags/RIP/" style="font-size: 10px;">RIP</a> <a href="/tags/Router/" style="font-size: 12.86px;">Router</a> <a href="/tags/Routing/" style="font-size: 15.71px;">Routing</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/Service/" style="font-size: 10px;">Service</a> <a href="/tags/Shell/" style="font-size: 11.43px;">Shell</a> <a href="/tags/Signature-Authentication/" style="font-size: 10px;">Signature Authentication</a> <a href="/tags/TCP/" style="font-size: 10px;">TCP</a> <a href="/tags/UDP/" style="font-size: 10px;">UDP</a> <a href="/tags/Wireless/" style="font-size: 10px;">Wireless</a> <a href="/tags/Zsh/" style="font-size: 10px;">Zsh</a> <a href="/tags/esc-seq/" style="font-size: 11.43px;">esc-seq</a> <a href="/tags/ifconfig/" style="font-size: 10px;">ifconfig</a> <a href="/tags/iproute2/" style="font-size: 10px;">iproute2</a> <a href="/tags/keycode/" style="font-size: 10px;">keycode</a> <a href="/tags/net-tools/" style="font-size: 10px;">net-tools</a> <a href="/tags/password/" style="font-size: 11.43px;">password</a> <a href="/tags/port/" style="font-size: 10px;">port</a> <a href="/tags/root/" style="font-size: 10px;">root</a> <a href="/tags/shortkeys/" style="font-size: 12.86px;">shortkeys</a> <a href="/tags/source/" style="font-size: 10px;">source</a> <a href="/tags/sysrq/" style="font-size: 10px;">sysrq</a> <a href="/tags/tput/" style="font-size: 11.43px;">tput</a> <a href="/tags/wifi/" style="font-size: 10px;">wifi</a> <a href="/tags/xev/" style="font-size: 10px;">xev</a>
+            </canvas>
+      <a href="/tags/ARP/" style="font-size: 10px;">ARP</a> <a href="/tags/Arch/" style="font-size: 10px;">Arch</a> <a href="/tags/Bash/" style="font-size: 10px;">Bash</a> <a href="/tags/BlackArch/" style="font-size: 10px;">BlackArch</a> <a href="/tags/EIGRP/" style="font-size: 10px;">EIGRP</a> <a href="/tags/Fn/" style="font-size: 10px;">Fn</a> <a href="/tags/Frame/" style="font-size: 10px;">Frame</a> <a href="/tags/GRUB/" style="font-size: 10px;">GRUB</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/ICMP/" style="font-size: 10px;">ICMP</a> <a href="/tags/IP/" style="font-size: 10px;">IP</a> <a href="/tags/Install/" style="font-size: 11.43px;">Install</a> <a href="/tags/LSA/" style="font-size: 11.43px;">LSA</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Manually/" style="font-size: 10px;">Manually</a> <a href="/tags/Network/" style="font-size: 18.57px;">Network</a> <a href="/tags/OSPF/" style="font-size: 14.29px;">OSPF</a> <a href="/tags/OSPFv2/" style="font-size: 11.43px;">OSPFv2</a> <a href="/tags/OSPFv3/" style="font-size: 11.43px;">OSPFv3</a> <a href="/tags/OpenWrt/" style="font-size: 12.86px;">OpenWrt</a> <a href="/tags/PDU/" style="font-size: 17.14px;">PDU</a> <a href="/tags/PPPOE/" style="font-size: 11.43px;">PPPOE</a> <a href="/tags/Port/" style="font-size: 10px;">Port</a> <a href="/tags/RIP/" style="font-size: 10px;">RIP</a> <a href="/tags/Router/" style="font-size: 12.86px;">Router</a> <a href="/tags/Routing/" style="font-size: 15.71px;">Routing</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/Service/" style="font-size: 10px;">Service</a> <a href="/tags/Shell/" style="font-size: 11.43px;">Shell</a> <a href="/tags/Signature-Authentication/" style="font-size: 10px;">Signature Authentication</a> <a href="/tags/TCP/" style="font-size: 10px;">TCP</a> <a href="/tags/UDP/" style="font-size: 10px;">UDP</a> <a href="/tags/Wireless/" style="font-size: 10px;">Wireless</a> <a href="/tags/Zsh/" style="font-size: 10px;">Zsh</a> <a href="/tags/esc-seq/" style="font-size: 11.43px;">esc-seq</a> <a href="/tags/ifconfig/" style="font-size: 10px;">ifconfig</a> <a href="/tags/iproute2/" style="font-size: 10px;">iproute2</a> <a href="/tags/keycode/" style="font-size: 10px;">keycode</a> <a href="/tags/net-tools/" style="font-size: 10px;">net-tools</a> <a href="/tags/password/" style="font-size: 11.43px;">password</a> <a href="/tags/port/" style="font-size: 10px;">port</a> <a href="/tags/root/" style="font-size: 10px;">root</a> <a href="/tags/shortkeys/" style="font-size: 12.86px;">shortkeys</a> <a href="/tags/source/" style="font-size: 10px;">source</a> <a href="/tags/sysrq/" style="font-size: 10px;">sysrq</a> <a href="/tags/tput/" style="font-size: 11.43px;">tput</a> <a href="/tags/wifi/" style="font-size: 10px;">wifi</a> <a href="/tags/xev/" style="font-size: 10px;">xev</a>
+        </div>
+    </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/articles/20170924~BGP-Message-Format/">BGP Message Format</a>
+          </li>
+        
+          <li>
+            <a href="/articles/20170923~OSPFv3-LSA-Message-Format/">OSPFv3 LSA Message Format</a>
+          </li>
+        
+          <li>
+            <a href="/articles/20170923~OSPFv2-LSA-Message-Format/">OSPFv2 LSA Message Format</a>
+          </li>
+        
+          <li>
+            <a href="/articles/20170922~OSPFv3-Message-Format/">OSPFv3 Message Format</a>
+          </li>
+        
+          <li>
+            <a href="/articles/20170922~OSPFv2-Message-Format/">OSPFv2 Message Format</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+
+</aside>
+
+        
+      </div>
+      <footer id="footer">
+    
+    <div class="outer">
+        <div id="footer-left">
+            &copy; 2017 philosophos &lt;&gt;
+            <br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+            <br>
+            <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+            </script>
+            <span id="busuanzi_container_site_pv" style='display:none'>
+                Total Visits:&nbsp;
+                <span id="busuanzi_value_site_pv"></span>
+            </span>
+            <br>
+            <span id="busuanzi_container_site_uv" style='display:none'>
+                You are Visiter No.
+                <span id="busuanzi_value_site_uv"></span>
+            </span>
+        </div>
+            <!--
+            <span id="busuanzi_container_page_pv" style='display:none'>
+                Total Visits:&nbsp;
+                <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            -->
+    </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/links" class="mobile-nav-link">Links</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

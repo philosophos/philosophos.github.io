@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>OpenWrt -- Set SSH | Enjoy CS&amp;IT, Enjoy Life</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="On OpenWrt , set ssh Signature Authentication, disable PasswordAuth, change default port.">
+<meta name="keywords" content="Linux,OpenWrt,Router,SSH,Signature Authentication,port">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenWrt -- Set SSH">
+<meta property="og:url" content="http://philosophos.localhost/articles/20170313~OpenWrt-set-ssh/index.html">
+<meta property="og:site_name" content="Enjoy CS&amp;IT, Enjoy Life">
+<meta property="og:description" content="On OpenWrt , set ssh Signature Authentication, disable PasswordAuth, change default port.">
+<meta property="og:updated_time" content="2017-09-18T20:31:04.773Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OpenWrt -- Set SSH">
+<meta name="twitter:description" content="On OpenWrt , set ssh Signature Authentication, disable PasswordAuth, change default port.">
+  
+    <link rel="alternate" href="/atom.xml" title="Enjoy CS&amp;IT, Enjoy Life" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Enjoy CS&amp;IT, Enjoy Life</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/links">Links</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://philosophos.localhost"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-OpenWrt-set-ssh" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/articles/20170313~OpenWrt-set-ssh/" class="article-date">
+  <time datetime="2017-03-13T12:28:31.000Z" itemprop="datePublished">2017-03-13</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>►<a class="article-category-link" href="/categories/Linux/OpenWrt/">OpenWrt</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      OpenWrt -- Set SSH
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>Set Password At First Login</li>
+<li>SSH Signature Authentication<ul>
+<li>Authentication Key Generation</li>
+<li>Copy Public Key To The OpenWrt System</li>
+</ul>
+</li>
+<li>Disable PasswordAuth, Change Default Port<ul>
+<li>Use uci command</li>
+<li>Edit /etc/config/dropbear Directly</li>
+</ul>
+</li>
+<li>Simple Your Life With an SSH Config File</li>
+</ul>
+<p>About <a href="https://matt.ucc.asn.au/dropbear/dropbear.html" target="_blank" rel="external">dropbear</a><br><a id="more"></a></p>
+<hr>
+<h2 id="Set-Password-At-First-Login"><a href="#Set-Password-At-First-Login" class="headerlink" title="Set Password At First Login"></a>Set Password At First Login</h2><pre><code>$ telnet 192.168.1.1
+telnet 192.168.1.1
+Trying 192.168.1.1...
+Connected to 192.168.1.1.
+Escape character is &apos;^]&apos;.
+ === IMPORTANT ============================
+  Use &apos;passwd&apos; to set your login password
+  this will disable telnet and enable SSH
+ ------------------------------------------
+
+
+BusyBox v1.23.2 (2016-01-02 05:45:02 CET) built-in shell (ash)
+
+  _______                     ________        __
+ |       |.-----.-----.-----.|  |  |  |.----.|  |_
+ |   -   ||  _  |  -__|     ||  |  |  ||   _||   _|
+ |_______||   __|_____|__|__||________||__|  |____|
+          |__| W I R E L E S S   F R E E D O M
+ -----------------------------------------------------
+ CHAOS CALMER (15.05.1, r48532)
+ -----------------------------------------------------
+  * 1 1/2 oz Gin            Shake with a glassful
+  * 1/4 oz Triple Sec       of broken ice and pour
+  * 3/4 oz Lime Juice       unstrained into a goblet.
+  * 1 1/2 oz Orange Juice
+  * 1 tsp. Grenadine Syrup
+ -----------------------------------------------------
+root@openwrt:~$ passwd
+Changing password for root
+New password:
+Retype password:
+Password for root changed by root
+root@OpenWrt:~$
+</code></pre><ul>
+<li>Please choose a secure password, else the passwd tool will say to you <code>Bad password: too weak</code> after the line <code>New password:</code></li>
+<li>After you set a password the telnet daemon will be disabled, type exit into the prompt Without reboot, SSH is now available; so is HTTPS if the WebUI (LuCI) is installed with it’s TLS-modules</li>
+</ul>
+<pre><code>$ telnet 192.168.1.1
+Trying 192.168.1.1...
+Connected to 192.168.1.1.
+Escape character is &apos;^]&apos;.
+Login failed.
+Connection closed by foreign host
+
+$ ssh root@192.168.1.1
+The authenticity of host &apos;192.168.1.1 (192.168.1.1)&apos; can&apos;t be established.
+RSA key fingerprint is SHA256:VWZOi9dHQ06YSQuLVg0i74MH7HhJj118KWe+dixtZvI.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added &apos;192.168.1.1&apos; (RSA) to the list of known hosts.
+root@192.168.1.1&apos;s password:
+
+
+BusyBox v1.23.2 (2016-01-02 05:45:02 CET) built-in shell (ash)
+
+  _______                     ________        __
+ |       |.-----.-----.-----.|  |  |  |.----.|  |_
+ |   -   ||  _  |  -__|     ||  |  |  ||   _||   _|
+ |_______||   __|_____|__|__||________||__|  |____|
+          |__| W I R E L E S S   F R E E D O M
+ -----------------------------------------------------
+ CHAOS CALMER (15.05.1, r48532)
+ -----------------------------------------------------
+  * 1 1/2 oz Gin            Shake with a glassful
+  * 1/4 oz Triple Sec       of broken ice and pour
+  * 3/4 oz Lime Juice       unstrained into a goblet.
+  * 1 1/2 oz Orange Juice
+  * 1 tsp. Grenadine Syrup
+ -----------------------------------------------------
+root@OpenWrt:~#
+</code></pre><hr>
+<h2 id="SSH-Signature-Authentication"><a href="#SSH-Signature-Authentication" class="headerlink" title="SSH Signature Authentication"></a>SSH Signature Authentication</h2><h3 id="Authentication-Key-Generation"><a href="#Authentication-Key-Generation" class="headerlink" title="Authentication Key Generation"></a>Authentication Key Generation</h3><pre><code>$ ssh-keygen -C &apos;root@WRT&apos; -f ~/.ssh/wrt_rsa
+Generating public/private rsa key pair.
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /home/j0ham/.ssh/wrt_rsa.
+Your public key has been saved in /home/j0ham/.ssh/wrt_rsa.pub.
+The key fingerprint is:
+SHA256:MKm5X6uxA9VM9iNVQNEA4A7fpumL8KTsL820pxrSzGk root@WRT
+The key&apos;s randomart image is:
++---[RSA 2048]----+
+|      ...o=*.    |
+|     . .o . .    |
+|    . == o       |
+|     *.++ o      |
+|    o.o S. .     |
+| + .o. +         |
+|. E+oo+ .        |
+| +.*++o+ .       |
+| .=+=o*+.        |
++----[SHA256]-----+
+</code></pre><h3 id="Copy-Public-Key-To-The-OpenWrt-System"><a href="#Copy-Public-Key-To-The-OpenWrt-System" class="headerlink" title="Copy Public Key To The OpenWrt System"></a>Copy Public Key To The OpenWrt System</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ cat ~/.ssh/wrt_rsa.pub | ssh root@192.168.1.1 <span class="string">'cat &gt;&gt; /etc/dropbear/authorized_keys; chmod 0600 /etc/dropbear/authorized_keys'</span></div></pre></td></tr></table></figure>
+<p>Now <code>ssh -i ~/.ssh/wrt_rsa root@192.168.1.1</code> can ssh to the OpenWrt system.</p>
+<hr>
+<h2 id="Disable-PasswordAuth-Change-Default-Port"><a href="#Disable-PasswordAuth-Change-Default-Port" class="headerlink" title="Disable PasswordAuth, Change Default Port"></a>Disable PasswordAuth, Change Default Port</h2><h3 id="Use-uci-command"><a href="#Use-uci-command" class="headerlink" title="Use uci command"></a>Use uci command</h3><pre><code>root@OpenWrt:~# uci show dropbear
+dropbear.@dropbear[0]=dropbear
+dropbear.@dropbear[0].PasswordAuth=&apos;on&apos;
+dropbear.@dropbear[0].RootPasswordAuth=&apos;on&apos;
+dropbear.@dropbear[0].Port=&apos;22&apos;
+root@OpenWrt:~# uci set dropbear.@dropbear[0].Port=&apos;2222&apos;
+root@OpenWrt:~# uci set dropbear.@dropbear[0].PasswordAuth=&apos;off&apos;
+root@OpenWrt:~# uci set dropbear.@dropbear[0].RootPasswordAuth=&apos;off&apos;
+root@OpenWrt:~# uci commit dropbear
+root@OpenWrt:~# uci show dropbear
+dropbear.@dropbear[0]=dropbear
+dropbear.@dropbear[0].Port=&apos;2222&apos;
+dropbear.@dropbear[0].PasswordAuth=&apos;off&apos;
+dropbear.@dropbear[0].RootPasswordAuth=&apos;off&apos;
+root@OpenWrt:~# /etc/init.d/dropbear reload
+</code></pre><h3 id="Edit-etc-config-dropbear-Directly"><a href="#Edit-etc-config-dropbear-Directly" class="headerlink" title="Edit /etc/config/dropbear Directly"></a>Edit /etc/config/dropbear Directly</h3><pre><code>root@OpenWrt:~# cat /etc/config/dropbear
+config dropbear
+    option PasswordAuth &apos;on&apos;
+    option RootPasswordAuth &apos;on&apos;
+    option Port         &apos;22&apos;
+#   option BannerFile   &apos;/etc/banner&apos;
+</code></pre><figure class="highlight sh"><figcaption><span>Edit /etc/config/dropbear</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">config dropbear</div><div class="line">        option PasswordAuth <span class="string">'off'</span></div><div class="line">        option RootPasswordAuth <span class="string">'off'</span></div><div class="line">        option Port         <span class="string">'2222'</span></div><div class="line"><span class="comment">#       option BannerFile   '/etc/banner'</span></div></pre></td></tr></table></figure>
+<pre><code>root@OpenWrt:~# /etc/init.d/dropbear reload
+</code></pre><p>Now only <code>ssh -i ~/.ssh/wrt_rsa -p 2222 root@192.168.1.1</code> can ssh to the OpenWrt system.</p>
+<hr>
+<h2 id="Simple-Your-Life-With-an-SSH-Config-File"><a href="#Simple-Your-Life-With-an-SSH-Config-File" class="headerlink" title="Simple Your Life With an SSH Config File"></a>Simple Your Life With an SSH Config File</h2><figure class="highlight sh"><figcaption><span>Edit ~/.ssh/config</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Host openWRT</div><div class="line">    User root</div><div class="line">    Hostname 192.168.1.1</div><div class="line">    Port 2222</div><div class="line">    PreferredAuthentications publickey</div><div class="line">    IdentityFile ~/.ssh/wrt_rsa</div></pre></td></tr></table></figure>
+<p>Now <code>ssh openWRT</code> can ssh to the OpenWrt system.</p>
+<hr>
+<p>About <a href="https://matt.ucc.asn.au/dropbear/dropbear.html" target="_blank" rel="external">dropbear</a><br>Dropbear is a relatively small SSH server and client. It runs on a variety of POSIX-based platforms. Dropbear is open source software, distributed under a MIT-style license.  Dropbear is particularly useful for “embedded”-type Linux (or other Unix) systems, such as wireless routers.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+    
+      <a data-url="http://philosophos.localhost/articles/20170313~OpenWrt-set-ssh/" data-id="cj7xnecvx000kvmm8vmmjbvmz" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenWrt/">OpenWrt</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Router/">Router</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SSH/">SSH</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Signature-Authentication/">Signature Authentication</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/port/">port</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/articles/20170313~OpenWrt-set-source-with-HTTPS/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          OpenWrt -- set source with HTTPS
+        
+      </div>
+    </a>
+  
+  
+    <a href="/articles/20170305~Installing-BlackArch-on-top-of-ArchLinux/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">Installing BlackArch on top of Arch Linux</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Network/">Network</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/OpenWrt/">OpenWrt</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/Bash/">Bash</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/Zsh/">Zsh</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Network/">Network</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ARP/">ARP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Arch/">Arch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bash/">Bash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BlackArch/">BlackArch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EIGRP/">EIGRP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fn/">Fn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Frame/">Frame</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GRUB/">GRUB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTPS/">HTTPS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ICMP/">ICMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IP/">IP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Install/">Install</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LSA/">LSA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Manually/">Manually</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Network/">Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OSPF/">OSPF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OSPFv2/">OSPFv2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OSPFv3/">OSPFv3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenWrt/">OpenWrt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PDU/">PDU</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PPPOE/">PPPOE</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Port/">Port</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RIP/">RIP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Router/">Router</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Routing/">Routing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Service/">Service</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Signature-Authentication/">Signature Authentication</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TCP/">TCP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UDP/">UDP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Wireless/">Wireless</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zsh/">Zsh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/esc-seq/">esc-seq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ifconfig/">ifconfig</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iproute2/">iproute2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/keycode/">keycode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/net-tools/">net-tools</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/password/">password</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/port/">port</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/root/">root</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shortkeys/">shortkeys</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/source/">source</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sysrq/">sysrq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tput/">tput</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wifi/">wifi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xev/">xev</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+    <script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+    <div class="widget-wrap">
+        <h3 class="widget-title">Tag Cloud</h3>
+        <div id="myCanvasContainer" class="widget tagcloud">
+            <canvas width="250" height="250" id="resCanvas" style="width=100%">
+                <a href="/tags/ARP/" style="font-size: 10px;">ARP</a> <a href="/tags/Arch/" style="font-size: 10px;">Arch</a> <a href="/tags/Bash/" style="font-size: 10px;">Bash</a> <a href="/tags/BlackArch/" style="font-size: 10px;">BlackArch</a> <a href="/tags/EIGRP/" style="font-size: 10px;">EIGRP</a> <a href="/tags/Fn/" style="font-size: 10px;">Fn</a> <a href="/tags/Frame/" style="font-size: 10px;">Frame</a> <a href="/tags/GRUB/" style="font-size: 10px;">GRUB</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/ICMP/" style="font-size: 10px;">ICMP</a> <a href="/tags/IP/" style="font-size: 10px;">IP</a> <a href="/tags/Install/" style="font-size: 11.43px;">Install</a> <a href="/tags/LSA/" style="font-size: 11.43px;">LSA</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Manually/" style="font-size: 10px;">Manually</a> <a href="/tags/Network/" style="font-size: 18.57px;">Network</a> <a href="/tags/OSPF/" style="font-size: 14.29px;">OSPF</a> <a href="/tags/OSPFv2/" style="font-size: 11.43px;">OSPFv2</a> <a href="/tags/OSPFv3/" style="font-size: 11.43px;">OSPFv3</a> <a href="/tags/OpenWrt/" style="font-size: 12.86px;">OpenWrt</a> <a href="/tags/PDU/" style="font-size: 17.14px;">PDU</a> <a href="/tags/PPPOE/" style="font-size: 11.43px;">PPPOE</a> <a href="/tags/Port/" style="font-size: 10px;">Port</a> <a href="/tags/RIP/" style="font-size: 10px;">RIP</a> <a href="/tags/Router/" style="font-size: 12.86px;">Router</a> <a href="/tags/Routing/" style="font-size: 15.71px;">Routing</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/Service/" style="font-size: 10px;">Service</a> <a href="/tags/Shell/" style="font-size: 11.43px;">Shell</a> <a href="/tags/Signature-Authentication/" style="font-size: 10px;">Signature Authentication</a> <a href="/tags/TCP/" style="font-size: 10px;">TCP</a> <a href="/tags/UDP/" style="font-size: 10px;">UDP</a> <a href="/tags/Wireless/" style="font-size: 10px;">Wireless</a> <a href="/tags/Zsh/" style="font-size: 10px;">Zsh</a> <a href="/tags/esc-seq/" style="font-size: 11.43px;">esc-seq</a> <a href="/tags/ifconfig/" style="font-size: 10px;">ifconfig</a> <a href="/tags/iproute2/" style="font-size: 10px;">iproute2</a> <a href="/tags/keycode/" style="font-size: 10px;">keycode</a> <a href="/tags/net-tools/" style="font-size: 10px;">net-tools</a> <a href="/tags/password/" style="font-size: 11.43px;">password</a> <a href="/tags/port/" style="font-size: 10px;">port</a> <a href="/tags/root/" style="font-size: 10px;">root</a> <a href="/tags/shortkeys/" style="font-size: 12.86px;">shortkeys</a> <a href="/tags/source/" style="font-size: 10px;">source</a> <a href="/tags/sysrq/" style="font-size: 10px;">sysrq</a> <a href="/tags/tput/" style="font-size: 11.43px;">tput</a> <a href="/tags/wifi/" style="font-size: 10px;">wifi</a> <a href="/tags/xev/" style="font-size: 10px;">xev</a>
+            </canvas>
+      <a href="/tags/ARP/" style="font-size: 10px;">ARP</a> <a href="/tags/Arch/" style="font-size: 10px;">Arch</a> <a href="/tags/Bash/" style="font-size: 10px;">Bash</a> <a href="/tags/BlackArch/" style="font-size: 10px;">BlackArch</a> <a href="/tags/EIGRP/" style="font-size: 10px;">EIGRP</a> <a href="/tags/Fn/" style="font-size: 10px;">Fn</a> <a href="/tags/Frame/" style="font-size: 10px;">Frame</a> <a href="/tags/GRUB/" style="font-size: 10px;">GRUB</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/ICMP/" style="font-size: 10px;">ICMP</a> <a href="/tags/IP/" style="font-size: 10px;">IP</a> <a href="/tags/Install/" style="font-size: 11.43px;">Install</a> <a href="/tags/LSA/" style="font-size: 11.43px;">LSA</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Manually/" style="font-size: 10px;">Manually</a> <a href="/tags/Network/" style="font-size: 18.57px;">Network</a> <a href="/tags/OSPF/" style="font-size: 14.29px;">OSPF</a> <a href="/tags/OSPFv2/" style="font-size: 11.43px;">OSPFv2</a> <a href="/tags/OSPFv3/" style="font-size: 11.43px;">OSPFv3</a> <a href="/tags/OpenWrt/" style="font-size: 12.86px;">OpenWrt</a> <a href="/tags/PDU/" style="font-size: 17.14px;">PDU</a> <a href="/tags/PPPOE/" style="font-size: 11.43px;">PPPOE</a> <a href="/tags/Port/" style="font-size: 10px;">Port</a> <a href="/tags/RIP/" style="font-size: 10px;">RIP</a> <a href="/tags/Router/" style="font-size: 12.86px;">Router</a> <a href="/tags/Routing/" style="font-size: 15.71px;">Routing</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/Service/" style="font-size: 10px;">Service</a> <a href="/tags/Shell/" style="font-size: 11.43px;">Shell</a> <a href="/tags/Signature-Authentication/" style="font-size: 10px;">Signature Authentication</a> <a href="/tags/TCP/" style="font-size: 10px;">TCP</a> <a href="/tags/UDP/" style="font-size: 10px;">UDP</a> <a href="/tags/Wireless/" style="font-size: 10px;">Wireless</a> <a href="/tags/Zsh/" style="font-size: 10px;">Zsh</a> <a href="/tags/esc-seq/" style="font-size: 11.43px;">esc-seq</a> <a href="/tags/ifconfig/" style="font-size: 10px;">ifconfig</a> <a href="/tags/iproute2/" style="font-size: 10px;">iproute2</a> <a href="/tags/keycode/" style="font-size: 10px;">keycode</a> <a href="/tags/net-tools/" style="font-size: 10px;">net-tools</a> <a href="/tags/password/" style="font-size: 11.43px;">password</a> <a href="/tags/port/" style="font-size: 10px;">port</a> <a href="/tags/root/" style="font-size: 10px;">root</a> <a href="/tags/shortkeys/" style="font-size: 12.86px;">shortkeys</a> <a href="/tags/source/" style="font-size: 10px;">source</a> <a href="/tags/sysrq/" style="font-size: 10px;">sysrq</a> <a href="/tags/tput/" style="font-size: 11.43px;">tput</a> <a href="/tags/wifi/" style="font-size: 10px;">wifi</a> <a href="/tags/xev/" style="font-size: 10px;">xev</a>
+        </div>
+    </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/articles/20170924~BGP-Message-Format/">BGP Message Format</a>
+          </li>
+        
+          <li>
+            <a href="/articles/20170923~OSPFv3-LSA-Message-Format/">OSPFv3 LSA Message Format</a>
+          </li>
+        
+          <li>
+            <a href="/articles/20170923~OSPFv2-LSA-Message-Format/">OSPFv2 LSA Message Format</a>
+          </li>
+        
+          <li>
+            <a href="/articles/20170922~OSPFv3-Message-Format/">OSPFv3 Message Format</a>
+          </li>
+        
+          <li>
+            <a href="/articles/20170922~OSPFv2-Message-Format/">OSPFv2 Message Format</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+
+</aside>
+
+        
+      </div>
+      <footer id="footer">
+    
+    <div class="outer">
+        <div id="footer-left">
+            &copy; 2017 philosophos &lt;&gt;
+            <br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+            <br>
+            <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+            </script>
+            <span id="busuanzi_container_site_pv" style='display:none'>
+                Total Visits:&nbsp;
+                <span id="busuanzi_value_site_pv"></span>
+            </span>
+            <br>
+            <span id="busuanzi_container_site_uv" style='display:none'>
+                You are Visiter No.
+                <span id="busuanzi_value_site_uv"></span>
+            </span>
+        </div>
+            <!--
+            <span id="busuanzi_container_page_pv" style='display:none'>
+                Total Visits:&nbsp;
+                <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            -->
+    </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/links" class="mobile-nav-link">Links</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

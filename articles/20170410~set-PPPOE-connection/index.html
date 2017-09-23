@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>set PPPOE connection | Enjoy CS&amp;IT, Enjoy Life</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="deb-based Distro rpm-based Distro Arch Linux">
+<meta name="keywords" content="Linux,Network,PPPOE">
+<meta property="og:type" content="article">
+<meta property="og:title" content="set PPPOE connection">
+<meta property="og:url" content="http://philosophos.localhost/articles/20170410~set-PPPOE-connection/index.html">
+<meta property="og:site_name" content="Enjoy CS&amp;IT, Enjoy Life">
+<meta property="og:description" content="deb-based Distro rpm-based Distro Arch Linux">
+<meta property="og:updated_time" content="2017-09-18T20:31:04.773Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="set PPPOE connection">
+<meta name="twitter:description" content="deb-based Distro rpm-based Distro Arch Linux">
+  
+    <link rel="alternate" href="/atom.xml" title="Enjoy CS&amp;IT, Enjoy Life" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Enjoy CS&amp;IT, Enjoy Life</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/links">Links</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://philosophos.localhost"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-set-PPPOE-connection" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/articles/20170410~set-PPPOE-connection/" class="article-date">
+  <time datetime="2017-04-10T10:50:21.000Z" itemprop="datePublished">2017-04-10</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>►<a class="article-category-link" href="/categories/Linux/Network/">Network</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      set PPPOE connection
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>deb-based Distro</li>
+<li>rpm-based Distro</li>
+<li>Arch Linux<a id="more"></a>
+</li>
+</ul>
+<hr>
+<h2 id="deb-based-Distro"><a href="#deb-based-Distro" class="headerlink" title="deb-based Distro"></a>deb-based Distro</h2><h3 id="Install"><a href="#Install" class="headerlink" title="Install"></a>Install</h3><pre><code>apt-get install pppoe pppoeconf
+</code></pre><h3 id="Configure"><a href="#Configure" class="headerlink" title="Configure"></a>Configure</h3><pre><code>pppoeconf
+</code></pre><h3 id="Use"><a href="#Use" class="headerlink" title="Use"></a>Use</h3><pre><code>pon dsl-provider
+poff
+</code></pre><h3 id="configuration-files"><a href="#configuration-files" class="headerlink" title="configuration files"></a>configuration files</h3><p>/etc/sysconfig/network-scripts/ifcfg-eth0<br>/etc/network/interfaces<br>/etc/ppp/peers/dsl-provider<br>/etc/ppp/chap-secrets<br>/etc/ppp/pap-secrets</p>
+<hr>
+<h2 id="rpm-based-Distro"><a href="#rpm-based-Distro" class="headerlink" title="rpm-based Distro"></a>rpm-based Distro</h2><h3 id="Install-1"><a href="#Install-1" class="headerlink" title="Install"></a>Install</h3><pre><code>yum install rp-pppoe
+</code></pre><p>or</p>
+<pre><code>rpm -ivh /some-path/rp-pppoe-3.11-5.el7.x86_64.rpm
+</code></pre><h3 id="Configure-1"><a href="#Configure-1" class="headerlink" title="Configure"></a>Configure</h3><pre><code>pppoe-setup
+</code></pre><h3 id="Use-1"><a href="#Use-1" class="headerlink" title="Use"></a>Use</h3><pre><code>pppoe-status /etc/sysconfig/network-scripts/ifcfg-ppp0
+pppoe-start
+pppoe-stop
+ifup ppp0
+ifdown ppp0
+</code></pre><h3 id="configuration-files-1"><a href="#configuration-files-1" class="headerlink" title="configuration files"></a>configuration files</h3><p>/etc/sysconfig/network-scripts/ifcfg-eth0<br>/etc/sysconfig/network-scripts/ifcfg-ppp0<br>/etc/ppp/chap-secrets<br>/etc/ppp/pap-secrets</p>
+<hr>
+<h2 id="Arch-Linux"><a href="#Arch-Linux" class="headerlink" title="Arch Linux"></a>Arch Linux</h2><h3 id="Install-2"><a href="#Install-2" class="headerlink" title="Install"></a>Install</h3><pre><code>pacman -S rp-pppoe
+</code></pre><h3 id="Configure-2"><a href="#Configure-2" class="headerlink" title="Configure"></a>Configure</h3><pre><code>pppoe-setup
+</code></pre><h3 id="Use-2"><a href="#Use-2" class="headerlink" title="Use"></a>Use</h3><pre><code>pppoe-status
+pppoe-start
+pppoe-stop
+ifup ppp0
+ifdown ppp0
+</code></pre><p><strong>To make pppoe auto run when booting up</strong><br><code>systemctl enable adsl</code></p>
+<h3 id="configuration-files-2"><a href="#configuration-files-2" class="headerlink" title="configuration files"></a>configuration files</h3><p>/etc/ppp/firewall-masq<br>/etc/ppp/firewall-standalone<br>/etc/ppp/pppoe-server-options<br>/etc/ppp/pppoe.conf</p>
+
+      
+    </div>
+    <footer class="article-footer">
+    
+        <div class="article-footer-copyright">
+    <div style="text-align:center">
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">
+        <img alt="Creative Commons License" style="border-width:0"
+        src="/image/copyright.png" />
+        </a>
+    </div>
+    This work is licensed under a 
+    <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">
+    Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License
+    </a>.
+    NonCommercial reprint please indicate the auther and source,
+    Commercial reprint please contact the auther.
+</div>
+
+    
+      <a data-url="http://philosophos.localhost/articles/20170410~set-PPPOE-connection/" data-id="cj7xnecwb001cvmm81v7t3vzg" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Network/">Network</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PPPOE/">PPPOE</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/articles/20170410~Manage-Wireless-Network-Manually/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          Manage Wireless Network Manually
+        
+      </div>
+    </a>
+  
+  
+    <a href="/articles/20170410~OpenWrt-pppoe-wifi/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">OpenWrt -- pppoe &amp; wifi</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Network/">Network</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/OpenWrt/">OpenWrt</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/Bash/">Bash</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/Zsh/">Zsh</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Network/">Network</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ARP/">ARP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Arch/">Arch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bash/">Bash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BlackArch/">BlackArch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EIGRP/">EIGRP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fn/">Fn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Frame/">Frame</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GRUB/">GRUB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTPS/">HTTPS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ICMP/">ICMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IP/">IP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Install/">Install</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LSA/">LSA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Manually/">Manually</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Network/">Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OSPF/">OSPF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OSPFv2/">OSPFv2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OSPFv3/">OSPFv3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenWrt/">OpenWrt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PDU/">PDU</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PPPOE/">PPPOE</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Port/">Port</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RIP/">RIP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Router/">Router</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Routing/">Routing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Service/">Service</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Signature-Authentication/">Signature Authentication</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TCP/">TCP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UDP/">UDP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Wireless/">Wireless</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zsh/">Zsh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/esc-seq/">esc-seq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ifconfig/">ifconfig</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iproute2/">iproute2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/keycode/">keycode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/net-tools/">net-tools</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/password/">password</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/port/">port</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/root/">root</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shortkeys/">shortkeys</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/source/">source</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sysrq/">sysrq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tput/">tput</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wifi/">wifi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xev/">xev</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+    <script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+    <div class="widget-wrap">
+        <h3 class="widget-title">Tag Cloud</h3>
+        <div id="myCanvasContainer" class="widget tagcloud">
+            <canvas width="250" height="250" id="resCanvas" style="width=100%">
+                <a href="/tags/ARP/" style="font-size: 10px;">ARP</a> <a href="/tags/Arch/" style="font-size: 10px;">Arch</a> <a href="/tags/Bash/" style="font-size: 10px;">Bash</a> <a href="/tags/BlackArch/" style="font-size: 10px;">BlackArch</a> <a href="/tags/EIGRP/" style="font-size: 10px;">EIGRP</a> <a href="/tags/Fn/" style="font-size: 10px;">Fn</a> <a href="/tags/Frame/" style="font-size: 10px;">Frame</a> <a href="/tags/GRUB/" style="font-size: 10px;">GRUB</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/ICMP/" style="font-size: 10px;">ICMP</a> <a href="/tags/IP/" style="font-size: 10px;">IP</a> <a href="/tags/Install/" style="font-size: 11.43px;">Install</a> <a href="/tags/LSA/" style="font-size: 11.43px;">LSA</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Manually/" style="font-size: 10px;">Manually</a> <a href="/tags/Network/" style="font-size: 18.57px;">Network</a> <a href="/tags/OSPF/" style="font-size: 14.29px;">OSPF</a> <a href="/tags/OSPFv2/" style="font-size: 11.43px;">OSPFv2</a> <a href="/tags/OSPFv3/" style="font-size: 11.43px;">OSPFv3</a> <a href="/tags/OpenWrt/" style="font-size: 12.86px;">OpenWrt</a> <a href="/tags/PDU/" style="font-size: 17.14px;">PDU</a> <a href="/tags/PPPOE/" style="font-size: 11.43px;">PPPOE</a> <a href="/tags/Port/" style="font-size: 10px;">Port</a> <a href="/tags/RIP/" style="font-size: 10px;">RIP</a> <a href="/tags/Router/" style="font-size: 12.86px;">Router</a> <a href="/tags/Routing/" style="font-size: 15.71px;">Routing</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/Service/" style="font-size: 10px;">Service</a> <a href="/tags/Shell/" style="font-size: 11.43px;">Shell</a> <a href="/tags/Signature-Authentication/" style="font-size: 10px;">Signature Authentication</a> <a href="/tags/TCP/" style="font-size: 10px;">TCP</a> <a href="/tags/UDP/" style="font-size: 10px;">UDP</a> <a href="/tags/Wireless/" style="font-size: 10px;">Wireless</a> <a href="/tags/Zsh/" style="font-size: 10px;">Zsh</a> <a href="/tags/esc-seq/" style="font-size: 11.43px;">esc-seq</a> <a href="/tags/ifconfig/" style="font-size: 10px;">ifconfig</a> <a href="/tags/iproute2/" style="font-size: 10px;">iproute2</a> <a href="/tags/keycode/" style="font-size: 10px;">keycode</a> <a href="/tags/net-tools/" style="font-size: 10px;">net-tools</a> <a href="/tags/password/" style="font-size: 11.43px;">password</a> <a href="/tags/port/" style="font-size: 10px;">port</a> <a href="/tags/root/" style="font-size: 10px;">root</a> <a href="/tags/shortkeys/" style="font-size: 12.86px;">shortkeys</a> <a href="/tags/source/" style="font-size: 10px;">source</a> <a href="/tags/sysrq/" style="font-size: 10px;">sysrq</a> <a href="/tags/tput/" style="font-size: 11.43px;">tput</a> <a href="/tags/wifi/" style="font-size: 10px;">wifi</a> <a href="/tags/xev/" style="font-size: 10px;">xev</a>
+            </canvas>
+      <a href="/tags/ARP/" style="font-size: 10px;">ARP</a> <a href="/tags/Arch/" style="font-size: 10px;">Arch</a> <a href="/tags/Bash/" style="font-size: 10px;">Bash</a> <a href="/tags/BlackArch/" style="font-size: 10px;">BlackArch</a> <a href="/tags/EIGRP/" style="font-size: 10px;">EIGRP</a> <a href="/tags/Fn/" style="font-size: 10px;">Fn</a> <a href="/tags/Frame/" style="font-size: 10px;">Frame</a> <a href="/tags/GRUB/" style="font-size: 10px;">GRUB</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/ICMP/" style="font-size: 10px;">ICMP</a> <a href="/tags/IP/" style="font-size: 10px;">IP</a> <a href="/tags/Install/" style="font-size: 11.43px;">Install</a> <a href="/tags/LSA/" style="font-size: 11.43px;">LSA</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Manually/" style="font-size: 10px;">Manually</a> <a href="/tags/Network/" style="font-size: 18.57px;">Network</a> <a href="/tags/OSPF/" style="font-size: 14.29px;">OSPF</a> <a href="/tags/OSPFv2/" style="font-size: 11.43px;">OSPFv2</a> <a href="/tags/OSPFv3/" style="font-size: 11.43px;">OSPFv3</a> <a href="/tags/OpenWrt/" style="font-size: 12.86px;">OpenWrt</a> <a href="/tags/PDU/" style="font-size: 17.14px;">PDU</a> <a href="/tags/PPPOE/" style="font-size: 11.43px;">PPPOE</a> <a href="/tags/Port/" style="font-size: 10px;">Port</a> <a href="/tags/RIP/" style="font-size: 10px;">RIP</a> <a href="/tags/Router/" style="font-size: 12.86px;">Router</a> <a href="/tags/Routing/" style="font-size: 15.71px;">Routing</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/Service/" style="font-size: 10px;">Service</a> <a href="/tags/Shell/" style="font-size: 11.43px;">Shell</a> <a href="/tags/Signature-Authentication/" style="font-size: 10px;">Signature Authentication</a> <a href="/tags/TCP/" style="font-size: 10px;">TCP</a> <a href="/tags/UDP/" style="font-size: 10px;">UDP</a> <a href="/tags/Wireless/" style="font-size: 10px;">Wireless</a> <a href="/tags/Zsh/" style="font-size: 10px;">Zsh</a> <a href="/tags/esc-seq/" style="font-size: 11.43px;">esc-seq</a> <a href="/tags/ifconfig/" style="font-size: 10px;">ifconfig</a> <a href="/tags/iproute2/" style="font-size: 10px;">iproute2</a> <a href="/tags/keycode/" style="font-size: 10px;">keycode</a> <a href="/tags/net-tools/" style="font-size: 10px;">net-tools</a> <a href="/tags/password/" style="font-size: 11.43px;">password</a> <a href="/tags/port/" style="font-size: 10px;">port</a> <a href="/tags/root/" style="font-size: 10px;">root</a> <a href="/tags/shortkeys/" style="font-size: 12.86px;">shortkeys</a> <a href="/tags/source/" style="font-size: 10px;">source</a> <a href="/tags/sysrq/" style="font-size: 10px;">sysrq</a> <a href="/tags/tput/" style="font-size: 11.43px;">tput</a> <a href="/tags/wifi/" style="font-size: 10px;">wifi</a> <a href="/tags/xev/" style="font-size: 10px;">xev</a>
+        </div>
+    </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/articles/20170924~BGP-Message-Format/">BGP Message Format</a>
+          </li>
+        
+          <li>
+            <a href="/articles/20170923~OSPFv3-LSA-Message-Format/">OSPFv3 LSA Message Format</a>
+          </li>
+        
+          <li>
+            <a href="/articles/20170923~OSPFv2-LSA-Message-Format/">OSPFv2 LSA Message Format</a>
+          </li>
+        
+          <li>
+            <a href="/articles/20170922~OSPFv3-Message-Format/">OSPFv3 Message Format</a>
+          </li>
+        
+          <li>
+            <a href="/articles/20170922~OSPFv2-Message-Format/">OSPFv2 Message Format</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+
+</aside>
+
+        
+      </div>
+      <footer id="footer">
+    
+    <div class="outer">
+        <div id="footer-left">
+            &copy; 2017 philosophos &lt;&gt;
+            <br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+            <br>
+            <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+            </script>
+            <span id="busuanzi_container_site_pv" style='display:none'>
+                Total Visits:&nbsp;
+                <span id="busuanzi_value_site_pv"></span>
+            </span>
+            <br>
+            <span id="busuanzi_container_site_uv" style='display:none'>
+                You are Visiter No.
+                <span id="busuanzi_value_site_uv"></span>
+            </span>
+        </div>
+            <!--
+            <span id="busuanzi_container_page_pv" style='display:none'>
+                Total Visits:&nbsp;
+                <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            -->
+    </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/links" class="mobile-nav-link">Links</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

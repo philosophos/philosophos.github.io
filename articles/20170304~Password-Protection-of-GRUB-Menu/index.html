@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Password Protection of GRUB Menu | Enjoy CS&amp;IT, Enjoy Life</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="set password protection for grub menu">
+<meta name="keywords" content="Linux,password,GRUB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Password Protection of GRUB Menu">
+<meta property="og:url" content="http://philosophos.localhost/articles/20170304~Password-Protection-of-GRUB-Menu/index.html">
+<meta property="og:site_name" content="Enjoy CS&amp;IT, Enjoy Life">
+<meta property="og:description" content="set password protection for grub menu">
+<meta property="og:updated_time" content="2017-09-18T20:31:04.773Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Password Protection of GRUB Menu">
+<meta name="twitter:description" content="set password protection for grub menu">
+  
+    <link rel="alternate" href="/atom.xml" title="Enjoy CS&amp;IT, Enjoy Life" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Enjoy CS&amp;IT, Enjoy Life</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/links">Links</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://philosophos.localhost"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-Password-Protection-of-GRUB-Menu" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/articles/20170304~Password-Protection-of-GRUB-Menu/" class="article-date">
+  <time datetime="2017-03-04T13:26:24.000Z" itemprop="datePublished">2017-03-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Password Protection of GRUB Menu
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>By default, the boot loader interface is accessible to anyone with physical access to the console: anyone can select and edit any menu entry, and anyone can get direct access to a GRUB shell prompt.  For most systems, this is reasonable since anyone with direct physical access has a variety of other ways to gain full access, and requiring authentication at the boot loader level would only serve to make it difficult to recover broken systems. </p>
+<p>However, in some environments, such as kiosks, it may be appropriate to lock down the boot loader to require authentication before performing certain operations.</p>
+<ul>
+<li>Set GRUB Passwords</li>
+<li>Enable More Authentication Support</li>
+</ul>
+<a id="more"></a>
+<hr>
+<h2 id="Set-GRUB-Passwords"><a href="#Set-GRUB-Passwords" class="headerlink" title="Set GRUB Passwords"></a>Set GRUB Passwords</h2><p>The <code>password</code> and <code>password_pbkdf2</code> commands can be used to define users, each of which has an associated password. <code>password</code> sets the password in plain text, requiring grub.cfg to be secure; <code>password_pbkdf2</code> sets the password hashed using the Password-Based Key Derivation Function (RFC 2898), requiring the use of grub-mkpasswd-pbkdf2.</p>
+<pre><code># grub-mkpasswd-pbkdf2
+Enter password:
+Reenter password:
+PBKDF2 hash of your password is grub.pbkdf2.sha512.10000.C9169FD3A50B9F7ABB1CCEF23E010EFC1EF0191494F9D987D52343D58D48D7DF0DED2C93F225B1F09E473B58F78BE61D4FB8219CD3F429F02DB136C624DF3BE0.0B7315DC33B782922A56DA902C1F412CC15894BEE92AA218BC5ADC6E8B929CBEFA1DE3C768D1B7BF81068386249901BD1868E8F7FE90870F77319B6B8490E409
+</code></pre><figure class="highlight sh"><figcaption><span>Add the following to /etc/grub.d/00_header</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">cat &lt;&lt; EOF</div><div class="line"></div><div class="line"><span class="built_in">set</span> superusers=<span class="string">"root"</span></div><div class="line">password_pbkdf2 root grub.pbkdf2.sha512.10000.C9169FD3A50B9F7ABB1CCEF23E010EFC1EF0191494F9D987D52343D58D48D7DF0DED2C93F225B1F09E473B58F78BE61D4FB8219CD3F429F02DB136C624DF3BE0.0B7315DC33B782922A56DA902C1F412CC15894BEE92AA218BC5ADC6E8B929CBEFA1DE3C768D1B7BF81068386249901BD1868E8F7FE90870F77319B6B8490E409</div><div class="line">password user1 password_in_plain_text</div><div class="line"></div><div class="line">EOF</div></pre></td></tr></table></figure>
+<p>run <code>grub-mkconfig -o /boot/grub/grub.cfg</code> to regenerate grub configuration file. Your GRUB command line, boot parameters and all boot entries are now protected.</p>
+<p><strong>Warning</strong>  —  Though grub password was set, ANYONE with direct physical access can still boot from Udisk or PXE via changing BIOS settings and run OS as ROOT, which means you should set BIOS password to protected OS from unauthorized access.</p>
+<hr>
+<h2 id="Enable-More-Authentication-Support"><a href="#Enable-More-Authentication-Support" class="headerlink" title="Enable More Authentication Support"></a>Enable More Authentication Support</h2><p>In order to enable authentication support, the <code>superusers</code> environment variable must be set to a list of usernames, separated by any of spaces, commas, semicolons, pipes, or ampersands. Superusers are permitted to use the GRUB command line, edit menu entries, and execute any menu entry. If <code>superusers</code> is set, then use of the command line is automatically restricted to superusers.</p>
+<p>Other users may be given access to specific menu entries by giving a list of usernames (as above) using the <code>--users</code> option to the <code>menuentry</code> command.<br>If the <code>--users</code> option is not used for a menu entry, then that only superusers are able to use it.</p>
+<p>Adding <code>--unrestricted</code> to a menu entry will</p>
+<ul>
+<li>allow any user to boot the OS</li>
+<li>preventing the user from editing the entry</li>
+<li>preventing access to the grub command console</li>
+</ul>
+<p>Only a superuser or users specified with the <code>--user</code> switch will be able to edit the menu entry.</p>
+<p><strong>Warning</strong>  —  Adding <code>--unrestricted</code> to a menu entry with <code>submenuentry</code> will allow ANYONE gain <code>superuser</code> authority in the submenuentry !  So make sure the <code>--unrestricted</code> option is not used for a menu entry with <code>submenuentry</code>, Or add <code>GRUB_DISABLE_SUBMENU=y</code> to <code>/etc/default/grub</code> / <code>/etc/sysconfig/grub</code> to disable submenu.</p>
+<figure class="highlight sh"><figcaption><span>Putting this together, a typical `grub.cfg` fragment might look like this :</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">menuentry <span class="string">"can be run only by superusers"</span> &#123;</div><div class="line">	<span class="built_in">set</span> root=(hd0,1)</div><div class="line">	linux /vmlinuz single</div><div class="line">&#125;</div><div class="line"></div><div class="line">menuentry <span class="string">"can be run only by superusers"</span> --users <span class="string">""</span> &#123;</div><div class="line">	<span class="built_in">set</span> root=(hd0,1)</div><div class="line">	linux /vmlinuz single</div><div class="line">&#125;</div><div class="line"></div><div class="line">menuentry <span class="string">"can be run by user1 or superusers"</span> --users user1 &#123;</div><div class="line">	<span class="built_in">set</span> root=(hd0,2)</div><div class="line">	chainloader +1</div><div class="line">&#125;</div><div class="line"></div><div class="line">menuentry <span class="string">"can be run by any user"</span> --unrestricted &#123;</div><div class="line">	<span class="built_in">set</span> root=(hd0,1)</div><div class="line">	linux /vmlinuz</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>NOTE</strong>  —  The grub-mkconfig program does not yet have built-in support for generating configuration files with authentication. You can edit <code>/boot/grub/grub.cfg</code> after running <code>grub-mkconfig -o /boot/grub/grub.cfg</code>.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+    
+        <div class="article-footer-copyright">
+    <div style="text-align:center">
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">
+        <img alt="Creative Commons License" style="border-width:0"
+        src="/image/copyright.png" />
+        </a>
+    </div>
+    This work is licensed under a 
+    <a rel="license" href="http://creativecommons.org/licenses/by-nc-nd/4.0/">
+    Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License
+    </a>.
+    NonCommercial reprint please indicate the auther and source,
+    Commercial reprint please contact the auther.
+</div>
+
+    
+      <a data-url="http://philosophos.localhost/articles/20170304~Password-Protection-of-GRUB-Menu/" data-id="cj7xnecvo000avmm8d8onxyag" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GRUB/">GRUB</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/password/">password</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/articles/20170305~Installing-BlackArch-on-top-of-ArchLinux/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          Installing BlackArch on top of Arch Linux
+        
+      </div>
+    </a>
+  
+  
+    <a href="/articles/20170225~change-NIC-name/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">change NIC name</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+</section>
+        
+          <aside id="sidebar">
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Kategorien</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Network/">Network</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/OpenWrt/">OpenWrt</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/Bash/">Bash</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/Zsh/">Zsh</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Network/">Network</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ARP/">ARP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Arch/">Arch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bash/">Bash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BlackArch/">BlackArch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EIGRP/">EIGRP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fn/">Fn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Frame/">Frame</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GRUB/">GRUB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTPS/">HTTPS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ICMP/">ICMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IP/">IP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Install/">Install</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LSA/">LSA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Manually/">Manually</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Network/">Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OSPF/">OSPF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OSPFv2/">OSPFv2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OSPFv3/">OSPFv3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenWrt/">OpenWrt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PDU/">PDU</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PPPOE/">PPPOE</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Port/">Port</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RIP/">RIP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Router/">Router</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Routing/">Routing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Service/">Service</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Signature-Authentication/">Signature Authentication</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TCP/">TCP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UDP/">UDP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Wireless/">Wireless</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zsh/">Zsh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/esc-seq/">esc-seq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ifconfig/">ifconfig</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iproute2/">iproute2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/keycode/">keycode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/net-tools/">net-tools</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/password/">password</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/port/">port</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/root/">root</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shortkeys/">shortkeys</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/source/">source</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sysrq/">sysrq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tput/">tput</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wifi/">wifi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xev/">xev</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+    <script type="text/javascript" charset="utf-8" src="/js/tagcloud.js"></script>
+    <script type="text/javascript" charset="utf-8" src="/js/tagcanvas.js"></script>
+    <div class="widget-wrap">
+        <h3 class="widget-title">Tag Cloud</h3>
+        <div id="myCanvasContainer" class="widget tagcloud">
+            <canvas width="250" height="250" id="resCanvas" style="width=100%">
+                <a href="/tags/ARP/" style="font-size: 10px;">ARP</a> <a href="/tags/Arch/" style="font-size: 10px;">Arch</a> <a href="/tags/Bash/" style="font-size: 10px;">Bash</a> <a href="/tags/BlackArch/" style="font-size: 10px;">BlackArch</a> <a href="/tags/EIGRP/" style="font-size: 10px;">EIGRP</a> <a href="/tags/Fn/" style="font-size: 10px;">Fn</a> <a href="/tags/Frame/" style="font-size: 10px;">Frame</a> <a href="/tags/GRUB/" style="font-size: 10px;">GRUB</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/ICMP/" style="font-size: 10px;">ICMP</a> <a href="/tags/IP/" style="font-size: 10px;">IP</a> <a href="/tags/Install/" style="font-size: 11.43px;">Install</a> <a href="/tags/LSA/" style="font-size: 11.43px;">LSA</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Manually/" style="font-size: 10px;">Manually</a> <a href="/tags/Network/" style="font-size: 18.57px;">Network</a> <a href="/tags/OSPF/" style="font-size: 14.29px;">OSPF</a> <a href="/tags/OSPFv2/" style="font-size: 11.43px;">OSPFv2</a> <a href="/tags/OSPFv3/" style="font-size: 11.43px;">OSPFv3</a> <a href="/tags/OpenWrt/" style="font-size: 12.86px;">OpenWrt</a> <a href="/tags/PDU/" style="font-size: 17.14px;">PDU</a> <a href="/tags/PPPOE/" style="font-size: 11.43px;">PPPOE</a> <a href="/tags/Port/" style="font-size: 10px;">Port</a> <a href="/tags/RIP/" style="font-size: 10px;">RIP</a> <a href="/tags/Router/" style="font-size: 12.86px;">Router</a> <a href="/tags/Routing/" style="font-size: 15.71px;">Routing</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/Service/" style="font-size: 10px;">Service</a> <a href="/tags/Shell/" style="font-size: 11.43px;">Shell</a> <a href="/tags/Signature-Authentication/" style="font-size: 10px;">Signature Authentication</a> <a href="/tags/TCP/" style="font-size: 10px;">TCP</a> <a href="/tags/UDP/" style="font-size: 10px;">UDP</a> <a href="/tags/Wireless/" style="font-size: 10px;">Wireless</a> <a href="/tags/Zsh/" style="font-size: 10px;">Zsh</a> <a href="/tags/esc-seq/" style="font-size: 11.43px;">esc-seq</a> <a href="/tags/ifconfig/" style="font-size: 10px;">ifconfig</a> <a href="/tags/iproute2/" style="font-size: 10px;">iproute2</a> <a href="/tags/keycode/" style="font-size: 10px;">keycode</a> <a href="/tags/net-tools/" style="font-size: 10px;">net-tools</a> <a href="/tags/password/" style="font-size: 11.43px;">password</a> <a href="/tags/port/" style="font-size: 10px;">port</a> <a href="/tags/root/" style="font-size: 10px;">root</a> <a href="/tags/shortkeys/" style="font-size: 12.86px;">shortkeys</a> <a href="/tags/source/" style="font-size: 10px;">source</a> <a href="/tags/sysrq/" style="font-size: 10px;">sysrq</a> <a href="/tags/tput/" style="font-size: 11.43px;">tput</a> <a href="/tags/wifi/" style="font-size: 10px;">wifi</a> <a href="/tags/xev/" style="font-size: 10px;">xev</a>
+            </canvas>
+      <a href="/tags/ARP/" style="font-size: 10px;">ARP</a> <a href="/tags/Arch/" style="font-size: 10px;">Arch</a> <a href="/tags/Bash/" style="font-size: 10px;">Bash</a> <a href="/tags/BlackArch/" style="font-size: 10px;">BlackArch</a> <a href="/tags/EIGRP/" style="font-size: 10px;">EIGRP</a> <a href="/tags/Fn/" style="font-size: 10px;">Fn</a> <a href="/tags/Frame/" style="font-size: 10px;">Frame</a> <a href="/tags/GRUB/" style="font-size: 10px;">GRUB</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/ICMP/" style="font-size: 10px;">ICMP</a> <a href="/tags/IP/" style="font-size: 10px;">IP</a> <a href="/tags/Install/" style="font-size: 11.43px;">Install</a> <a href="/tags/LSA/" style="font-size: 11.43px;">LSA</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Manually/" style="font-size: 10px;">Manually</a> <a href="/tags/Network/" style="font-size: 18.57px;">Network</a> <a href="/tags/OSPF/" style="font-size: 14.29px;">OSPF</a> <a href="/tags/OSPFv2/" style="font-size: 11.43px;">OSPFv2</a> <a href="/tags/OSPFv3/" style="font-size: 11.43px;">OSPFv3</a> <a href="/tags/OpenWrt/" style="font-size: 12.86px;">OpenWrt</a> <a href="/tags/PDU/" style="font-size: 17.14px;">PDU</a> <a href="/tags/PPPOE/" style="font-size: 11.43px;">PPPOE</a> <a href="/tags/Port/" style="font-size: 10px;">Port</a> <a href="/tags/RIP/" style="font-size: 10px;">RIP</a> <a href="/tags/Router/" style="font-size: 12.86px;">Router</a> <a href="/tags/Routing/" style="font-size: 15.71px;">Routing</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/Service/" style="font-size: 10px;">Service</a> <a href="/tags/Shell/" style="font-size: 11.43px;">Shell</a> <a href="/tags/Signature-Authentication/" style="font-size: 10px;">Signature Authentication</a> <a href="/tags/TCP/" style="font-size: 10px;">TCP</a> <a href="/tags/UDP/" style="font-size: 10px;">UDP</a> <a href="/tags/Wireless/" style="font-size: 10px;">Wireless</a> <a href="/tags/Zsh/" style="font-size: 10px;">Zsh</a> <a href="/tags/esc-seq/" style="font-size: 11.43px;">esc-seq</a> <a href="/tags/ifconfig/" style="font-size: 10px;">ifconfig</a> <a href="/tags/iproute2/" style="font-size: 10px;">iproute2</a> <a href="/tags/keycode/" style="font-size: 10px;">keycode</a> <a href="/tags/net-tools/" style="font-size: 10px;">net-tools</a> <a href="/tags/password/" style="font-size: 11.43px;">password</a> <a href="/tags/port/" style="font-size: 10px;">port</a> <a href="/tags/root/" style="font-size: 10px;">root</a> <a href="/tags/shortkeys/" style="font-size: 12.86px;">shortkeys</a> <a href="/tags/source/" style="font-size: 10px;">source</a> <a href="/tags/sysrq/" style="font-size: 10px;">sysrq</a> <a href="/tags/tput/" style="font-size: 11.43px;">tput</a> <a href="/tags/wifi/" style="font-size: 10px;">wifi</a> <a href="/tags/xev/" style="font-size: 10px;">xev</a>
+        </div>
+    </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/articles/20170924~BGP-Message-Format/">BGP Message Format</a>
+          </li>
+        
+          <li>
+            <a href="/articles/20170923~OSPFv3-LSA-Message-Format/">OSPFv3 LSA Message Format</a>
+          </li>
+        
+          <li>
+            <a href="/articles/20170923~OSPFv2-LSA-Message-Format/">OSPFv2 LSA Message Format</a>
+          </li>
+        
+          <li>
+            <a href="/articles/20170922~OSPFv3-Message-Format/">OSPFv3 Message Format</a>
+          </li>
+        
+          <li>
+            <a href="/articles/20170922~OSPFv2-Message-Format/">OSPFv2 Message Format</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+
+</aside>
+
+        
+      </div>
+      <footer id="footer">
+    
+    <div class="outer">
+        <div id="footer-left">
+            &copy; 2017 philosophos &lt;&gt;
+            <br>
+            Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+            <br>
+            <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+            </script>
+            <span id="busuanzi_container_site_pv" style='display:none'>
+                Total Visits:&nbsp;
+                <span id="busuanzi_value_site_pv"></span>
+            </span>
+            <br>
+            <span id="busuanzi_container_site_uv" style='display:none'>
+                You are Visiter No.
+                <span id="busuanzi_value_site_uv"></span>
+            </span>
+        </div>
+            <!--
+            <span id="busuanzi_container_page_pv" style='display:none'>
+                Total Visits:&nbsp;
+                <span id="busuanzi_value_page_pv"></span>
+            </span><br>
+            -->
+    </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/links" class="mobile-nav-link">Links</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
