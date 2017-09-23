@@ -6,13 +6,13 @@
   <title>Routing PDU | Enjoy CS&amp;IT, Enjoy Life</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="RIP RIPv1 RIPv2 RIPng   EIGRP OSPF OSPFv2 OSPFv3   BGP">
-<meta name="keywords" content="Network,PDU,Routing,RIP,EIGRP,OSPF,BGP">
+<meta name="keywords" content="Network,PDU,Routing,OSPF,EIGRP,RIP,BGP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Routing PDU">
 <meta property="og:url" content="http://philosophos.localhost/articles/Routing-PDU/index.html">
 <meta property="og:site_name" content="Enjoy CS&amp;IT, Enjoy Life">
 <meta property="og:description" content="RIP RIPv1 RIPv2 RIPng   EIGRP OSPF OSPFv2 OSPFv3   BGP">
-<meta property="og:updated_time" content="2017-09-18T23:16:18.326Z">
+<meta property="og:updated_time" content="2017-09-23T12:15:48.267Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Routing PDU">
 <meta name="twitter:description" content="RIP RIPv1 RIPv2 RIPng   EIGRP OSPF OSPFv2 OSPFv3   BGP">
@@ -56,7 +56,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://philosophos.localhost"></form>
@@ -109,7 +109,7 @@
 </ul>
 <a id="more"></a>
 <hr>
-<h2 id="RIP-Message-Format"><a href="#RIP-Message-Format" class="headerlink" title="RIP Message Format"></a>RIP Message Format</h2><hr>
+<h2 id="RIP-Message-Format-UDP"><a href="#RIP-Message-Format-UDP" class="headerlink" title="RIP Message Format : UDP"></a>RIP Message Format : UDP</h2><hr>
 <h4 id="RIPv1-Message-Format-520-udp"><a href="#RIPv1-Message-Format-520-udp" class="headerlink" title="RIPv1 Message Format : 520/udp"></a>RIPv1 Message Format : 520/udp</h4><pre><code>┃ 8bit         | 8bit       | 16bit       ┃
 ┏--------------+------------+-------------┓ -----------------|
 ┃ Command(1~6) | Version(1) | Reserved(0) ┃                  |
@@ -178,11 +178,425 @@
 ┃ ... ... up to 25 routing entries        ┃
 ┗-----------------------------------------┛
 </code></pre><hr>
-<h2 id="EIGRP-Message-Format"><a href="#EIGRP-Message-Format" class="headerlink" title="EIGRP Message Format"></a>EIGRP Message Format</h2><hr>
+<h2 id="EIGRP-Message-Format-IP-88"><a href="#EIGRP-Message-Format-IP-88" class="headerlink" title="EIGRP Message Format : IP 88"></a>EIGRP Message Format : IP 88</h2><pre><code>┃ 8bit    | 8bit   | 16bit    ┃
+┏---------+--------+----------┓ ----|
+┃ Version | Opcode | Checksum ┃     |
+┠---------+--------+----------┨     |
+┃ Flags                       ┃  20byte
+┠-----------------------------┨     |
+┃ Sequence                    ┃     |
+┠-----------------------------┨     |
+┃ ACK                         ┃     |
+┠-----------------------------┨     |
+┃ Autonomous System Number    ┃     |
+┠-----------------------------┨ ----|
+┃ TLV(type/length/value)      ┃
+┗-----------------------------┛
+</code></pre><table>
+<thead>
+<tr>
+<th>number</th>
+<th>TLV类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0x0001</td>
+<td>EIGRP参数</td>
+</tr>
+<tr>
+<td>0x0003</td>
+<td>Sequence</td>
+</tr>
+<tr>
+<td>0x0004</td>
+<td>Software Version</td>
+</tr>
+<tr>
+<td>0x0005</td>
+<td>Next Multicast Sequence</td>
+</tr>
+<tr>
+<td>0x0102</td>
+<td>IP Internal Routing</td>
+</tr>
+<tr>
+<td>0x0103</td>
+<td>IP External Routing</td>
+</tr>
+<tr>
+<td>0x0202</td>
+<td>AppleTalk Internal Routing</td>
+</tr>
+<tr>
+<td>0x0203</td>
+<td>AppleTalk External Routing</td>
+</tr>
+<tr>
+<td>0x0204</td>
+<td>AppleTalk link config</td>
+</tr>
+<tr>
+<td>0x0302</td>
+<td>IPX Internal Routing</td>
+</tr>
+<tr>
+<td>0x0303</td>
+<td>IPX External Routing</td>
+</tr>
+</tbody>
+</table>
+<p>TLV with EIGRP参数</p>
+<pre><code>┃ 8bit |  8bit  | 8bit | 8bit ┃
+┏---------------+-------------┓
+┃ type=0x0001   | length      ┃
+┠------+--------+------+------┨
+┃ K1   | K2     | K3   | K4   ┃
+┠------+--------+------+------┨
+┃ K5   |Reserved| hold time   ┃
+┗------+--------+-------------┛
+</code></pre><p>IP Internal Routing’s TLV</p>
+<pre><code>┃ 8bit        | 8bit | 8bit | 8bit    ┃
+┏--------------------+----------------┓
+┃ type=0x0102        | length         ┃
+┠--------------------+----------------┨
+┃ Next Hop                            ┃
+┠-------------------------------------┨
+┃ Delay                               ┃
+┠-------------------------------------┨
+┃ Bandwidth                           ┃
+┠---------------------------+---------┨
+┃ MTU                       |Hop Count┃
+┠-------------+------+------+---------┨
+┃ Reliability | Load | Reserved       ┃
+┠-------------+------+----------------┨
+┃Prefix Length| Destination           ┃
+┗-------------+-----------------------┛
+</code></pre><p>IP External Routing’s TLV</p>
+<pre><code>┃ 8bit        | 8bit |        8bit        |   8bit  ┃
+┏--------------------+------------------------------┓
+┃ type=0x0103        | length                       ┃
+┠--------------------+------------------------------┨
+┃ Next Hop                                          ┃
+┠---------------------------------------------------┨
+┃ Originating Router                                ┃
+┠---------------------------------------------------┨
+┃ Originating Autonomous System Number              ┃
+┠---------------------------------------------------┨
+┃ Arbitrary Tag                                     ┃
+┠---------------------------------------------------┨
+┃ External Protocol Metric                          ┃
+┠--------------------+--------------------+---------┨
+┃ Reserved           |External Protocol ID| Flags   ┃
+┠--------------------+--------------------+---------┨
+┃ Delay                                             ┃
+┠---------------------------------------------------┨
+┃ Bandwidth                                         ┃
+┠-----------------------------------------+---------┨
+┃ MTU                                     |Hop Count┃
+┠-------------+------+--------------------+---------┨
+┃ Reliability | Load | Reserved                     ┃
+┠-------------+------+------------------------------┨
+┃Prefix Length| Destination                         ┃
+┗-------------+-------------------------------------┛
+</code></pre><p>External Protocol ID<br>| number | External Protocol      |<br>|——–+————————|<br>|   0x01 | IGRP                   |<br>|   0x02 | EIGRP                  |<br>|   0x03 | Static Route           |<br>|   0x04 | RIP                    |<br>|   0x05 | Hello                  |<br>|   0x06 | OSPF                   |<br>|   0x07 | IS-IS                  |<br>|   0x08 | EGP                    |<br>|   0x09 | BGP                    |<br>|   0x0a | IDRP                   |<br>|   0x0b | Direct Connect         |</p>
 <h2 id="OSPF-Message-Format"><a href="#OSPF-Message-Format" class="headerlink" title="OSPF Message Format"></a>OSPF Message Format</h2><hr>
-<h4 id="OSPFv2-Message-Format"><a href="#OSPFv2-Message-Format" class="headerlink" title="OSPFv2 Message Format"></a>OSPFv2 Message Format</h4><hr>
-<h4 id="OSPFv3-Message-Format"><a href="#OSPFv3-Message-Format" class="headerlink" title="OSPFv3 Message Format"></a>OSPFv3 Message Format</h4><hr>
-<h2 id="BGP-Message-Format"><a href="#BGP-Message-Format" class="headerlink" title="BGP Message Format"></a>BGP Message Format</h2>
+<h4 id="OSPFv2-Message-Format"><a href="#OSPFv2-Message-Format" class="headerlink" title="OSPFv2 Message Format"></a>OSPFv2 Message Format</h4><pre><code>┃ 8bit  | 8bit |    16bit    ┃
+┏-------+------+-------------┓
+┃Version| Type |Packet Length┃
+┠-------+------+-------------┨
+┃ Router ID                  ┃
+┠----------------------------┨
+┃ Area ID                    ┃
+┠--------------+-------------┨
+┃ Checksum     | AuType      ┃
+┠--------------+-------------┨
+┃ Authentication             ┃
+┠----------------------------┨
+┃ Authentication             ┃
+┠----------------------------┨
+┃ Data                       ┃
+┗----------------------------┛
+</code></pre><p>if AuType=2</p>
+<pre><code>┠--------+--------+----------------------------┨
+┃ 0x0000 | Key ID | Authentication Data Length ┃
+┠--------+--------+----------------------------┨
+┃ Cryptographic Sequence Number                ┃
+┠----------------------------------------------┨
+</code></pre><p>OSPF message type<br>| number | OSPF message type    |<br>|——–+———————-|<br>|      1 | Hello                |<br>|      2 | database description |<br>|      3 | link state request   |<br>|      4 | link state update    |<br>|      5 | link state confirm   |</p>
+<p>OSPF Authentication Type<br>| number | OSPF  Authentication type                  |<br>|——–+——————————————–|<br>|      0 | null (no authentication)                   |<br>|      1 | simple password authentication (plaintext) |<br>|      2 | cryptographic checksum (MD5)               |</p>
+<h6 id="OSPF-Hello-packet"><a href="#OSPF-Hello-packet" class="headerlink" title="OSPF Hello packet"></a>OSPF Hello packet</h6><pre><code>┃ 8bit    | 8bit |  8bit  | 8bit           ┃
+┏---------+------+-------------------------┓
+┃ Version |Type=1| Packet Length           ┃
+┠---------+------+-------------------------┨
+┃ Router ID                                ┃
+┠------------------------------------------┨
+┃ Area ID                                  ┃
+┠----------------+-------------------------┨
+┃ Checksum       | AuType                  ┃
+┠----------------+-------------------------┨
+┃ Authentication                           ┃
+┠------------------------------------------┨
+┃ Authentication                           ┃
+┠------------------------------------------┨
+┃ Network Mask                             ┃
+┠----------------+--------+----------------┨
+┃ Hello Interval | Option | Router Priority┃
+┠----------------+--------+----------------┨
+┃ Router Dead Interval                     ┃
+┠------------------------------------------┨
+┃ Designated Router                        ┃
+┠------------------------------------------┨
+┃ Back-up Designated Router                ┃
+┠------------------------------------------┨
+┃ Neighbor                                 ┃
+┠------------------------------------------┨
+┃                   ...                    ┃
+┠------------------------------------------┨
+┃ Neighbor                                 ┃
+┗------------------------------------------┛
+</code></pre><h6 id="OSPF-database-description-packet"><a href="#OSPF-database-description-packet" class="headerlink" title="OSPF database description packet"></a>OSPF database description packet</h6><pre><code>┃ 8bit    | 8bit |  8bit  | 8bit       ┃
+┏---------+------+---------------------┓
+┃ Version |Type=2| Packet Length       ┃
+┠---------+------+---------------------┨
+┃ Router ID                            ┃
+┠--------------------------------------┨
+┃ Area ID                              ┃
+┠----------------+---------------------┨
+┃ Checksum       | AuType              ┃
+┠----------------+---------------------┨
+┃ Authentication                       ┃
+┠--------------------------------------┨
+┃ Authentication                       ┃
+┠----------------+--------+-----+-+-+--┨
+┃ Interface MTU  | Option |00000|I|M|MS┃
+┠----------------+--------+-----+-+-+--┨
+┃ DD Sequence Number                   ┃
+┠--------------------------------------┨
+┃ LSA Header                           ┃
+┗--------------------------------------┛
+I:Initial bit
+M:More bit
+MS:Master/Slave bit
+</code></pre><h6 id="OSPF-link-state-request-packet"><a href="#OSPF-link-state-request-packet" class="headerlink" title="OSPF link state request packet"></a>OSPF link state request packet</h6><pre><code>┃ 8bit    | 8bit |     16bit     ┃
+┏---------+------+---------------┓
+┃ Version |Type=3| Packet Length ┃
+┠---------+------+---------------┨
+┃ Router ID                      ┃
+┠--------------------------------┨
+┃ Area ID                        ┃
+┠----------------+---------------┨
+┃ Checksum       | AuType        ┃
+┠----------------+---------------┨
+┃ Authentication                 ┃
+┠--------------------------------┨
+┃ Authentication                 ┃
+┠--------------------------------┨
+┃ Link State Type                ┃
+┠--------------------------------┨
+┃ Link State ID                  ┃
+┠--------------------------------┨
+┃ Advertising Router             ┃
+┠--------------------------------┨
+┃              ...               ┃
+┠--------------------------------┨
+┃ Link State Type                ┃
+┠--------------------------------┨
+┃ Link State ID                  ┃
+┠--------------------------------┨
+┃ Advertising Router             ┃
+┗--------------------------------┛
+</code></pre><h6 id="OSPF-link-state-update-packet"><a href="#OSPF-link-state-update-packet" class="headerlink" title="OSPF link state update packet"></a>OSPF link state update packet</h6><pre><code>┃ 8bit    | 8bit |     16bit     ┃
+┏---------+------+---------------┓
+┃ Version |Type=4| Packet Length ┃
+┠---------+------+---------------┨
+┃ Router ID                      ┃
+┠--------------------------------┨
+┃ Area ID                        ┃
+┠----------------+---------------┨
+┃ Checksum       | AuType        ┃
+┠----------------+---------------┨
+┃ Authentication                 ┃
+┠--------------------------------┨
+┃ Authentication                 ┃
+┠--------------------------------┨
+┃ Number of LSA                  ┃
+┠--------------------------------┨
+┃ LSA                            ┃
+┗--------------------------------┛
+</code></pre><h6 id="OSPF-link-state-confirm-packet"><a href="#OSPF-link-state-confirm-packet" class="headerlink" title="OSPF link state confirm packet"></a>OSPF link state confirm packet</h6><pre><code>┃ 8bit    | 8bit |     16bit     ┃
+┏---------+------+---------------┓
+┃ Version |Type=4| Packet Length ┃
+┠---------+------+---------------┨
+┃ Router ID                      ┃
+┠--------------------------------┨
+┃ Area ID                        ┃
+┠----------------+---------------┨
+┃ Checksum       | AuType        ┃
+┠----------------+---------------┨
+┃ Authentication                 ┃
+┠--------------------------------┨
+┃ Authentication                 ┃
+┠--------------------------------┨
+┃ LSA Header                     ┃
+┗--------------------------------┛
+</code></pre><h6 id="OSPF-Protocol-LSA-Header"><a href="#OSPF-Protocol-LSA-Header" class="headerlink" title="OSPF Protocol LSA Header"></a>OSPF Protocol LSA Header</h6><pre><code>┃ 16bit    |  8bit  | 8bit ┃
+┏----------+--------+------┓
+┃ Age      | Option | Type ┃
+┠----------+--------+------┨
+┃ Link State ID            ┃
+┠--------------------------┨
+┃ Advertising Router       ┃
+┠--------------------------┨
+┃ Sequence                 ┃
+┠----------+---------------┨
+┃ Checksum | Length        ┃
+┗----------+---------------┛
+</code></pre><p>| number | type                           | Command                             |<br>|——–+——————————–+————————————-|<br>|      1 | Router LSA                     | show ip ospf database router        |<br>|      2 | Network LSA                    | show ip ospf database network       |<br>|      3 | Network Summary LSA            | show ip ospf database summary       |<br>|      4 | ASBR Summary LSA               | show ip ospf database asbr-summary  |<br>|      5 | AS External LSA                | show ip ospf database external      |<br>|      6 | Group Membership LSA           |                                     |<br>|      7 | NSSA External LSA              | show ip ospf database nssa-external |<br>|      8 | External Attributes LSA        | show ip ospf database               |<br>|      9 | Opaque LSA (link链路本地范围 ) |                                     |<br>|     10 | Opaque LSA (area本地区域范围)  |                                     |<br>|     11 | Opaque LSA (AS范围)            |                                     |</p>
+<h6 id="OSPF-Router-LSA"><a href="#OSPF-Router-LSA" class="headerlink" title="OSPF Router LSA"></a>OSPF Router LSA</h6><pre><code>┃ 8bit      | 8bit          | 8bit   | 8bit   ┃
+┏---------------------------+--------+--------┓
+┃ Age                       | Option | Type=1 ┃
+┠---------------------------+--------+--------┨
+┃ Link State ID                               ┃
+┠---------------------------------------------┨
+┃ Advertising Router                          ┃
+┠---------------------------------------------┨
+┃ Sequence                                    ┃
+┠---------------------------+-----------------┨
+┃ Checksum                  | Length          ┃
+┠-----------+---------------+-----------------┨
+┃00000|V|E|B| 0x00          | Number of Links ┃
+┠-----------+---------------+-----------------┨
+┃ Link ID                                     ┃
+┠---------------------------------------------┨
+┃ Link Data                                   ┃
+┠-----------+---------------+-----------------┨
+┃ Link Type | Number of Tos | Metric          ┃
+┠-----------+---------------+-----------------┨
+┃ Tos       | 0x00          | Tos Metric      ┃
+┠-----------+---------------+-----------------┨
+┃                    ...                      ┃
+┠---------------------------------------------┨
+┃ Link ID                                     ┃
+┠---------------------------------------------┨
+┃ Link Data                                   ┃
+┗---------------------------------------------┛
+</code></pre><p>| Link Type | Link connected to:              | Link ID Value                           | Link Data Value                    |<br>|———–+———————————+—————————————–+————————————|<br>|         1 | another Router (point-to-point) | neighboring router’s ID                 | 和网络相连的始发路由器接口的ipaddr |<br>|         2 | a Transit Network               | designated router’s interface’s IP addr | 和网络相连的始发路由器接口的ipaddr |<br>|         3 | a Stub Network                  | IP网络/子网地址                         | 网络ip addr / subnet mask          |<br>|         4 | virtual link                    | neighboring router’s ID                 | 始发路由器接口的mib-ii ifindex值   |</p>
+<h6 id="ospf-network-lsa"><a href="#ospf-network-lsa" class="headerlink" title="ospf network lsa"></a>ospf network lsa</h6><pre><code>┃ 16bit    |  8bit  | 8bit ┃
+┏----------+--------+------┓
+┃ age      | option |type=2┃
+┠----------+--------+------┨
+┃ link state id            ┃
+┠--------------------------┨
+┃ advertising router       ┃
+┠--------------------------┨
+┃ sequence                 ┃
+┠----------+---------------┨
+┃ checksum | length        ┃
+┠----------+---------------┨
+┃ network mask             ┃
+┠--------------------------┨
+┃ attached router          ┃
+┠--------------------------┨
+┃ attached router          ┃
+┠--------------------------┨
+┃           ...            ┃
+┠--------------------------┨
+┃ attached router          ┃
+┗--------------------------┛
+</code></pre><h6 id="ospf-network-asbr-summary-lsa"><a href="#ospf-network-asbr-summary-lsa" class="headerlink" title="ospf network/asbr summary lsa"></a>ospf network/asbr summary lsa</h6><pre><code>┃ 8bit | 8bit | 8bit   | 8bit     ┃
+┏-------------+--------+----------┓
+┃ age         | option | type=3/4 ┃
+┠-------------+--------+----------┨
+┃ link state id                   ┃
+┠---------------------------------┨
+┃ advertising router              ┃
+┠---------------------------------┨
+┃ sequence                        ┃
+┠-------------+-------------------┨
+┃ checksum    | length            ┃
+┠-------------+-------------------┨
+┃ network mask                    ┃
+┠------+--------------------------┨
+┃ 0x00 | metric                   ┃
+┠------+--------------------------┨
+┃ tos  | tos metric               ┃
+┠------+--------------------------┨
+┃               ...               ┃
+┠------+--------------------------┨
+┃ 0x00 | metric                   ┃
+┗---------------------------------┛
+</code></pre><h6 id="ospf-autonomous-system-external-lsa"><a href="#ospf-autonomous-system-external-lsa" class="headerlink" title="ospf autonomous system external lsa"></a>ospf autonomous system external lsa</h6><pre><code>┃ 8bit    | 8bit | 8bit   | 8bit   ┃
+┏----------------+--------+--------┓
+┃ age            | option | type=5 ┃
+┠----------------+--------+--------┨
+┃ link state id                    ┃
+┠----------------------------------┨
+┃ advertising router               ┃
+┠----------------------------------┨
+┃ sequence                         ┃
+┠----------------+-----------------┨
+┃ checksum       | length          ┃
+┠----------------+-----------------┨
+┃ network mask                     ┃
+┠-+-------+------------------------┨
+┃e|0000000| metric                 ┃
+┠-+-------+------------------------┨
+┃ forwarding address               ┃
+┠----------------------------------┨
+┃ external route tag               ┃
+┠-+-------+------------------------┨
+┃e|  tos  | tos metric             ┃
+┠-+-------+------------------------┨
+┃ forwarding address               ┃
+┠----------------------------------┨
+┃ external route tag               ┃
+┠----------------------------------┨
+┃                ...               ┃
+┠----------------+-----------------┨
+┃ network mask                     ┃
+┠-+-------+------------------------┨
+┃e|0000000| metric                 ┃
+┠-+-------+------------------------┨
+┃ forwarding address               ┃
+┠----------------------------------┨
+┃ external route tag               ┃
+┗----------------------------------┛
+e:external metric bit:0(e1)/1(e2)
+</code></pre><h6 id="ospf-not-so-stubby-area-external-lsa"><a href="#ospf-not-so-stubby-area-external-lsa" class="headerlink" title="ospf not-so-stubby area external lsa"></a>ospf not-so-stubby area external lsa</h6><pre><code>┃ 8bit    | 8bit | 8bit   | 8bit   ┃
+┏----------------+--------+--------┓
+┃ age            | option | type=5 ┃
+┠----------------+--------+--------┨
+┃ link state id                    ┃
+┠----------------------------------┨
+┃ advertising router               ┃
+┠----------------------------------┨
+┃ sequence                         ┃
+┠----------------+-----------------┨
+┃ checksum       | length          ┃
+┠----------------+-----------------┨
+┃ network mask                     ┃
+┠-+-------+------------------------┨
+┃e|  tos  | tos metric             ┃
+┠-+-------+------------------------┨
+┃ forwarding address               ┃
+┠----------------------------------┨
+┃ external route tag               ┃
+┠----------------------------------┨
+┃                ...               ┃
+┠----------------+-----------------┨
+┃ network mask                     ┃
+┠-+-------+------------------------┨
+┃e|0000000| metric                 ┃
+┠-+-------+------------------------┨
+┃ forwarding address               ┃
+┠----------------------------------┨
+┃ external route tag               ┃
+┗----------------------------------┛
+e:external metric bit:0(e1)/1(e2)
+</code></pre><hr>
+<h4 id="ospfv3-message-format"><a href="#ospfv3-message-format" class="headerlink" title="ospfv3 message format"></a>ospfv3 message format</h4><hr>
+<h2 id="bgp-message-format"><a href="#bgp-message-format" class="headerlink" title="bgp message format"></a>bgp message format</h2>
       
     </div>
     <footer class="article-footer">
@@ -203,7 +617,7 @@
 </div>
 
     
-      <a data-url="http://philosophos.localhost/articles/Routing-PDU/" data-id="cj7qs79oh001rhzm8140r08iv" class="article-share-link">Teilen</a>
+      <a data-url="http://philosophos.localhost/articles/Routing-PDU/" data-id="cj7xbox650027cdm8zm8l1u5a" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/BGP/">BGP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/EIGRP/">EIGRP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Network/">Network</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OSPF/">OSPF</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PDU/">PDU</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RIP/">RIP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Routing/">Routing</a></li></ul>
@@ -214,9 +628,18 @@
     
 <nav id="article-nav">
   
+    <a href="/articles/RIP-Message-Format/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          RIP Message Format
+        
+      </div>
+    </a>
+  
   
     <a href="/articles/ICMP-PDU/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Älter</strong>
+      <strong class="article-nav-caption">Older</strong>
       <div class="article-nav-title">ICMP PDU</div>
     </a>
   
@@ -234,7 +657,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Kategorien</h3>
+    <h3 class="widget-title">Categories</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Network/">Network</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/OpenWrt/">OpenWrt</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/">Shell</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/Bash/">Bash</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/Shell/Zsh/">Zsh</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/Network/">Network</a></li></ul>
     </div>
@@ -246,7 +669,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ARP/">ARP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Arch/">Arch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BGP/">BGP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bash/">Bash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BlackArch/">BlackArch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EIGRP/">EIGRP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fn/">Fn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Frame/">Frame</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GRUB/">GRUB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTPS/">HTTPS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ICMP/">ICMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IP/">IP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Install/">Install</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Manually/">Manually</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Network/">Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OSPF/">OSPF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenWrt/">OpenWrt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PDU/">PDU</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PPPOE/">PPPOE</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Port/">Port</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RIP/">RIP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Router/">Router</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Routing/">Routing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Service/">Service</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Signature-Authentication/">Signature Authentication</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TCP/">TCP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UDP/">UDP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Wireless/">Wireless</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zsh/">Zsh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/esc-seq/">esc-seq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ifconfig/">ifconfig</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iproute2/">iproute2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/keycode/">keycode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/net-tools/">net-tools</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/password/">password</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/port/">port</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/root/">root</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shortkeys/">shortkeys</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/source/">source</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sysrq/">sysrq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tput/">tput</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wifi/">wifi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xev/">xev</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/ARP/">ARP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Arch/">Arch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BGP/">BGP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Bash/">Bash</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/BlackArch/">BlackArch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/EIGRP/">EIGRP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Fn/">Fn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Frame/">Frame</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GRUB/">GRUB</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTTPS/">HTTPS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ICMP/">ICMP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IP/">IP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Install/">Install</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LSA/">LSA</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Manually/">Manually</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Network/">Network</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OSPF/">OSPF</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OSPFv2/">OSPFv2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OSPFv3/">OSPFv3</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OpenWrt/">OpenWrt</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PDU/">PDU</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PPPOE/">PPPOE</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Port/">Port</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RIP/">RIP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Router/">Router</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Routing/">Routing</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SSH/">SSH</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Service/">Service</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Shell/">Shell</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Signature-Authentication/">Signature Authentication</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TCP/">TCP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UDP/">UDP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Wireless/">Wireless</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Zsh/">Zsh</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/esc-seq/">esc-seq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ifconfig/">ifconfig</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iproute2/">iproute2</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/keycode/">keycode</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/net-tools/">net-tools</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/password/">password</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/port/">port</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/root/">root</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shortkeys/">shortkeys</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/source/">source</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sysrq/">sysrq</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/tput/">tput</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/wifi/">wifi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xev/">xev</a></li></ul>
     </div>
   </div>
 
@@ -259,9 +682,9 @@
         <h3 class="widget-title">Tag Cloud</h3>
         <div id="myCanvasContainer" class="widget tagcloud">
             <canvas width="250" height="250" id="resCanvas" style="width=100%">
-                <a href="/tags/ARP/" style="font-size: 10px;">ARP</a> <a href="/tags/Arch/" style="font-size: 10px;">Arch</a> <a href="/tags/BGP/" style="font-size: 10px;">BGP</a> <a href="/tags/Bash/" style="font-size: 10px;">Bash</a> <a href="/tags/BlackArch/" style="font-size: 10px;">BlackArch</a> <a href="/tags/EIGRP/" style="font-size: 10px;">EIGRP</a> <a href="/tags/Fn/" style="font-size: 10px;">Fn</a> <a href="/tags/Frame/" style="font-size: 10px;">Frame</a> <a href="/tags/GRUB/" style="font-size: 10px;">GRUB</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/ICMP/" style="font-size: 10px;">ICMP</a> <a href="/tags/IP/" style="font-size: 10px;">IP</a> <a href="/tags/Install/" style="font-size: 12.5px;">Install</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Manually/" style="font-size: 10px;">Manually</a> <a href="/tags/Network/" style="font-size: 17.5px;">Network</a> <a href="/tags/OSPF/" style="font-size: 10px;">OSPF</a> <a href="/tags/OpenWrt/" style="font-size: 15px;">OpenWrt</a> <a href="/tags/PDU/" style="font-size: 12.5px;">PDU</a> <a href="/tags/PPPOE/" style="font-size: 12.5px;">PPPOE</a> <a href="/tags/Port/" style="font-size: 10px;">Port</a> <a href="/tags/RIP/" style="font-size: 10px;">RIP</a> <a href="/tags/Router/" style="font-size: 15px;">Router</a> <a href="/tags/Routing/" style="font-size: 10px;">Routing</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/Service/" style="font-size: 10px;">Service</a> <a href="/tags/Shell/" style="font-size: 12.5px;">Shell</a> <a href="/tags/Signature-Authentication/" style="font-size: 10px;">Signature Authentication</a> <a href="/tags/TCP/" style="font-size: 10px;">TCP</a> <a href="/tags/UDP/" style="font-size: 10px;">UDP</a> <a href="/tags/Wireless/" style="font-size: 10px;">Wireless</a> <a href="/tags/Zsh/" style="font-size: 10px;">Zsh</a> <a href="/tags/esc-seq/" style="font-size: 12.5px;">esc-seq</a> <a href="/tags/ifconfig/" style="font-size: 10px;">ifconfig</a> <a href="/tags/iproute2/" style="font-size: 10px;">iproute2</a> <a href="/tags/keycode/" style="font-size: 10px;">keycode</a> <a href="/tags/net-tools/" style="font-size: 10px;">net-tools</a> <a href="/tags/password/" style="font-size: 12.5px;">password</a> <a href="/tags/port/" style="font-size: 10px;">port</a> <a href="/tags/root/" style="font-size: 10px;">root</a> <a href="/tags/shortkeys/" style="font-size: 15px;">shortkeys</a> <a href="/tags/source/" style="font-size: 10px;">source</a> <a href="/tags/sysrq/" style="font-size: 10px;">sysrq</a> <a href="/tags/tput/" style="font-size: 12.5px;">tput</a> <a href="/tags/wifi/" style="font-size: 10px;">wifi</a> <a href="/tags/xev/" style="font-size: 10px;">xev</a>
+                <a href="/tags/ARP/" style="font-size: 10px;">ARP</a> <a href="/tags/Arch/" style="font-size: 10px;">Arch</a> <a href="/tags/BGP/" style="font-size: 10px;">BGP</a> <a href="/tags/Bash/" style="font-size: 10px;">Bash</a> <a href="/tags/BlackArch/" style="font-size: 10px;">BlackArch</a> <a href="/tags/EIGRP/" style="font-size: 11.43px;">EIGRP</a> <a href="/tags/Fn/" style="font-size: 10px;">Fn</a> <a href="/tags/Frame/" style="font-size: 10px;">Frame</a> <a href="/tags/GRUB/" style="font-size: 10px;">GRUB</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/ICMP/" style="font-size: 10px;">ICMP</a> <a href="/tags/IP/" style="font-size: 10px;">IP</a> <a href="/tags/Install/" style="font-size: 11.43px;">Install</a> <a href="/tags/LSA/" style="font-size: 11.43px;">LSA</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Manually/" style="font-size: 10px;">Manually</a> <a href="/tags/Network/" style="font-size: 18.57px;">Network</a> <a href="/tags/OSPF/" style="font-size: 14.29px;">OSPF</a> <a href="/tags/OSPFv2/" style="font-size: 11.43px;">OSPFv2</a> <a href="/tags/OSPFv3/" style="font-size: 11.43px;">OSPFv3</a> <a href="/tags/OpenWrt/" style="font-size: 12.86px;">OpenWrt</a> <a href="/tags/PDU/" style="font-size: 17.14px;">PDU</a> <a href="/tags/PPPOE/" style="font-size: 11.43px;">PPPOE</a> <a href="/tags/Port/" style="font-size: 10px;">Port</a> <a href="/tags/RIP/" style="font-size: 11.43px;">RIP</a> <a href="/tags/Router/" style="font-size: 12.86px;">Router</a> <a href="/tags/Routing/" style="font-size: 15.71px;">Routing</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/Service/" style="font-size: 10px;">Service</a> <a href="/tags/Shell/" style="font-size: 11.43px;">Shell</a> <a href="/tags/Signature-Authentication/" style="font-size: 10px;">Signature Authentication</a> <a href="/tags/TCP/" style="font-size: 10px;">TCP</a> <a href="/tags/UDP/" style="font-size: 10px;">UDP</a> <a href="/tags/Wireless/" style="font-size: 10px;">Wireless</a> <a href="/tags/Zsh/" style="font-size: 10px;">Zsh</a> <a href="/tags/esc-seq/" style="font-size: 11.43px;">esc-seq</a> <a href="/tags/ifconfig/" style="font-size: 10px;">ifconfig</a> <a href="/tags/iproute2/" style="font-size: 10px;">iproute2</a> <a href="/tags/keycode/" style="font-size: 10px;">keycode</a> <a href="/tags/net-tools/" style="font-size: 10px;">net-tools</a> <a href="/tags/password/" style="font-size: 11.43px;">password</a> <a href="/tags/port/" style="font-size: 10px;">port</a> <a href="/tags/root/" style="font-size: 10px;">root</a> <a href="/tags/shortkeys/" style="font-size: 12.86px;">shortkeys</a> <a href="/tags/source/" style="font-size: 10px;">source</a> <a href="/tags/sysrq/" style="font-size: 10px;">sysrq</a> <a href="/tags/tput/" style="font-size: 11.43px;">tput</a> <a href="/tags/wifi/" style="font-size: 10px;">wifi</a> <a href="/tags/xev/" style="font-size: 10px;">xev</a>
             </canvas>
-      <a href="/tags/ARP/" style="font-size: 10px;">ARP</a> <a href="/tags/Arch/" style="font-size: 10px;">Arch</a> <a href="/tags/BGP/" style="font-size: 10px;">BGP</a> <a href="/tags/Bash/" style="font-size: 10px;">Bash</a> <a href="/tags/BlackArch/" style="font-size: 10px;">BlackArch</a> <a href="/tags/EIGRP/" style="font-size: 10px;">EIGRP</a> <a href="/tags/Fn/" style="font-size: 10px;">Fn</a> <a href="/tags/Frame/" style="font-size: 10px;">Frame</a> <a href="/tags/GRUB/" style="font-size: 10px;">GRUB</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/ICMP/" style="font-size: 10px;">ICMP</a> <a href="/tags/IP/" style="font-size: 10px;">IP</a> <a href="/tags/Install/" style="font-size: 12.5px;">Install</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Manually/" style="font-size: 10px;">Manually</a> <a href="/tags/Network/" style="font-size: 17.5px;">Network</a> <a href="/tags/OSPF/" style="font-size: 10px;">OSPF</a> <a href="/tags/OpenWrt/" style="font-size: 15px;">OpenWrt</a> <a href="/tags/PDU/" style="font-size: 12.5px;">PDU</a> <a href="/tags/PPPOE/" style="font-size: 12.5px;">PPPOE</a> <a href="/tags/Port/" style="font-size: 10px;">Port</a> <a href="/tags/RIP/" style="font-size: 10px;">RIP</a> <a href="/tags/Router/" style="font-size: 15px;">Router</a> <a href="/tags/Routing/" style="font-size: 10px;">Routing</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/Service/" style="font-size: 10px;">Service</a> <a href="/tags/Shell/" style="font-size: 12.5px;">Shell</a> <a href="/tags/Signature-Authentication/" style="font-size: 10px;">Signature Authentication</a> <a href="/tags/TCP/" style="font-size: 10px;">TCP</a> <a href="/tags/UDP/" style="font-size: 10px;">UDP</a> <a href="/tags/Wireless/" style="font-size: 10px;">Wireless</a> <a href="/tags/Zsh/" style="font-size: 10px;">Zsh</a> <a href="/tags/esc-seq/" style="font-size: 12.5px;">esc-seq</a> <a href="/tags/ifconfig/" style="font-size: 10px;">ifconfig</a> <a href="/tags/iproute2/" style="font-size: 10px;">iproute2</a> <a href="/tags/keycode/" style="font-size: 10px;">keycode</a> <a href="/tags/net-tools/" style="font-size: 10px;">net-tools</a> <a href="/tags/password/" style="font-size: 12.5px;">password</a> <a href="/tags/port/" style="font-size: 10px;">port</a> <a href="/tags/root/" style="font-size: 10px;">root</a> <a href="/tags/shortkeys/" style="font-size: 15px;">shortkeys</a> <a href="/tags/source/" style="font-size: 10px;">source</a> <a href="/tags/sysrq/" style="font-size: 10px;">sysrq</a> <a href="/tags/tput/" style="font-size: 12.5px;">tput</a> <a href="/tags/wifi/" style="font-size: 10px;">wifi</a> <a href="/tags/xev/" style="font-size: 10px;">xev</a>
+      <a href="/tags/ARP/" style="font-size: 10px;">ARP</a> <a href="/tags/Arch/" style="font-size: 10px;">Arch</a> <a href="/tags/BGP/" style="font-size: 10px;">BGP</a> <a href="/tags/Bash/" style="font-size: 10px;">Bash</a> <a href="/tags/BlackArch/" style="font-size: 10px;">BlackArch</a> <a href="/tags/EIGRP/" style="font-size: 11.43px;">EIGRP</a> <a href="/tags/Fn/" style="font-size: 10px;">Fn</a> <a href="/tags/Frame/" style="font-size: 10px;">Frame</a> <a href="/tags/GRUB/" style="font-size: 10px;">GRUB</a> <a href="/tags/HTTPS/" style="font-size: 10px;">HTTPS</a> <a href="/tags/ICMP/" style="font-size: 10px;">ICMP</a> <a href="/tags/IP/" style="font-size: 10px;">IP</a> <a href="/tags/Install/" style="font-size: 11.43px;">Install</a> <a href="/tags/LSA/" style="font-size: 11.43px;">LSA</a> <a href="/tags/Linux/" style="font-size: 20px;">Linux</a> <a href="/tags/Manually/" style="font-size: 10px;">Manually</a> <a href="/tags/Network/" style="font-size: 18.57px;">Network</a> <a href="/tags/OSPF/" style="font-size: 14.29px;">OSPF</a> <a href="/tags/OSPFv2/" style="font-size: 11.43px;">OSPFv2</a> <a href="/tags/OSPFv3/" style="font-size: 11.43px;">OSPFv3</a> <a href="/tags/OpenWrt/" style="font-size: 12.86px;">OpenWrt</a> <a href="/tags/PDU/" style="font-size: 17.14px;">PDU</a> <a href="/tags/PPPOE/" style="font-size: 11.43px;">PPPOE</a> <a href="/tags/Port/" style="font-size: 10px;">Port</a> <a href="/tags/RIP/" style="font-size: 11.43px;">RIP</a> <a href="/tags/Router/" style="font-size: 12.86px;">Router</a> <a href="/tags/Routing/" style="font-size: 15.71px;">Routing</a> <a href="/tags/SSH/" style="font-size: 10px;">SSH</a> <a href="/tags/Service/" style="font-size: 10px;">Service</a> <a href="/tags/Shell/" style="font-size: 11.43px;">Shell</a> <a href="/tags/Signature-Authentication/" style="font-size: 10px;">Signature Authentication</a> <a href="/tags/TCP/" style="font-size: 10px;">TCP</a> <a href="/tags/UDP/" style="font-size: 10px;">UDP</a> <a href="/tags/Wireless/" style="font-size: 10px;">Wireless</a> <a href="/tags/Zsh/" style="font-size: 10px;">Zsh</a> <a href="/tags/esc-seq/" style="font-size: 11.43px;">esc-seq</a> <a href="/tags/ifconfig/" style="font-size: 10px;">ifconfig</a> <a href="/tags/iproute2/" style="font-size: 10px;">iproute2</a> <a href="/tags/keycode/" style="font-size: 10px;">keycode</a> <a href="/tags/net-tools/" style="font-size: 10px;">net-tools</a> <a href="/tags/password/" style="font-size: 11.43px;">password</a> <a href="/tags/port/" style="font-size: 10px;">port</a> <a href="/tags/root/" style="font-size: 10px;">root</a> <a href="/tags/shortkeys/" style="font-size: 12.86px;">shortkeys</a> <a href="/tags/source/" style="font-size: 10px;">source</a> <a href="/tags/sysrq/" style="font-size: 10px;">sysrq</a> <a href="/tags/tput/" style="font-size: 11.43px;">tput</a> <a href="/tags/wifi/" style="font-size: 10px;">wifi</a> <a href="/tags/xev/" style="font-size: 10px;">xev</a>
         </div>
     </div>
 
@@ -269,7 +692,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li></ul>
     </div>
@@ -279,28 +702,28 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/articles/Routing-PDU/">Routing PDU</a>
+            <a href="/articles/BGP-Message-Format/">BGP Message Format</a>
           </li>
         
           <li>
-            <a href="/articles/ICMP-PDU/">ICMP PDU</a>
+            <a href="/articles/OSPFv3-LSA-Message-Format/">OSPFv3 LSA Message Format</a>
           </li>
         
           <li>
-            <a href="/articles/Get-the-keycode-of-Fn-F1-F12-with-xev/">Get the keycode of Fn+F1~F12 with xev</a>
+            <a href="/articles/OSPFv2-LSA-Message-Format/">OSPFv2 LSA Message Format</a>
           </li>
         
           <li>
-            <a href="/articles/net-tools-VS-iproute2/">net-tools VS iproute2</a>
+            <a href="/articles/OSPFv3-Message-Format/">OSPFv3 Message Format</a>
           </li>
         
           <li>
-            <a href="/articles/Manage-Wireless-Network-Manually/">Manage Wireless Network Manually</a>
+            <a href="/articles/OSPFv2-Message-Format/">OSPFv2 Message Format</a>
           </li>
         
       </ul>
